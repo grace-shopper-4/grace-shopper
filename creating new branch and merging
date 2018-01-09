@@ -1,0 +1,12 @@
+1. first make sure your local master branch is up to date with the remote one (do git pull or git pull origin master)
+
+2. to make a new branch => git checkout -b new-branch-name
+
+3. go back to code editor and do whatever, then git add *, git commit, and git push origin new-branch-name
+
+4. look at <>Code. new branch should be on the remote github repo now under the branches tab. click "new pull request" 
+  and fill out whatever comments you want, then submit.
+
+5. you should see your pull request under the pull requests tab. any one of us should be able to merge your new branch with the master.
+
+6. after it's merged you could delete your local new-branch-name

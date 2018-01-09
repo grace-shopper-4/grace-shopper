@@ -9,7 +9,7 @@ const Order = db.define('order', {
       isIn: ["Completed", "Cancelled", "Processing", "Created"]
     }
   },
-  sessionId: {
+  session: {
     type: Sequelize.STRING
   }
 })

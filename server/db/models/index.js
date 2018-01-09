@@ -19,16 +19,15 @@ const Order = require('./order')
  * instead of: const User = require('../db/models/user')
  */
 
- Category.hasMany(Product);
- Order.hasMany(Product);
- 
- Review.hasOne(User);
- Product.hasMany(Review);
- Product.hasMany(Category);
- User.hasMany(Order);
- User.hasMany(Review);
- LineItem.hasMany(Product);
- LineItem.hasOne(Order);
+Category.hasMany(Product);
+
+Order.hasMany(LineItem);
+
+Product.hasMany(Review);
+
+User.hasMany(Order);
+User.hasMany(Review);
+Product.hasMany(LineItem)
 
 module.exports = {
   User,

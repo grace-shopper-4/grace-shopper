@@ -10,7 +10,9 @@
  * Now that you've got the main idea, check it out in practice below!
  */
 const db = require('../server/db')
-const {User} = require('../server/db/models')
+const { Product, Category, User, LineItem, Order, Review } = require('../server/db/models')
+const Chance = require('chance');
+const chance = new Chance();
 
 async function seed () {
   await db.sync({force: true})
@@ -18,10 +20,79 @@ async function seed () {
   // Whoa! Because we `await` the promise that db.sync returns, the next line will not be
   // executed until that promise resolves!
 
+  //seed User
   const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
+    User.create({name: "Baloney", email: 'cody@email.com', password: '123'}),
+    User.create({name: "Baloney", email: 'murphy@email.com', password: '123'})
   ])
+
+  //seed Product
+  for (let i = 0; i < 12; i++) {
+    let title = chance.word({length: 5});
+    let description = chance.paragraph();
+    let price = chance.dollar({max: 100});
+    let inventory = chance.integer({min: 1, max: 100});
+    let size = Math.floor(Math.random() * (13) + 1);
+    await Product.create({
+        title,
+        description,
+        price,
+        inventory,
+        size
+    })
+  }
+
+  //seed Category
+  for (let i = 0; i < 3; i++) {
+    let title = chance.word({length: 10});
+    let description = chance.paragraph();
+    await Category.create({
+        title,
+        description
+    })
+  }
+
+  let statuses = ["Completed", "Cancelled", "Processing", "Created"]
+  //seed Order
+  for (let i = 0; i < 6; i++) {
+    // let status = statuses[Math.floor(Math.random() * 4)];
+    // console.log("order status, ", status);
+    let session = chance.word({length: 5})
+    await Order.create({
+        session
+    })
+  }
+
+  //seed LineItem
+  for (let i = 0; i < 12; i++) {
+    let quantity = chance.integer({min: 1, max: 20})
+    let itemPrice = chance.floating({min: 0, max: 100})
+    let orderId = Math.floor(Math.random() * (6) + 1);
+    let productId = Math.floor(Math.random() * (12) + 1);
+    await LineItem.create({
+        quantity,
+        itemPrice,
+        orderId,
+        productId
+    })
+  }
+
+  //seed Review
+  for (let i = 0; i < 12; i++) {
+    let title = chance.sentence();
+    let content = chance.paragraph();
+    let stars = Math.floor(Math.random() * (5) + 1);
+    let productId = Math.floor(Math.random() * (12) + 1);
+    let userId = Math.floor(Math.random() * (2) + 1);
+    await Review.create({
+        title,
+        content,
+        stars,
+        productId,
+        userId
+    })
+  }
+
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!
   console.log(`seeded ${users.length} users`)

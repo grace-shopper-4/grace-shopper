@@ -10,7 +10,7 @@ const Product = db.define('product', {
     type: Sequelize.TEXT
   },
   price: {
-    type: Sequelize.DOUBLE,
+    type: Sequelize.STRING,  //change back to DOUBLE
     allowNull: false
   },
   inventory: {

@@ -20,6 +20,10 @@ const Product = db.define('product', {
   photo: {
     type: Sequelize.STRING,
     defaultValue: "imageURL"
+  },
+  size: {
+    type: Sequelize.INTEGER,
+    allowNull: false
   }
 })
 

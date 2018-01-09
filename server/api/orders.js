@@ -18,3 +18,14 @@ router.get('/:id', (req, res, next) => {
   .then(order => res.json(order))
   .catch(next)
 })
+
+router.get('/:userId', (req, res, next) => {
+  Order.fineOne({
+    where: {
+      userId: req.params.userId,
+      status: 'created'
+    }
+  })
+  .then(order => res.json(order))
+  .catch(next)
+})

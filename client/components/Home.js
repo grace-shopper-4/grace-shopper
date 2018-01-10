@@ -5,12 +5,29 @@ import {connect} from 'react-redux'
 /**
  * COMPONENT
  */
-export const UserHome = (props) => {
-  const {email} = props
+export const Home = (props) => {
+  const categories = props.categories;
+  const products = props.products;
 
   return (
     <div>
-      <h3>Welcome, {email}</h3>
+      <h3>Boot Party</h3>
+      <div>Cool movie background will go here</div>
+      <br/>
+      {categories.map(category => {
+        return (
+          <div key={category.id} id="category-container">
+            <div>{category.title}</div>
+            <ul>
+            {products.map(product => {
+              return (
+                <li key={product.id}>{product.title}</li>
+              )
+            })}
+            </ul>
+          </div>
+        )
+      })}
     </div>
   )
 }
@@ -18,17 +35,13 @@ export const UserHome = (props) => {
 /**
  * CONTAINER
  */
-const mapState = (state) => {
-  return {
-    email: state.user.email
-  }
-}
+const mapState = ({categories, products}) => ({categories, products})
 
-export default connect(mapState)(UserHome)
+export default connect(mapState)(Home)
 
-/**
- * PROP TYPES
- */
-UserHome.propTypes = {
-  email: PropTypes.string
-}
+// /**
+//  * PROP TYPES
+//  */
+// Home.propTypes = {
+//   email: PropTypes.string
+// }

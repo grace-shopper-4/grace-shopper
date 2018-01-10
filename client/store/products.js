@@ -13,7 +13,7 @@ const getProducts = products => ({type: GET_PRODUCTS, products})
 /**
  * THUNK CREATORS
  */
-export const fetchAllProducts = () =>
+export const fetchProducts = () =>
   dispatch =>
     axios.get('/api/products')
       .then(res =>

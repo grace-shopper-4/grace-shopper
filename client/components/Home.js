@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import {NavLink} from 'react-router-dom'
 
 /**
  * COMPONENT
@@ -17,14 +18,7 @@ export const Home = (props) => {
       {categories.map(category => {
         return (
           <div key={category.id} id="category-container">
-            <div>{category.title}</div>
-            <ul>
-            {products.map(product => {
-              return (
-                <li key={product.id}>{product.title}</li>
-              )
-            })}
-            </ul>
+            <NavLink to={`/categories/${category.id}`}>{category.title}</NavLink>
           </div>
         )
       })}

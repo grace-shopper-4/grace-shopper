@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {NavLink} from 'react-router-dom'
+import {fetchCategories} from '../store'
 
 /**
  * COMPONENT
@@ -10,6 +11,7 @@ export class Home extends Component {
   componentDidMount() {
     this.props.setAllCategoriesOnState();
   }
+
   render() {
     const categories = this.props.categories;
     return (

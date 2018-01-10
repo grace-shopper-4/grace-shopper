@@ -6,32 +6,43 @@ import {NavLink} from 'react-router-dom'
 /**
  * COMPONENT
  */
-export const Home = (props) => {
-  const categories = props.categories;
-  const products = props.products;
-
-  return (
-    <div>
-      <h3>Boot Party</h3>
-      <div>Cool movie background will go here</div>
-      <br/>
-      {categories.map(category => {
-        return (
-          <div key={category.id} id="category-container">
-            <NavLink to={`/categories/${category.id}`}>{category.title}</NavLink>
-          </div>
-        )
-      })}
-    </div>
-  )
+export class Home extends Component {
+  componentDidMount() {
+    this.props.setAllCategoriesOnState();
+  }
+  render() {
+    return (
+      <div>
+        <h3>Boot Party</h3>
+        <div>{'<Cool video thing will go here>'}</div>
+        <br/>
+        {categories.map(category => {
+          return (
+            <div key={category.id}>
+              <NavLink to={`/categories/${category.id}`}>{category.title}</NavLink>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Oxhide_boots._Loulan%2C_Xinjiang._Early_Han_220_BCE_-_8_CE.jpg/220px-Oxhide_boots._Loulan%2C_Xinjiang._Early_Han_220_BCE_-_8_CE.jpg" />
+            </div>
+          )
+        })}
+      </div>
+    )
+  }
 }
 
 /**
  * CONTAINER
  */
-const mapState = ({categories, products}) => ({categories, products})
+const mapState = ({categories}) => ({categories})
 
-export default connect(mapState)(Home)
+const mapDispatch = dispatch => {
+  return {
+    setAllCategoriesOnState() {
+      dispatch(fetchCategories());
+    }
+  }
+}
+
+export default connect(mapState, mapDispatch)(Home)
 
 // /**
 //  * PROP TYPES

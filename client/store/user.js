@@ -10,7 +10,10 @@ const REMOVE_USER = 'REMOVE_USER'
 /**
  * INITIAL STATE
  */
-const defaultUser = {}
+const defaultUser = {
+  name: "guest",
+  isGuest: true
+}
 
 /**
  * ACTION CREATORS
@@ -24,9 +27,8 @@ const removeUser = () => ({type: REMOVE_USER})
 export const me = () =>
   dispatch =>
     axios.get('/auth/me')
-      .then(res => {
-            console.log(res.data)
-        dispatch(getUser(res.data || defaultUser))})
+      .then(res =>
+        dispatch(getUser(res.data || defaultUser)))
       .catch(err => console.log(err))
 
 export const auth = (email, password, method, name) =>

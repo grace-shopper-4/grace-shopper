@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import {NavLink} from 'react-router-dom'
 import {fetchCategories} from '../store'
 
 /**
@@ -17,11 +18,11 @@ export class Home extends Component {
       <div>
         <h3>Boot Party</h3>
         <div>{'<Cool video thing will go here>'}</div>
-        <br />
+        <br/>
         {categories.map(category => {
           return (
             <div key={category.id}>
-              <h4>{category.title}</h4>
+              <NavLink to={`/categories/${category.id}`}>{category.title}</NavLink>
               <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Oxhide_boots._Loulan%2C_Xinjiang._Early_Han_220_BCE_-_8_CE.jpg/220px-Oxhide_boots._Loulan%2C_Xinjiang._Early_Han_220_BCE_-_8_CE.jpg" />
             </div>
           )

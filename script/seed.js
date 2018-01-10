@@ -13,6 +13,7 @@ const db = require('../server/db')
 const { Product, Category, User, LineItem, Order, Review } = require('../server/db/models')
 const Chance = require('chance');
 const chance = new Chance();
+const axios = require('axios');
 
 async function seed () {
   await db.sync({force: true})
@@ -26,25 +27,10 @@ async function seed () {
     User.create({name: "Baloney", email: 'murphy@email.com', password: '123'})
   ])
 
-  //seed Product
-  for (let i = 0; i < 12; i++) {
-    let title = chance.word({length: 5});
-    let description = chance.paragraph();
-    let price = chance.dollar({max: 100});
-    let inventory = chance.integer({min: 1, max: 100});
-    let size = Math.floor(Math.random() * (13) + 1);
-    await Product.create({
-        title,
-        description,
-        price,
-        inventory,
-        size
-    })
-  }
-
+  const titles = ['Party', 'Rain', 'Cowboy'];
   //seed Category
   for (let i = 0; i < 3; i++) {
-    let title = chance.word({length: 10});
+    let title = titles[i];
     let description = chance.paragraph();
     await Category.create({
         title,
@@ -52,11 +38,28 @@ async function seed () {
     })
   }
 
+  //seed Product
+  for (let i = 0; i < 12; i++) {
+    let title = chance.word({length: 5});
+    let description = chance.paragraph();
+    let price = parseFloat((chance.dollar({max: 100})).slice(1));
+    let inventory = chance.integer({min: 1, max: 100});
+    let size = Math.floor(Math.random() * (13) + 1);
+    let categoryId = i%3 + 1;
+    await Product.create({
+        title,
+        description,
+        price,
+        inventory,
+        size,
+        categoryId
+    })
+  }
+
   let statuses = ["Completed", "Cancelled", "Processing", "Created"]
   //seed Order
   for (let i = 0; i < 6; i++) {
-    // let status = statuses[Math.floor(Math.random() * 4)];
-    // console.log("order status, ", status);
+    let status = statuses[Math.floor(Math.random() * 4)];
     let session = chance.word({length: 5})
     await Order.create({
         session
@@ -66,9 +69,14 @@ async function seed () {
   //seed LineItem
   for (let i = 0; i < 12; i++) {
     let quantity = chance.integer({min: 1, max: 20})
-    let itemPrice = chance.floating({min: 0, max: 100})
     let orderId = Math.floor(Math.random() * (6) + 1);
     let productId = Math.floor(Math.random() * (12) + 1);
+    let itemPrice = 0;
+    await Product.findById(productId)
+          .then(product => {
+            itemPrice = product.price;
+          })
+          .catch(err => console.error(err))
     await LineItem.create({
         quantity,
         itemPrice,

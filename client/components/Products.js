@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 // import store from '../store'
-import {fetchCategories, fetchAllProducts} from '../store'
+import {fetchCategories} from '../store'
 /**
  * COMPONENT
  */
@@ -27,7 +27,7 @@ export class Products extends Component {
             category.products.map(product =>{
               return (
             <div key={product.id}>
-
+            <img src={product.photo} alt="product photo" />
             <h3>{product.title}</h3>
             <h4>{product.price}</h4>
             </div>

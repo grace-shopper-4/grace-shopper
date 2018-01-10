@@ -19,7 +19,7 @@ const Product = db.define('product', {
   },
   photo: {
     type: Sequelize.STRING,
-    defaultValue: "imageURL"
+    defaultValue: "../images/Oxhide_boots._Loulan,_Xinjiang._Early_Han_220_BCE_-_8_CE.jpg"
   },
   size: {
     type: Sequelize.INTEGER,

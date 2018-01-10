@@ -3,7 +3,9 @@ const {Category, Product, Review} = require('../db/models')
 module.exports = router
 
 router.get('/', (req, res, next) => {
-  Category.findAll()
+  Category.findAll({
+    include: [{model: Product}]
+  })
     .then(categories => res.json(categories))
     .catch(next)
 })
@@ -11,7 +13,8 @@ router.get('/', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
   Category.findOne({
-    where: {id: req.params.id}
+    where: {id: req.params.id},
+    include: [{model: Product}]
   })
     .then(category => res.json(category))
     .catch(next)

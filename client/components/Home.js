@@ -11,6 +11,7 @@ export class Home extends Component {
     this.props.setAllCategoriesOnState();
   }
   render() {
+    const categories = this.props.categories;
     return (
       <div>
         <h3>Boot Party</h3>
@@ -47,6 +48,6 @@ export default connect(mapState, mapDispatch)(Home)
 // /**
 //  * PROP TYPES
 //  */
-// Home.propTypes = {
+// UserHome.propTypes = {
 //   email: PropTypes.string
 // }

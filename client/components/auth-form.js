@@ -17,6 +17,10 @@ const AuthForm = (props) => {
           <input name="email" type="text" />
         </div>
         <div>
+          <label htmlFor="userName"><small>name</small></label>
+          <input name="userName" type="text" />
+        </div>
+        <div>
           <label htmlFor="password"><small>Password</small></label>
           <input name="password" type="password" />
         </div>
@@ -59,8 +63,9 @@ const mapDispatch = (dispatch) => {
       evt.preventDefault()
       const formName = evt.target.name
       const email = evt.target.email.value
+      const userName = evt.target.userName.value
       const password = evt.target.password.value
-      dispatch(auth(email, password, formName))
+      dispatch(auth(email, password, formName, userName))
     }
   }
 }

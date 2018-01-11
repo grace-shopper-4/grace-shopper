@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User, LineItem, Product} = require('../db/models')
+const {User, LineItem, Product, Order} = require('../db/models')
 module.exports = router
 
 router.get('/', (req, res, next) => {
@@ -40,5 +40,12 @@ router.get('/:id/orders/:orderId', (req, res, next) => {
         include:[{model: Product}]}]}]
   })
     .then(userOrder => res.json(userOrder))
+    .catch(next)
+})
+
+router.put('/:userId', (req, res, next) => {
+  User.update(req.body,
+                {returning: true, where: {id: req.params.userId}})
+    .then(user => res.json(user))
     .catch(next)
 })

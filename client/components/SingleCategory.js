@@ -11,22 +11,21 @@ export class SingleCategory extends Component {
 
     componentDidMount() {
         this.props.setCurrentCategory(this.props.match.params.id);
-        this.props.setAllProducts();
     }
     
     render() {
         console.log('props: ', this.props)
         console.log('params id: ', this.props.match.params.id)
         const category = this.props.singleCategory;
-        const products = this.props.products.filter(product => product.categoryId === category.id)
         return (
             <div>
                 <h3>{category.title}</h3>
                 <ul>
-                    {products.map(product => {
-                        return (
-                            <li key={product.id}>{product.title}</li>
-                        )
+                    {category.products && 
+                        category.products.map(product => {
+                            return (
+                                <li key={product.id}>{product.title}</li>
+                            )
                     })}
                 </ul>
             </div>

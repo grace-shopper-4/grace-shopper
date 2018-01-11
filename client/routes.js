@@ -15,7 +15,7 @@ import {Main,
         OrderReview,
         OrderConfirmation,
         ShoppingCart} from './components'
-import {me} from './store'
+import {me, fetchProducts, fetchCategories} from './store'
 
 /**
  * COMPONENT

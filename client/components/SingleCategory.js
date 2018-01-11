@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 // import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import { fetchCategory, fetchProducts } from '../store'
+import { fetchCategories } from '../store'
 import { NavLink } from 'react-router-dom';
 
 /**
@@ -10,25 +10,32 @@ import { NavLink } from 'react-router-dom';
 export class SingleCategory extends Component {
 
     componentDidMount() {
-        this.props.setCurrentCategory(this.props.match.params.id);
+        this.props.fetchAllCategories();
     }
 
     render() {
-        console.log('props: ', this.props)
-        console.log('params id: ', this.props.match.params.id)
-        const category = this.props.singleCategory;
+        let currentCategory = {};
+        this.props.categories.forEach(category => {
+            console.log(category.id === this.props.match.params.id)
+            if (category.id === parseInt(this.props.match.params.id)) currentCategory = category;
+        })
+        console.log('current category: ', currentCategory)
+        if (currentCategory === {}) return <div />
         return (
             <div>
-                <h3>{category.title}</h3>
+                <h3>{currentCategory.title}</h3>
                 <ul>
-                    {category.products &&
-                        category.products.map(product => {
+                    {currentCategory.products &&
+                        currentCategory.products.map(product => {
+                            console.log("reviews: ", product.reviews)
                             return (
-                                <li>
-                                    <div key={product.id}>
+                                <li key={product.id}>
+                                    <NavLink to={`/products/${product.id}`}>
                                         <h5>{product.title}</h5>
-                                        <div>{product.reviews.stars}</div>
-                                    </div>
+                                        <img src={product.photo} />
+                                        <h5> {`Average Rating: ${product.averageRating && product.averageRating}`} </h5>
+                                        <h5> {`Based on ${product.numberOfReviews} reviews.`} </h5>
+                                    </NavLink>
                                 </li>
                             )
                     })}
@@ -41,15 +48,12 @@ export class SingleCategory extends Component {
 /**
  * CONTAINER
  */
-const mapState = ({singleCategory, products}) => ({singleCategory, products})
+const mapState = ({categories}) => ({categories})
 
 const mapDispatch = dispatch => {
     return {
-        setCurrentCategory: (id) => {
-            dispatch(fetchCategory(id));
-        },
-        setAllProducts: () => {
-            dispatch(fetchProducts());
+        fetchAllCategories: () => {
+            dispatch(fetchCategories());
         }
     }
 }

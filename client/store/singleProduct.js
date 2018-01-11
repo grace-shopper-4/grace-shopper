@@ -8,7 +8,7 @@ const GET_PRODUCT = 'GET_PRODUCT'
 /**
  * ACTION CREATORS
  */
-const getProduct = product => ({type: GET_PRODUCT, product})
+export const getProduct = product => ({type: GET_PRODUCT, product})
 
 /**
  * THUNK CREATORS

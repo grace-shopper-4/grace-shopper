@@ -1,27 +1,31 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchProducts } from '../store'
+import { fetchCategories } from '../store'
 import _ from 'lodash';
 
 
 export class SingleProduct extends Component {
 
     componentDidMount() {
-        this.props.fetchProducts()
-
+        this.props.fetchCategories()
     }
     render() {
-        const product = this.props.products.find(aProduct => {
-            return aProduct.id === this.props.id})
+        let currentProduct = {};
+        this.props.categories.forEach(category => {
+            category.products.forEach(product => {
+                if (product.id === this.props.id) currentProduct = product;
+            })    
+        })
        
-        if (!product) return <div />
+        if (!currentProduct) return <div />
         return (
             <div>
-                <h1> {product.title}</h1>
-                <h3> {product.description}</h3>
-                <h4> {product.price}</h4>
-                <h4> {product.photo}</h4>
-                <h5> Reviews on Props as Well </h5>
+                <h1> {currentProduct.title}</h1>
+                <h3> {currentProduct.description}</h3>
+                <h4> {currentProduct.price}</h4>
+                <h4> {currentProduct.photo}</h4>
+                <h5> {`Average Rating: ${currentProduct.averageRating && currentProduct.averageRating}`} </h5>
+                <h5> {`Based on ${currentProduct.numberOfReviews} reviews.`} </h5>
             </div>
         )
     }
@@ -30,13 +34,16 @@ export class SingleProduct extends Component {
 const mapStateToProps = (state, ownProps) => {
     return {
       id: parseInt(ownProps.match.params.id),
-      products: state.products
+      categories: state.categories
     }
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    fetchProducts: () => {
-      dispatch(fetchProducts())
+    fetchCategories: () => {
+      dispatch(fetchCategories())
+    },
+    setCurrentProduct: () => {
+      dispatch(getProduct)
     }
 });
 

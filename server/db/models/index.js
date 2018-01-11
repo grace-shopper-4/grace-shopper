@@ -27,7 +27,9 @@ Product.hasMany(Review);
 
 User.hasMany(Order);
 User.hasMany(Review);
+
 Product.hasMany(LineItem)
+LineItem.belongsTo(Product)
 
 module.exports = {
   User,

@@ -23,8 +23,8 @@ async function seed () {
 
   //seed User
   const users = await Promise.all([
-    User.create({name: "Baloney", email: 'cody@email.com', password: '123'}),
-    User.create({name: "Baloney", email: 'murphy@email.com', password: '123'})
+    User.create({name: "Baloney", email: 'cody@email.com', password: '123', billingAddress: '123 Main Street, Chicago IL 60610', shippingAddress: '123 Main Street, Chicago IL 60610'}),
+    User.create({name: "Baloney", email: 'murphy@email.com', password: '123', billingAddress: '123 Main Street, Chicago IL 60610', shippingAddress: '123 Main Street, Chicago IL 60610'})
   ])
 
   const titles = ['Party', 'Rain', 'Cowboy'];

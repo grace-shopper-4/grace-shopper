@@ -15,7 +15,7 @@ import {Main,
         OrderReview,
         OrderConfirmation,
         ShoppingCart} from './components'
-import {me} from './store'
+import {me, fetchProducts, fetchCategories} from './store'
 
 /**
  * COMPONENT
@@ -35,7 +35,7 @@ class Routes extends Component {
             {/* Routes placed here are available to all visitors */}
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
-            <Route path="/products" component={Products} />
+            <Route exact path="/products" component={Products} />
             <Route path="/products/:id" component={SingleProduct} />
             <Route path="/categories/:id" component={SingleCategory} />
             <Route path="/shoppingCart" component={ShoppingCart} />

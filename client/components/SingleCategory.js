@@ -24,7 +24,11 @@ export class SingleCategory extends Component {
                     {category.products && 
                         category.products.map(product => {
                             return (
-                                <li key={product.id}>{product.title}</li>
+                                <li>
+                                    <div key={product.id}>
+                                        <h5>{product.title}</h5>
+                                        <div>{product.reviews.stars}</div>
+                                    </div>
                             )
                     })}
                 </ul>

@@ -12,7 +12,7 @@ export class SingleCategory extends Component {
     componentDidMount() {
         this.props.setCurrentCategory(this.props.match.params.id);
     }
-    
+
     render() {
         console.log('props: ', this.props)
         console.log('params id: ', this.props.match.params.id)
@@ -21,7 +21,7 @@ export class SingleCategory extends Component {
             <div>
                 <h3>{category.title}</h3>
                 <ul>
-                    {category.products && 
+                    {category.products &&
                         category.products.map(product => {
                             return (
                                 <li>
@@ -29,6 +29,7 @@ export class SingleCategory extends Component {
                                         <h5>{product.title}</h5>
                                         <div>{product.reviews.stars}</div>
                                     </div>
+                                </li>
                             )
                     })}
                 </ul>

@@ -2,11 +2,12 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 // import store from '../store'
 import {fetchCategories} from '../store'
+import {Grid, Image, Header} from 'semantic-ui-react'
 /**
  * COMPONENT
  */
 
-export class Products extends Component {
+ export class Products extends Component {
 
   componentDidMount(){
     this.props.createCategoryState()
@@ -15,36 +16,39 @@ export class Products extends Component {
   render(){
     const {categories, products} = this.props
     return (
-      <div>
-        <h1> All Products </h1>
-        {
-           categories.map(category => {
-            console.log(category.products)
-             return (
-           <div key={category.id}>
-           <h2>{category.title} Boots</h2>
-           {
-            category.products.map(product =>{
-              return (
-            <div key={product.id}>
-            <img src={product.photo} alt="product photo" />
-            <h3>{product.title}</h3>
-            <h4>{product.price}</h4>
-            </div>
-            )
-           })
-         }
+            <div>
+            <h1> All Products </h1>
+            <Grid columns={4} divided>
+            {
+             categories.map(category => {
+               return (
+                       <Grid.Row key={category.id}>
+                       <h2>{category.title} Boots</h2>
+                       {
+                        category.products.map(product =>{
+                          return (
+                                  <Grid.Column key={product.id}>
+                                  <Image src={product.photo} alt="product photo" />
+                                  <Header as='h3' content={product.title} />
+                                  <Header as='h4' content={product.price} />
+                                  </Grid.Column>
+                                  )
+                        })
+                      }
+                        </Grid.Row>
+                      )
+             })
+           }
+           </Grid>
            </div>
-                       )
-         })
-        }
-      </div>
-    )
-   }
+           )
+  }
 }
+
+
 /**
- * CONTAINER
- */
+* CONTAINER
+*/
 const mapState = (state) => {
   return {
     categories: state.categories,
@@ -63,8 +67,8 @@ const mapDispatch = (dispatch) => {
 export default connect(mapState, mapDispatch)(Products)
 
 /**
- * PROP TYPES
- */
+* PROP TYPES
+*/
 // UserHome.propTypes = {
 //   email: PropTypes.string
 // }

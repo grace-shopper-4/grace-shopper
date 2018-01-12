@@ -26,8 +26,14 @@ export const addLineItem = (orderId, product) => dispatch => {
 }
 
 export const updateLineItem = (orderId, product) => dispatch => {
-  console.log('updateState ')
   axios.put(`/api/orders/${orderId}/lineItem`, product)
+  .then(res => res.data)
+  .then(updatedOrder => dispatch(getCurrentOrder(updatedOrder)))
+  .catch(err => console.error(err))
+}
+
+export const deleteLineItem = (orderId, lineItemId) => dispatch => {
+  axios.delete(`/api/orders/${orderId}/lineItem/${lineItemId}`)
   .then(res => res.data)
   .then(updatedOrder => dispatch(getCurrentOrder(updatedOrder)))
   .catch(err => console.error(err))

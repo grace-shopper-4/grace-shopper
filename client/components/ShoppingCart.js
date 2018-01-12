@@ -1,12 +1,12 @@
 import React from 'react'
 // import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import { deleteLineItem } from '../store'
 
 /**
  * COMPONENT
  */
 export function ShoppingCart (props) {
-    console.log('cart: ', props.cart)
     if (props.cart){
         return (
             <div>
@@ -18,6 +18,9 @@ export function ShoppingCart (props) {
                                     <div>{lineItem.product.title}</div>
                                     <div>{`Qty: ${lineItem.quantity}`}</div>
                                     <div>{`Total cost: ${lineItem.totalPrice}`}</div>
+                                    <button onClick={() => {
+                                        props.removeLineItem(props.cart.id, lineItem.id)
+                                    }}>Remove Item</button>
                                 </li>
                             )
                         }
@@ -35,4 +38,12 @@ export function ShoppingCart (props) {
  */
 const mapState = ({cart}) => ({cart})
 
-export default connect(mapState)(ShoppingCart)
+const mapDispatch = () => dispatch => {
+    return {
+        removeLineItem: (orderId, lineItemId) => {
+            dispatch(deleteLineItem(orderId, lineItemId));
+        }
+    }
+}
+
+export default connect(mapState, mapDispatch)(ShoppingCart)

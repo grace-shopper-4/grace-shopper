@@ -75,7 +75,12 @@ router.post('/:id/lineItem', async (req, res, next) => {
     })
     let updatedOrder = await Order.findOne({
       where: {id: req.params.id}, 
-      include: [{model: LineItem}]
+      include: [{
+        model: LineItem, 
+        include: [{
+          model: Product
+        }]
+      }]
     });
     res.json(updatedOrder);
   } catch (err) {
@@ -91,11 +96,35 @@ router.put('/:id/lineItem', async (req, res, next) => {
     await lineItem.update({quantity: lineItem.quantity + 1});
     let updatedOrder = await Order.findOne({
       where: {id: req.params.id}, 
-      include: [{model: LineItem}]
+      include: [{
+        model: LineItem, 
+        include: [{
+          model: Product
+        }]
+      }]
     });
     res.json(updatedOrder)
   } catch (err) {
     next(err);
+  }
+})
+
+router.delete('/:orderId/lineItem/:lineItemId', async (req, res, next) => {
+  try{
+    let lineItem = await LineItem.findById(req.params.lineItemId)
+    await lineItem.destroy();
+    let updatedOrder = await Order.findOne({
+      where: {id: req.params.orderId},
+      include: [{
+        model: LineItem, 
+        include: [{
+          model: Product
+        }]
+      }]
+    })
+    res.json(updatedOrder);
+  } catch (err) {
+    next(err)
   }
 })
 

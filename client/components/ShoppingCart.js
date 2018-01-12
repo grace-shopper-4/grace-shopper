@@ -6,19 +6,28 @@ import {connect} from 'react-redux'
  * COMPONENT
  */
 export function ShoppingCart (props) {
-    return (
-        <div>
-            <ul>
-                {props.cart.lineItems &&
-                    props.cart.lineItems.map(lineItem => {
-                        return (
-                            <li key={lineItem.id}>{lineItem.productId}</li>
-                        )
-                    }
-                )}
-            </ul>
-        </div>
-    );
+    console.log('cart: ', props.cart)
+    if (props.cart){
+        return (
+            <div>
+                <ul>
+                    {props.cart.lineItems &&
+                        props.cart.lineItems.map(lineItem => {
+                            return (
+                                <li key={lineItem.id}>
+                                    <div>{lineItem.product.title}</div>
+                                    <div>{`Qty: ${lineItem.quantity}`}</div>
+                                    <div>{`Total cost: ${lineItem.totalPrice}`}</div>
+                                </li>
+                            )
+                        }
+                    )}
+                </ul>
+            </div>
+        )
+    } else {
+        return null;
+    }
 }
 
 /**

@@ -11,8 +11,8 @@ export const fetchCurrentOrder = () => dispatch => {
     .catch(err => console.error(err))
 }
 
-export const createNewOrder = (product) => dispatch => {
-  axios.post('/api/orders', product)
+export const createNewOrder = (product, user) => dispatch => {
+  axios.post('/api/orders', { product, user })
   .then(res => res.data)
   .then(newOrder => dispatch(getCurrentOrder(newOrder)))
   .catch(err => console.error(err))

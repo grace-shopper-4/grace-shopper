@@ -2,6 +2,7 @@ import React from 'react'
 // import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import { deleteLineItem } from '../store'
+import { Link } from 'react-router-dom'
 
 /**
  * COMPONENT
@@ -26,6 +27,9 @@ export function ShoppingCart (props) {
                         }
                     )}
                 </ul>
+                <Link to={'/orderReview'}>
+                    <button>Submit Order</button>
+                </Link>
             </div>
         )
     } else {

@@ -8,6 +8,8 @@ class Navbar extends Component {
 
   render() {
     let user = this.props.user;
+    let categories = this.props.categories
+    console.log('categories', categories)
     return (
       <div>
         <div className="nav-wrapper">
@@ -17,15 +19,17 @@ class Navbar extends Component {
               <li><Link to="/">Home</Link></li>
               <li><Link to="/Categories">Categories</Link>
                 <ul className="sub-menu">
-                  <li><Link to="/Categories/party">Party</Link></li>
-                  <li><Link to="/Categories/rain">Rain</Link></li>
-                  <li><Link to="/Categories/cowboy">Cowboy</Link></li>
+                  {
+                    categories.map(category => {
+                      return <li key={category.id}><Link to={`/Categories/${category.id}`}> {category.title} </Link></li>
+                    })
+                  }
                   <li><Link to="/products">All Boots</Link></li>
                 </ul>
               </li>
             </ul>
           </nav>
-          <Link to="/cart"><img className="cart" src="/images/cart.jpg" /></Link>
+          <Link to="/shoppingcart"><img className="cart" src="/images/cart.jpg" /></Link>
           {
             user.isGuest ?
             <div>
@@ -44,9 +48,10 @@ class Navbar extends Component {
   }
 }
 
-const mapState = ({ user }) => {
+const mapState = ({ user, categories }) => {
   return {
-    user
+    user,
+    categories
   }
 }
 

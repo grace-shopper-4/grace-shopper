@@ -71,7 +71,7 @@ export default function (state = defaultUser, action) {
     case REMOVE_USER:
       return defaultUser
     case UPDATE_USER:
-      return {...state, action.updatedUser}
+      return {...state, action:updatedUser}
     default:
       return state
   }

@@ -42,7 +42,7 @@ async function seed () {
   for (let i = 0; i < 12; i++) {
     let title = chance.word({length: 5});
     let description = chance.paragraph();
-    let price = parseFloat((chance.dollar({max: 100})).slice(1));
+    let price = chance.integer({min: 500, max: 50000})
     let inventory = chance.integer({min: 1, max: 100});
     let size = Math.floor(Math.random() * (13) + 1);
     let categoryId = i%3 + 1;

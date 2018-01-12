@@ -12,7 +12,7 @@ const LineItem = db.define('lineItem', {
   }
 }, {
   getterMethods: {
-    totalPrice: () => {
+    totalPrice () {
         return this.quantity * this.itemPrice;
     }
   }

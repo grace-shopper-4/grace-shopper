@@ -18,3 +18,9 @@ router.get('/:id', (req, res, next) => {
   .then(review => res.json(review))
   .catch(next)
 })
+
+router.post('/', function (req, res, next) {
+  Review.create(req.body)
+  .then(review => res.json(review))
+  .catch(next);
+});

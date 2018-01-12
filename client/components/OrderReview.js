@@ -42,7 +42,6 @@ const mapState = (state, ownProps) => {
  const mapDispatch = (dispatch) => {
    return {
 //      handleChange (event){
-//       console.log(event.target.value)
 //     },
 //     submitNewStudent (event) {
 //       var campusId = Number(event.target.campusId.value)

@@ -13,7 +13,7 @@ router.get('/', (req, res, next) => {
 router.get('/:id', (req, res, next) => {
   Order.findOne({
     where: {id: req.params.id},
-    include:[{model: LineItem, include: [{model: Product}]}]
+    include: [{model: LineItem, include: [{model: Product}]}]
   })
   .then(order => res.json(order))
   .catch(next)

@@ -11,6 +11,7 @@ router.get('/', (req, res, next) => {
 })
 
 router.get('/:id', (req, res, next) => {
+
   User.findOne({
     where: {id: req.params.id},
     attributes: ['id', 'email']

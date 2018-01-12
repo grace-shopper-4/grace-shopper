@@ -26,8 +26,10 @@ Order.hasMany(LineItem);
 Product.hasMany(Review);
 
 User.hasMany(Order);
+Order.belongsTo(User);
 User.hasMany(Review);
 Product.hasMany(LineItem)
+LineItem.belongsTo(Product)
 
 module.exports = {
   User,

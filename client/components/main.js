@@ -17,7 +17,7 @@ const Main = (props) => {
 
   return (
     <div>
-      <h1>BOILERMAKER</h1>
+      <h1>newbootgoofin.gov</h1>
       <Navbar />
       {children}
     </div>

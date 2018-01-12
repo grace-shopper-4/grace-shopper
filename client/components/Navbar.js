@@ -2,9 +2,13 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { logout } from '../store'
+import { logout, fetchCurrentOrder } from '../store'
 
 class Navbar extends Component {
+
+  componentDidMount() {
+    this.props.fetchSessionOrder();
+  }
 
   render() {
     let user = this.props.user;
@@ -26,7 +30,7 @@ class Navbar extends Component {
               </li>
             </ul>
           </nav>
-          <Link to="/cart"><img className="cart" src="/images/cart.jpg" /></Link>
+          <Link to="/shoppingCart"><img className="cart" src="/images/cart.jpg" /></Link>
           {
             user.isGuest ?
             <div>
@@ -56,6 +60,9 @@ const mapDispatchToProps = (dispatch) => {
     onClickLogout: () => {
       console.log('it was clicked')
       dispatch(logout())
+    },
+    fetchSessionOrder: () => {
+      dispatch(fetchCurrentOrder());
     }
   };
 };

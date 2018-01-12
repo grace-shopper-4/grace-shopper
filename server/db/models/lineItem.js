@@ -7,12 +7,16 @@ const LineItem = db.define('lineItem', {
     allowNull: false
   },
   itemPrice: {
-    type: Sequelize.DOUBLE,
+    type: Sequelize.INTEGER,
     allowNull: false
   }
-},
-{getterMethods: {
-  totalPrice: () => this.itemPrice * this.quantity
-}})
+}, {
+  getterMethods: {
+    totalPrice: () => {
+        return this.quantity * this.itemPrice;
+    }
+  }
+})
+
 
 module.exports = LineItem

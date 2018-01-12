@@ -62,7 +62,8 @@ async function seed () {
     let status = statuses[Math.floor(Math.random() * 4)];
     let session = chance.word({length: 5})
     await Order.create({
-        session
+        session,
+        userId: 1
     })
   }
 

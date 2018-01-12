@@ -53,9 +53,12 @@ const mapState = (state, ownProps) => {
 //       };
 //       // dispatch(postStudent(student))
 //     }
-//   }
-// }
+      handleUpdate(orderId) {
+        dispatch(updateOrderStatus(orderId))
+      }
+   }
+}
 
 
-export default connect(mapState)(OrderReview)
+export default connect(mapState, mapDispatch)(OrderReview)
 

@@ -5,7 +5,7 @@ module.exports = router
 
 router.get('/', (req, res, next) => {
   Order.findAll({
-    include:[{model: LineItem, include: [{model: Product}]}, {model: User}]
+    include:[{model: LineItem, include: [{model: Product}]}]
   })
     .then(orders => res.json(orders))
     .catch(next)
@@ -58,7 +58,7 @@ router.get('/cart', async (req, res, next) => {
 router.get('/:id', (req, res, next) => {
   Order.findOne({
     where: {id: req.params.id},
-    include:[{model: LineItem, include: [{model: Product}]}, {model: User}]
+    include: [{model: LineItem, include: [{model: Product}]}]
   })
   .then(order => res.json(order))
   .catch(next)
@@ -109,6 +109,7 @@ router.put('/:id/lineItem', async (req, res, next) => {
   }
 })
 
+
 router.delete('/:orderId/lineItem/:lineItemId', async (req, res, next) => {
   try{
     let lineItem = await LineItem.findById(req.params.lineItemId)
@@ -128,4 +129,9 @@ router.delete('/:orderId/lineItem/:lineItemId', async (req, res, next) => {
   }
 })
 
-
+router.put('/:orderId', function (req, res, next) {
+  Order.update(req.body,
+                {returning: true, where: {id: req.params.orderId}})
+  .then(order => res.json(order))
+  .catch(next);
+});

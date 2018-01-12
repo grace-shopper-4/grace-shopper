@@ -23,6 +23,7 @@ router.get('/:id/orders', (req, res, next) => {
 })
 
 router.get('/:id', (req, res, next) => {
+
   User.findOne({
     where: {id: req.params.id},
     attributes: ['id', 'email']
@@ -44,5 +45,12 @@ router.get('/:id/orders/:orderId', (req, res, next) => {
         include:[{model: Product}]}]}]
   })
     .then(userOrder => res.json(userOrder))
+    .catch(next)
+})
+
+router.put('/:userId', (req, res, next) => {
+  User.update(req.body,
+                {returning: true, where: {id: req.params.userId}})
+    .then(user => res.json(user))
     .catch(next)
 })

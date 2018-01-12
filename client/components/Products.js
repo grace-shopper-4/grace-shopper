@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 // import store from '../store'
 import {fetchCategories} from '../store'
-import {Grid, Image, Header} from 'semantic-ui-react'
+import {Grid, Image, Header, Card} from 'semantic-ui-react'
 /**
  * COMPONENT
  */
@@ -14,36 +14,41 @@ import {Grid, Image, Header} from 'semantic-ui-react'
   }
 
   render(){
-    const {categories, products} = this.props
+    const {categories} = this.props
     return (
             <div>
-            <h1> All Products </h1>
-            <Grid columns={4} divided>
+            <Header as="h1"> All Products </Header>
             {
              categories.map(category => {
                return (
-                       <Grid.Row key={category.id}>
-                       <h2>{category.title} Boots</h2>
+                       <div>
+                       <Header as="h2">{category.title} Boots</Header>
+                       <Card.Group itemsPerRow={4}>
                        {
                         category.products.map(product =>{
                           return (
-                                  <Grid.Column key={product.id}>
+                                  <Card>
                                   <Image src={product.photo} alt="product photo" />
-                                  <Header as='h3' content={product.title} />
-                                  <Header as='h4' content={product.price} />
-                                  </Grid.Column>
+                                   <Card.Content>
+                                  <Card.Header className="categoryProductName">{product.title}</Card.Header>
+                                  <Card.Header className="categoryProductPrice">${product.price}</Card.Header>
+                                  </Card.Content>
+                                  </Card>
+
                                   )
                         })
                       }
-                        </Grid.Row>
+                      </Card.Group>
+                      </div>
                       )
              })
            }
-           </Grid>
            </div>
            )
   }
 }
+
+
 
 
 /**

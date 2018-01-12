@@ -1,37 +1,46 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {updateOrderStatus} from '../store'
 import {Form, Button} from 'semantic-ui-react'
-//need to create
+
 function OrderReview (props) {
-  console.log(props.user)
   return (
          <div>
          <h2>Review Order</h2>
-
            <Form name="billingAddress">
               <Form.Field>
               <label>Billing Address</label>
               <input name="address" value={props.user.billingAddress} />
               </Form.Field>
+              <Button type='submit'>Save</Button>
+            </Form>
+             <Form name="shippingAddress">
               <Form.Field>
               <label>Shipping Address</label>
               <input name="address" value={props.user.shippingAddress} />
               </Form.Field>
-              <Button type='submit'>Place Order</Button>
+              <Button type='submit'>Save</Button>
            </Form>
+
+              <img src={this.props.users.orders.lineItems.product.photo}  alt="product image" />
+              <p>{this.props.users.orders.lineItems.product.title}</p>
+              <p>{this.props.users.orders.lineItems.quantity}</p>
+              <p>{this.props.users.orders.lineItems.price}</p>
+
+            <Button onClick={this.props.handleUpdate} type='submit'>Submit Order</Button>
          </div>
          )
 }
 
-const mapState = (state) => {
+const mapState = (state, ownProps) => {
   return {
-    user: state.user
+    user: state.user,
   };
 }
 
 
-// const mapDispatch = (dispatch) => {
-//   return {
+ const mapDispatch = (dispatch) => {
+   return {
 //      handleChange (event){
 //       console.log(event.target.value)
 //     },
@@ -44,9 +53,12 @@ const mapState = (state) => {
 //       };
 //       // dispatch(postStudent(student))
 //     }
-//   }
-// }
+      handleUpdate(orderId) {
+        dispatch(updateOrderStatus(orderId))
+      }
+   }
+}
 
 
-export default connect(mapState)(OrderReview)
+export default connect(mapState, mapDispatch)(OrderReview)
 

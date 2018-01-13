@@ -1,59 +1,73 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {updateOrderStatus} from '../store'
+import {updateOrderStatus, updateUser} from '../store'
 import {Form, Button} from 'semantic-ui-react'
+import {Link} from 'react-router-dom'
 
 function OrderReview (props) {
+
+  const {cart, user} = props
+  const {lineItems} = cart
+  if (!cart) return <div />
+    if (!lineItems) return <div />
   return (
          <div>
          <h2>Review Order</h2>
-           <Form name="billingAddress">
-              <Form.Field>
-              <label>Billing Address</label>
-              <input name="address" value={props.user.billingAddress} />
-              </Form.Field>
-              <Button type='submit'>Save</Button>
-            </Form>
-             <Form name="shippingAddress">
+             <Form name="shippingAddress" onSubmit={(event) => {props.updateAddress(user.id, event)}}>
               <Form.Field>
               <label>Shipping Address</label>
-              <input name="address" value={props.user.shippingAddress} />
+              <input onChange={props.handleChange} name="address"/>
               </Form.Field>
               <Button type='submit'>Save</Button>
            </Form>
+                <form onSubmit={() => {props.submitOrder(cart.id)}}>
+            {
+              lineItems.map(lineItem =>{
+                console.log(lineItem)
+                return(
+                <div key={lineItem.id}>
+                <img src ={lineItem.product.photo} alt="product image" />
+                <h2>{lineItem.product.title}</h2>
+                <h3>{lineItem.itemPrice}</h3>
+                <h3>{lineItem.quantity}</h3>
+                <h3>{lineItem.totalPrice}</h3>
+                </div>
+                       )
+              })
+            }
+                <Link to="/orderConfirmation" ><button type="submit">Submit Order</button></Link>
+                </form>
 
-              <img src={this.props.users.orders.lineItems.product.photo}  alt="product image" />
-              <p>{this.props.users.orders.lineItems.product.title}</p>
-              <p>{this.props.users.orders.lineItems.quantity}</p>
-              <p>{this.props.users.orders.lineItems.price}</p>
-
-            <Button onClick={this.props.handleUpdate} type='submit'>Submit Order</Button>
          </div>
          )
 }
 
+
 const mapState = (state, ownProps) => {
   return {
     user: state.user,
+    cart: state.cart
   };
 }
 
 
  const mapDispatch = (dispatch) => {
    return {
-//      handleChange (event){
-//     },
-//     submitNewStudent (event) {
-//       var campusId = Number(event.target.campusId.value)
-//       event.preventDefault();
-//       const address = {
-//         billingAddress: event.target.billingAddress.value,
-//         shippingAddress: event.target.shippingAddress.value,
-//       };
-//       // dispatch(postStudent(student))
-//     }
-      handleUpdate(orderId) {
-        dispatch(updateOrderStatus(orderId))
+     handleChange (event){
+      console.log(event.target.value)
+    },
+    updateAddress (userId, event) {
+      event.preventDefault();
+      const address = {
+        shippingAddress: event.target.address.value,
+      };
+      dispatch(updateUser(userId, address))
+    },
+      submitOrder(orderId) {
+        const order = {
+        status: "Processing"
+      };
+        dispatch(updateOrderStatus(orderId, order))
       }
    }
 }

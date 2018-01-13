@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import { fetchCategories } from '../store'
 import { NavLink } from 'react-router-dom';
+import SearchBar from './SearchBar'
 
 /**
  * COMPONENT
@@ -14,6 +15,7 @@ export class SingleCategory extends Component {
     }
 
     render() {
+
         let currentCategory = {};
         this.props.categories.forEach(category => {
             console.log(category.id === this.props.match.params.id)

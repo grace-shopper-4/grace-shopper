@@ -4,7 +4,7 @@ const GET_CATEGORIES = 'GET_CATEGORIES';
 
 const getCategories = categories => {
   return {
-    type: GET_CATEGORIES, 
+    type: GET_CATEGORIES,
     categories
   }
 }
@@ -37,7 +37,6 @@ export const fetchCategories = () => dispatch => {
 export default function reducer(categories = [], action){
   switch (action.type) {
     case GET_CATEGORIES:
-      console.log("action.categories: ", action.categories)
       return action.categories;
     default:
       return categories;

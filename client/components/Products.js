@@ -7,17 +7,55 @@ import {Grid, Image, Header, Card} from 'semantic-ui-react'
  * COMPONENT
  */
 
+
+
+  // submitSearch = (event) => {
+  //   event.preventDefault();
+  //   const {products} = this.props
+  //   products.forEach(product =>{
+  //     if (product.title.includes(event.target.searchbar.value)){
+  //       console.log(product.title)
+  //       this.props.submitSearch(product)
+  //     }
+  //   })
+  // }
+
  export class Products extends Component {
+  constructor(){
+    super()
+    this.state = {
+      product: []
+    }
+  }
+
 
   componentDidMount(){
     this.props.createCategoryState()
   }
 
-  render(){
+  handleChange = (event) => {
     const {categories} = this.props
+    categories.filter(category =>{
+      category.products.filter(product=>{
+        if (product.title.includes(event.target.value)){
+          this.setState({
+            product
+          })
+        }
+      })
+    })
+  }
+
+  render(){
+    console.log(this.state.product)
+    const {categories} = this.props
+    if (!this.state.product){
     return (
             <div>
             <Header as="h1"> All Products </Header>
+            <form onSubmit={this.submitSearch}>
+              <input name="searchbar" placeholder="search" />
+              <button type="submit">search</button>
             {
              categories.map(category => {
                return (
@@ -34,7 +72,6 @@ import {Grid, Image, Header, Card} from 'semantic-ui-react'
                                   <Card.Header className="categoryProductPrice">${product.price}</Card.Header>
                                   </Card.Content>
                                   </Card>
-
                                   )
                         })
                       }
@@ -43,21 +80,22 @@ import {Grid, Image, Header, Card} from 'semantic-ui-react'
                       )
              })
            }
+           </form>
            </div>
            )
+    } else {
+
+    }
   }
 }
 
 
 
 
-/**
-* CONTAINER
-*/
 const mapState = (state) => {
   return {
     categories: state.categories,
-    // products: state.products
+
   }
 }
 
@@ -70,10 +108,3 @@ const mapDispatch = (dispatch) => {
 }
 
 export default connect(mapState, mapDispatch)(Products)
-
-/**
-* PROP TYPES
-*/
-// UserHome.propTypes = {
-//   email: PropTypes.string
-// }

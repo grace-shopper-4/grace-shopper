@@ -25,7 +25,7 @@ export class AddToCartButton extends Component {
                         if (lineItem.productId === product.id) lineItemId = lineItem.id;
                     })
                     if (lineItemId) { 
-                        this.props.incrementItems(cart.id, product) 
+                        this.props.incrementItem(cart.id, product) 
                     }
                     else { this.props.addNewItem(cart.id, product) }
                 }}>Add to Cart</button>
@@ -50,8 +50,8 @@ const mapDispatch = dispatch => {
         startNewCart: (product, user) => {
             dispatch(createNewOrder(product, user));
         },
-        incrementItems: (orderId, product) => {
-            dispatch(updateLineItem(orderId, product));
+        incrementItem: (orderId, product) => {
+            dispatch(updateLineItem(orderId, product, 1));
         },
         addNewItem: (orderId, product) => {
             dispatch(addLineItem(orderId, product))

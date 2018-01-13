@@ -64,6 +64,22 @@ router.get('/:id', (req, res, next) => {
   .catch(next)
 })
 
+router.put('/:orderId', function (req, res, next) {
+  Order.update(req.body,
+                {returning: true, where: {id: req.params.orderId}})
+  .then(order => res.json(order))
+  .catch(next);
+});
+
+router.delete('/:id', async (req, res, next) => {
+  let order = await Order.findById(req.params.id)
+  order.destroy()
+  let lineItems = await LineItem.findAll({where: {orderId: req.params.id}})
+  Object.keys(lineItems).forEach(async lineItemKey => {
+    await lineItems[lineItemKey].destroy();
+  })
+  res.status(200).send(`order ${req.params.id} deleted!`)
+})
 
 router.post('/:id/lineItem', async (req, res, next) => {
   try {
@@ -91,9 +107,9 @@ router.post('/:id/lineItem', async (req, res, next) => {
 router.put('/:id/lineItem', async (req, res, next) => {
   try {
     let lineItem = await LineItem.findOne({
-      where: {productId: req.body.id, orderId: req.params.id}
+      where: {productId: req.body.product.id, orderId: req.params.id}
     })
-    await lineItem.update({quantity: lineItem.quantity + 1});
+    await lineItem.update({quantity: lineItem.quantity + req.body.numberToAdd});
     let updatedOrder = await Order.findOne({
       where: {id: req.params.id}, 
       include: [{
@@ -129,9 +145,4 @@ router.delete('/:orderId/lineItem/:lineItemId', async (req, res, next) => {
   }
 })
 
-router.put('/:orderId', function (req, res, next) {
-  Order.update(req.body,
-                {returning: true, where: {id: req.params.orderId}})
-  .then(order => res.json(order))
-  .catch(next);
-});
+

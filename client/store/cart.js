@@ -25,8 +25,9 @@ export const addLineItem = (orderId, product) => dispatch => {
   .catch(err => console.error(err))
 }
 
-export const updateLineItem = (orderId, product) => dispatch => {
-  axios.put(`/api/orders/${orderId}/lineItem`, product)
+//numberToAdd parameter should be +1 to increment quantity or -1 to decrement quantity.
+export const updateLineItem = (orderId, product, numberToAdd) => dispatch => { 
+  axios.put(`/api/orders/${orderId}/lineItem`, {product, numberToAdd})
   .then(res => res.data)
   .then(updatedOrder => dispatch(getCurrentOrder(updatedOrder)))
   .catch(err => console.error(err))

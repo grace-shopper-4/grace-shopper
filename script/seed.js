@@ -87,7 +87,7 @@ async function seed () {
   }
 
   //seed Review
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < 50; i++) {
     let title = chance.sentence();
     let content = chance.paragraph();
     let stars = Math.floor(Math.random() * (5) + 1);

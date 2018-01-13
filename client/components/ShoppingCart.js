@@ -1,7 +1,7 @@
 import React from 'react'
 // import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import { deleteLineItem } from '../store'
+import { deleteLineItem, updateLineItem } from '../store'
 import { Link } from 'react-router-dom'
 
 /**
@@ -17,7 +17,17 @@ export function ShoppingCart (props) {
                             return (
                                 <li key={lineItem.id}>
                                     <div>{lineItem.product.title}</div>
-                                    <div>{`Qty: ${lineItem.quantity}`}</div>
+                                    <div>
+                                        <button onClick={() => {
+                                            if (lineItem.quantity > 1){
+                                                props.decrement(lineItem.orderId, lineItem.product)
+                                            } else {
+                                                props.removeLineItem(props.cart.id, lineItem.id)
+                                            }
+                                        }}>-</button> {/*make this*/}
+                                        <span>{`Qty: ${lineItem.quantity}`}</span>
+                                        <button onClick={() => props.increment(lineItem.orderId, lineItem.product)}>+</button> {/*make this*/}
+                                    </div>
                                     <div>{`Total cost: ${lineItem.totalPrice}`}</div>
                                     <button onClick={() => {
                                         props.removeLineItem(props.cart.id, lineItem.id)
@@ -45,7 +55,13 @@ const mapState = ({cart}) => ({cart})
 const mapDispatch = () => dispatch => {
     return {
         removeLineItem: (orderId, lineItemId) => {
-            dispatch(deleteLineItem(orderId, lineItemId));
+            dispatch(deleteLineItem(orderId, lineItemId))
+        },
+        increment: (orderId, product) => {
+            dispatch(updateLineItem(orderId, product, 1))
+        },
+        decrement: (orderId, product) => {
+            dispatch(updateLineItem(orderId, product, -1))
         }
     }
 }

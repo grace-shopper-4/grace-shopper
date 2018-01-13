@@ -13,7 +13,6 @@ class Navbar extends Component {
   render() {
     let user = this.props.user;
     let categories = this.props.categories
-    console.log('categories', categories)
     return (
       <div>
         <div className="nav-wrapper">

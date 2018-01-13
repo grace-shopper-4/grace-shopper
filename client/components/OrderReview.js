@@ -38,8 +38,6 @@ function OrderReview (props) {
                 <Link to="/orderConfirmation" ><button type="submit">Submit Order</button></Link>
                 </form>
 
-
-
          </div>
          )
 }

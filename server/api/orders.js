@@ -11,6 +11,10 @@ router.get('/', (req, res, next) => {
     .catch(next)
 })
 
+
+
+
+
 router.post('/', async (req, res, next) => {
   try {
     let userId = req.body.user.id;
@@ -53,6 +57,16 @@ router.get('/cart', async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+})
+
+router.get('/users/:id', (req, res, next) => {
+  Order.findAll({
+    where: {userId: req.params.id},
+    include:[{model: LineItem, include: [{model: Product}]}]
+  })
+    .then(orders => {
+     res.json(orders)})
+    .catch(next)
 })
 
 router.get('/:id', (req, res, next) => {

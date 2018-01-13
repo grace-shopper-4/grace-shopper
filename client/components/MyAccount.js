@@ -1,51 +1,84 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { me, fetchCategories, postReview, fetchOrder } from '../store'
+import {fetchUserOrders } from '../store'
 import _ from 'lodash';
 import StarsRating from 'react-stars-rating';
 
 export class MyAccount extends Component {
-    
-        componentDidMount() {
-          this.props.fetchOrder(this.props.user.id)
-
-    
+    constructor(props) {
+        super(props)
+        this.state = {
+            orders: []
         }
-        render() {
-         
-
-           
-          
-            return (
-
-                <div>
-    
-                <h1> {console.log("hihihi", this.props)}{this.props.user.email}</h1>
-                <h1> {this.props.user.name}</h1>
-                <h1> {this.props.billingAdress}</h1>
-                <h1> {this.props.shippingAdress}</h1>
-        
-                </div>)
-    
-            }
-        
+        this.setOrdersByStatus = this.setOrdersByStatus.bind(this)
     }
+
+
+    setOrdersByStatus(event) {
+        const filter = event.target.value
+        const orders = this.props.orders
+        let ordersToSet = filter !== 'none' ?
+            orders.filter(order => order.status === filter) :
+            orders
+        this.setState({ orders: ordersToSet })
+    }
+    componentDidMount() {
+        this.props.fetchUserOrders(this.props.user.id)
+    }
+
+    render() {
+        return (
+            <div>
+                <h1> {this.props.user.email}</h1>
+                <h1> {this.props.user.name}</h1>
+                <h1> Billing Address: {this.props.user.billingAddress}</h1>
+                <h1> Shipping Address: {this.props.user.shippingAddress}</h1>
+                <select className="form-control" name="filter-orders" onChange={this.setOrdersByStatus}>
+                    <option value="none">View Your Orders</option>
+                    <option>Created</option>
+                    <option>Completed</option>
+                    <option>Cancelled</option>
+                    <option>Processing</option>
+                </select>
+                <ul>
+                    {this.state.orders.map(order => {
+                        let totalPrice = 0
+                        return (
+                            <div key={order.id}>
+                                Order#{order.id}
+                                <ul> {order.lineItems.map(lineItem => {
+                                    totalPrice += lineItem.totalPrice
+                                    return (
+                                        <div key={lineItem.id}>
+                                        <li > Product Name: {lineItem.product.title} ƒ</li>
+                                        <li> <img src = {lineItem.product.photo}/> </li>
+                                        <li> Product Price: {lineItem.itemPrice} /> </li>
+                                        <li>  Product Quantity:{lineItem.quantity}/> </li>
+                                        <li> Subtotal:{lineItem.totalPrice}  </li>
+                                        </div>
+                                    )})
+                                }
+                                <li> Order Total: {totalPrice} </li>
+                             </ul>
+                        </div>)
+                      })}
+                    </ul>
+            </div>)
+
+    }
+}
 
 const mapStateToProps = (state, ownProps) => {
     return {
         user: state.user,
-      id: parseInt(ownProps.match.params.id),
-      categories: state.categories, 
-      order: state.cart,
+        orders: state.orders,
+        order: state.cart,
     }
 };
 
-
-
-
 const mapDispatchToProps = (dispatch) => ({
-    fetchOrder: (id) => {
-      dispatch(fetchOrder(id))
+    fetchUserOrders: (id) => {
+    dispatch(fetchUserOrders(id))
     },
 });
 

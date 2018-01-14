@@ -6,6 +6,7 @@
 export {default as Main} from './Main'
 export {default as Home} from './Home'
 export {Login, Signup} from './AuthForm'
+export {default as SingleOrder} from './SingleOrder'
 export {default as MyAccount} from './MyAccount'
 export {default as OrderConfirmation} from './OrderConfirmation'
 export {default as OrderReview} from './OrderReview'

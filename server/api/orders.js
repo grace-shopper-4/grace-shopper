@@ -12,9 +12,6 @@ router.get('/', (req, res, next) => {
 })
 
 
-
-
-
 router.post('/', async (req, res, next) => {
   try {
     let userId = req.body.user.id;
@@ -42,12 +39,12 @@ router.post('/', async (req, res, next) => {
 })
 
 router.get('/cart', async (req, res, next) => {
-  try {  
+  try {
     let orderId = req.session.cartOrderId;
     let order = await Order.findOne({
       where: {id: orderId},
       include: [{
-        model: LineItem, 
+        model: LineItem,
         include: [{
           model: Product
         }]
@@ -104,9 +101,9 @@ router.post('/:id/lineItem', async (req, res, next) => {
       orderId: req.params.id
     })
     let updatedOrder = await Order.findOne({
-      where: {id: req.params.id}, 
+      where: {id: req.params.id},
       include: [{
-        model: LineItem, 
+        model: LineItem,
         include: [{
           model: Product
         }]
@@ -125,9 +122,9 @@ router.put('/:id/lineItem', async (req, res, next) => {
     })
     await lineItem.update({quantity: lineItem.quantity + req.body.numberToAdd});
     let updatedOrder = await Order.findOne({
-      where: {id: req.params.id}, 
+      where: {id: req.params.id},
       include: [{
-        model: LineItem, 
+        model: LineItem,
         include: [{
           model: Product
         }]
@@ -147,7 +144,7 @@ router.delete('/:orderId/lineItem/:lineItemId', async (req, res, next) => {
     let updatedOrder = await Order.findOne({
       where: {id: req.params.orderId},
       include: [{
-        model: LineItem, 
+        model: LineItem,
         include: [{
           model: Product
         }]

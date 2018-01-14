@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {fetchUserOrders } from '../store'
 import _ from 'lodash';
 import StarsRating from 'react-stars-rating';
+import {Link} from 'react-router-dom'
 
 export class MyAccount extends Component {
     constructor(props) {
@@ -27,6 +28,7 @@ export class MyAccount extends Component {
     }
 
     render() {
+        console.log('props',  this.props)
         return (
             <div>
                 <h1> {this.props.user.email}</h1>
@@ -44,22 +46,11 @@ export class MyAccount extends Component {
                     {this.state.orders.map(order => {
                         let totalPrice = 0
                         return (
-                            <div key={order.id}>
-                                Order#{order.id}
-                                <ul> {order.lineItems.map(lineItem => {
-                                    totalPrice += lineItem.totalPrice
-                                    return (
-                                        <div key={lineItem.id}>
-                                        <li > Product Name: {lineItem.product.title} ƒ</li>
-                                        <li> <img src = {lineItem.product.photo}/> </li>
-                                        <li> Product Price: {lineItem.itemPrice} /> </li>
-                                        <li>  Product Quantity:{lineItem.quantity}/> </li>
-                                        <li> Subtotal:{lineItem.totalPrice}  </li>
-                                        </div>
-                                    )})
-                                }
-                                <li> Order Total: {totalPrice} </li>
-                             </ul>
+                         <div key={order.id}>
+                         <Link to={`/orders/${order.id}`}>
+                                Order# {order.id}
+                                  </Link>
+                              
                         </div>)
                       })}
                     </ul>
@@ -67,6 +58,30 @@ export class MyAccount extends Component {
 
     }
 }
+
+{/* <ul>
+{this.state.orders.map(order => {
+    let totalPrice = 0
+    return (
+        <div key={order.id}>
+            Order#{order.id}
+            <ul> {order.lineItems.map(lineItem => {
+                totalPrice += lineItem.totalPrice
+                return (
+                    <div key={lineItem.id}>
+                    <li > Product Name: {lineItem.product.title} </li>
+                    <li> <img src = {lineItem.product.photo}/> </li>
+                    <li> Product Price: {lineItem.itemPrice}  </li>
+                    <li>  Product Quantity:{lineItem.quantity}</li>
+                    <li> Subtotal:{lineItem.totalPrice}  </li>
+                    </div>
+                )})
+            }
+            <li> Order Total: {totalPrice} </li>
+         </ul>
+    </div>)
+  })}
+</ul> */}
 
 const mapStateToProps = (state, ownProps) => {
     return {

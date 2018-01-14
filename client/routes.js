@@ -11,6 +11,7 @@ import {Main,
         MyAccount,
         Products,
         SingleProduct,
+        SingleOrder,
         SingleCategory,
         OrderReview,
         OrderConfirmation,
@@ -42,6 +43,7 @@ class Routes extends Component {
             <Route path="/shoppingCart" component={ShoppingCart} />
             <Route path="/orderReview" component={OrderReview} />
             <Route path="/orderConfirmation" component={OrderConfirmation} />
+            <Route path="/orders/:id" component={SingleOrder} />
             {
               isLoggedIn &&
                 <Switch>

@@ -21,6 +21,14 @@ router.get('/:id', (req, res, next) => {
     .catch(next)
 })
 
+router.put('/:id',  (req, res, next) => {
+  Product.update(req.body,
+                {returning: true, where: {id: req.params.id}})
+  .then(product => {
+    res.json(product)})
+  .catch(next);
+});
+
 router.delete('/:id', (req, res, next) => {
   Review.destroy({
     where: {

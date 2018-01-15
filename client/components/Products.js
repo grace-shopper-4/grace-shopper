@@ -1,75 +1,68 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-// import store from '../store'
 import {fetchCategories} from '../store'
 import {Grid, Image, Header, Card} from 'semantic-ui-react'
 /**
  * COMPONENT
  */
 
-
-
-  // submitSearch = (event) => {
-  //   event.preventDefault();
-  //   const {products} = this.props
-  //   products.forEach(product =>{
-  //     if (product.title.includes(event.target.searchbar.value)){
-  //       console.log(product.title)
-  //       this.props.submitSearch(product)
-  //     }
-  //   })
-  // }
-
  export class Products extends Component {
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
     this.state = {
-      product: []
+      productSearch: '',
+      filteredProducts: this.props.categories.products
     }
+    this.handleChange = this.handleChange.bind(this)
   }
-
-
   componentDidMount(){
     this.props.createCategoryState()
   }
 
-  handleChange = (event) => {
-    const {categories} = this.props
-    categories.filter(category =>{
-      category.products.filter(product=>{
-        if (product.title.includes(event.target.value)){
-          this.setState({
-            product
-          })
+  handleChange(event){
+    const search = event.target.value
+    let filteredProducts = []
+    this.props.categories.filter(category =>{
+      category.products.filter(product =>{
+        if (product.title.includes(search)) {
+          filteredProducts.push(product)
         }
       })
+    })
+    this.setState({
+      productSearch: search,
+      filteredProducts: filteredProducts
     })
   }
 
   render(){
-    console.log(this.state.product)
+
+    console.log("filteredProducts", this.state.filteredProducts)
     const {categories} = this.props
-    if (!this.state.product){
+    const {filteredProducts} = this.state
     return (
             <div>
             <Header as="h1"> All Products </Header>
-            <form onSubmit={this.submitSearch}>
-              <input name="searchbar" placeholder="search" />
-              <button type="submit">search</button>
+            <input onChange={this.handleChange} name="searchbar" placeholder="search" />
+
             {
              categories.map(category => {
                return (
-                       <div>
+                       <div key={category.id}>
                        <Header as="h2">{category.title} Boots</Header>
                        <Card.Group itemsPerRow={4}>
                        {
-                        category.products.map(product =>{
+                        category.products.filter(product => {
+                          if (product.title.includes(this.state.productSearch)){
+                            return true
+                          }
+                        }).map(product => {
                           return (
-                                  <Card>
+                                  <Card key={product.id}>
                                   <Image src={product.photo} alt="product photo" />
-                                   <Card.Content>
+                                  <Card.Content>
                                   <Card.Header className="categoryProductName">{product.title}</Card.Header>
-                                  <Card.Header className="categoryProductPrice">${product.price}</Card.Header>
+                                  <Card.Header className="categoryProductPrice">${product.price/100}</Card.Header>
                                   </Card.Content>
                                   </Card>
                                   )
@@ -80,16 +73,11 @@ import {Grid, Image, Header, Card} from 'semantic-ui-react'
                       )
              })
            }
-           </form>
            </div>
            )
-    } else {
 
-    }
   }
 }
-
-
 
 
 const mapState = (state) => {

@@ -9,6 +9,7 @@ class OrderConfirmation extends Component {
   render() {
     let user = this.props.user
     let cart = this.props.cart
+    console.log(cart)
     return (
       <div id="container">
         {

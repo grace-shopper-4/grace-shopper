@@ -19,16 +19,25 @@ export class AddToCartButton extends Component {
         } 
         else {
             return (
-                <button onClick={event => {
-                    let lineItemId;
-                    cart.lineItems.forEach(lineItem => {
-                        if (lineItem.productId === product.id) lineItemId = lineItem.id;
-                    })
-                    if (lineItemId) { 
-                        this.props.incrementItem(cart.id, product) 
-                    }
-                    else { this.props.addNewItem(cart.id, product) }
-                }}>Add to Cart</button>
+                <div>
+                    <button onClick={event => {
+                        let addItemAlert = document.getElementById(`add-item-alert-${product.id}`)
+                        addItemAlert.classList.remove('hidden')
+                        setTimeout(() => {
+                            addItemAlert.classList.add('hidden')
+                        }, 200);
+
+                        let lineItemId;
+                        cart.lineItems.forEach(lineItem => {
+                            if (lineItem.productId === product.id) lineItemId = lineItem.id;
+                        })
+                        if (lineItemId) { 
+                            this.props.incrementItem(cart.id, product) 
+                        }
+                        else { this.props.addNewItem(cart.id, product) }
+                    }}>Add to Cart</button>
+                    <span id={`add-item-alert-${product.id}`} className="add-item-alert hidden">Item added to cart!</span>
+                </div>
             )
         }
     }

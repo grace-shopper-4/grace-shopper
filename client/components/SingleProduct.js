@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchCategories, postReview, fetchProduct, removeProduct, fetchProducts, updateProduct } from '../store'
+import { fetchCategories, postReview, fetchReviews, fetchProduct, removeProduct, fetchProducts, updateProduct } from '../store'
 
 import _ from 'lodash';
 import StarsRating from 'react-stars-rating';
@@ -14,15 +14,15 @@ export class SingleProduct extends Component {
             product: {}
         }
 
-        this.handleDeleteProduct = this.handleDeleteProduct.bind(this)
-        this.handleDelete = this.handleDelete.bind(this)  
+        // this.handleDeleteProduct = this.handleDeleteProduct.bind(this)
+        this.handleDelete = this.handleDelete.bind(this)
         this.handleTitle = this.handleTitle.bind(this);
         this.handlePrice = this.handlePrice.bind(this);
         this.handleInventory = this.handleInventory.bind(this);
         this.handlePhoto = this.handlePhoto.bind(this);
         this.handleDescription = this.handleDescription.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-       
+
 
     }
 
@@ -41,7 +41,7 @@ export class SingleProduct extends Component {
     }
 
     handleTitle(event) {
-       
+
         this.setState({
             product: { ...this.state.product, title: event.target.value }
         })
@@ -118,7 +118,7 @@ export class SingleProduct extends Component {
                 <h5> {`Average Rating: ${currentProduct.averageRating && currentProduct.averageRating}`} </h5>
                 <h5> {`Based on ${currentProduct.numberOfReviews} reviews.`} </h5>
             </div>
-            {admin && 
+            {admin &&
             <div>
                 <div>
             <button onClick = {this.handleDeleteProduct}> Delete Product </button>
@@ -132,7 +132,7 @@ export class SingleProduct extends Component {
                     name="Title"
                     placeholder="Enter Title"
                     onChange = {this.handleTitle}
-                    
+
                 />
             </div>
             <div>
@@ -145,12 +145,12 @@ export class SingleProduct extends Component {
             </div>
             <div>
                 <input
-                   
+
                     type="text"
                     name="Inventory"
                     placeholder="Enter Inventory"
                     onChange = {this.handleInventory}
-                 
+
                 />
             </div>
             <div>
@@ -210,7 +210,7 @@ export class SingleProduct extends Component {
 const mapStateToProps = (state, ownProps) => {
     return {
       isAdmin: state.user.isAdmin,
-      user: state.user, 
+      user: state.user,
       userId: state.user.id,
       id: parseInt(ownProps.match.params.id),
       categories: state.categories,

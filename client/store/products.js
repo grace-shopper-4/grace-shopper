@@ -8,7 +8,7 @@ const GET_PRODUCTS = 'GET_PRODUCTS'
 /**
  * ACTION CREATORS
  */
-const getProducts = products => ({type: GET_PRODUCTS, products})
+const getProducts = products => ({ type: GET_PRODUCTS, products })
 
 /**
  * THUNK CREATORS
@@ -19,6 +19,9 @@ export const fetchProducts = () =>
       .then(res =>
         dispatch(getProducts(res.data)))
       .catch(err => console.log(err))
+
+
+
 
 /**
  * REDUCER

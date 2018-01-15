@@ -25,7 +25,7 @@ export class AddToCartButton extends Component {
                         addItemAlert.classList.remove('hidden')
                         setTimeout(() => {
                             addItemAlert.classList.add('hidden')
-                        }, 500);
+                        }, 200);
 
                         let lineItemId;
                         cart.lineItems.forEach(lineItem => {

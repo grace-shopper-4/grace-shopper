@@ -17,7 +17,7 @@ export class Home extends Component {
     return (
       <div>
         <h3>Boot Party</h3>
-        <div>{'<Cool video thing will go here>'}</div>
+        <video src='../videos/Reno 911 New boot goofin.mp4' autoPlay muted loop />
         <br/>
         {categories.map(category => {
           return (

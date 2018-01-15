@@ -3,6 +3,7 @@ const Session = require('express').Session;
 const {Order, LineItem, Product, User} = require('../db/models')
 module.exports = router
 
+
 router.get('/', (req, res, next) => {
   Order.findAll({
     include:[{model: LineItem, include: [{model: Product}]}]
@@ -66,6 +67,7 @@ router.get('/users/:id', (req, res, next) => {
     .catch(next)
 })
 
+
 router.get('/:id', (req, res, next) => {
   Order.findOne({
     where: {id: req.params.id},
@@ -75,10 +77,12 @@ router.get('/:id', (req, res, next) => {
   .catch(next)
 })
 
-router.put('/:orderId', function (req, res, next) {
+router.put('/:id',  (req, res, next) => {
+  console.log(req.body)
   Order.update(req.body,
-                {returning: true, where: {id: req.params.orderId}})
-  .then(order => res.json(order))
+                {returning: true, where: {id: req.params.id}})
+  .then(order => {
+    res.json(order)})
   .catch(next);
 });
 

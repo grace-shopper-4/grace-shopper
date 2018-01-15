@@ -1,4 +1,5 @@
 import axios from 'axios';
+import _ from 'lodash';
 
 const GET_CURRENT_ORDER = 'GET_CURRENT_ORDER';
 
@@ -29,7 +30,10 @@ export const addLineItem = (orderId, product) => dispatch => {
 export const updateLineItem = (orderId, product, numberToAdd) => dispatch => { 
   axios.put(`/api/orders/${orderId}/lineItem`, {product, numberToAdd})
   .then(res => res.data)
-  .then(updatedOrder => dispatch(getCurrentOrder(updatedOrder)))
+  .then(updatedOrder => {
+    updatedOrder.lineItems = _.sortBy(updatedOrder.lineItems, 'id')
+    dispatch(getCurrentOrder(updatedOrder))
+  })
   .catch(err => console.error(err))
 }
 

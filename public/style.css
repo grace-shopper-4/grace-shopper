@@ -2,8 +2,15 @@ body {
     font-family: sans-serif;
 }
 
-a {
+a,
+Link,
+NavLink {
     text-decoration: none;
+    color: black;
+}
+
+p {
+    margin: 0;
 }
 
 label {
@@ -12,7 +19,7 @@ label {
 
 nav a {
     display: inline-block;
-    margin: 1em;
+    margin: 0 1em;
 }
 
 form div {
@@ -20,14 +27,21 @@ form div {
     display: inline-block;
 }
 
+
+/*Navbar*/
+
 .nav-wrapper {
     width: 100%;
     background: #999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .nav-menu {
     position: relative;
-    display: inline-block;
+    display: flex;
+    margin-left: 2rem;
 }
 
 .nav-menu li {
@@ -41,8 +55,26 @@ form div {
     background: #ccc;
 }
 
+.nav-menu ul {
+    padding-left: 0em;
+}
+
 .nav-menu ul li:hover>ul {
     display: inline-block;
+}
+
+.nav-options {
+    display: flex;
+    padding: 10px;
+    flex: 0 1 40%;
+    justify-content: space-evenly;
+}
+
+.nav-user-info {
+    display: flex;
+    justify-content: space-evenly;
+    flex: 0 1 75%;
+    align-items: center;
 }
 
 .logo {
@@ -50,12 +82,8 @@ form div {
 }
 
 .cart {
-    height: 40px;
-}
-
-.add-item-alert {
-    background-color: rgb(116, 238, 238);
-    margin: 10px;
+    height: 25px;
+    width: 50px;
 }
 
 .hidden {
@@ -63,8 +91,68 @@ form div {
     transition: opacity 0.5s ease-in;
 }
 
+@media (max-width: 850px) {
+    .nav-wrapper {
+        font-size: 0.75rem;
+    }
+}
+
+
+/*Home*/
+
+#home-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: background-color 0.1s ease;
+}
+
+.hotpink {
+    background-color: hotpink;
+}
+
+.pink {
+    background-color: pink;
+}
+
+.palevioletred {
+    background-color: palevioletred;
+}
+
+.purple {
+    background-color: purple
+}
+
+.violet {
+    background-color: violet;
+}
+
+.home-page-container {
+    background-color: white;
+}
+
+#home-page video {
+    margin: 20px;
+}
+
+.category-box {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    align-items: center;
+    margin: 20px auto;
+}
+
 
 /*All Products*/
+
+
+/*Shopping Cart*/
+
+.add-item-alert {
+    background-color: rgb(116, 238, 238);
+    margin: 10px;
+}
 
 
 /*Cards*/

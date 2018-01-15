@@ -20,9 +20,9 @@ class Navbar extends Component {
     return (
       <div>
         <div className="nav-wrapper">
-          <img className="logo" src="/images/A boot.png" />
           <nav className="nav-menu">
-            <ul className="clearfix">
+          {/*<img className="logo" src="/images/A boot.png" />*/}
+            <ul>
               <li><Link to="/">Home</Link></li>
               <li><Link to="/Categories">Categories</Link>
                 <ul className="sub-menu">
@@ -36,18 +36,22 @@ class Navbar extends Component {
               </li>
             </ul>
           </nav>
-          <Link to="/shoppingCart"><img className="cart" src="/images/cart.jpg" /></Link>
-          {
-            user.isGuest ?
-            <div>
-              <Link to="/login"><button>Log In</button></Link>
-              <Link to="/signup"><button>Sign Up</button></Link>
+          <div className="nav-options">
+            <div className="nav-user-info">
+              <p>Welcome, {user.name}!</p>
+              {
+                user.isGuest ?
+                <div>
+                  <Link to="/login"><button>Log In</button></Link>
+                  <Link to="/signup"><button>Sign Up</button></Link>
+                </div>
+                :
+                <Link to="/logout"><button onClick={ this.props.onClickLogout }>Log Out</button></Link>
+              }
             </div>
-            :
-            <Link to="/logout"><button onClick={ this.props.onClickLogout }>Log Out</button></Link>
-          }
+            <Link to="/shoppingCart"><img className="cart" src="/images/cart.jpg" /></Link>
+          </div>
 
-          <p>Welcome {user.name}</p>
         </div>
 
       </div>

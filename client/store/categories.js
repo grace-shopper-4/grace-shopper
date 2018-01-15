@@ -54,7 +54,8 @@ export default function reducer(categories = [], action) {
     case GET_CATEGORIES:
       return action.categories;
     case DELETE_PRODUCT:
-      return categories.map(category => {
+      let categoriesClone = categories;
+      return categoriesClone.map(category => {
         if (category.id === action.ids.catId) {
           category.products = category.products.filter(product => product.id !== action.ids.id)
           return category

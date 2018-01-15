@@ -2,41 +2,37 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchProducts } from '../store'
 
 
 class OrderConfirmation extends Component {
 
-
-  componentDidMount(){
-    this.props.fetchingProducts()
-  }
-
   render() {
-    let products = this.props.products
-    console.log('products', this.props)
+    let user = this.props.user
+    let cart = this.props.cart
     return (
-      <div>
-        <h1>Confirmation</h1>
-
+      <div id="container">
+        {
+          user.isGuest ?
+            <div>
+              <h1>Thank you for your order</h1>
+              <p>Your order number is {cart.id}</p>
+            </div>
+            :
+            <div>
+              <h1>Thank you for your order {user.name}</h1>
+              <p>Your order number is {cart.id}</p>
+            </div>
+        }
       </div>
     )
   }
 }
 
-const mapState = ({ products }) => {
+const mapState = ({ cart, user }) => {
   return {
-    products
+    cart,
+    user
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchingProducts: () => {
-      console.log('it was clicked')
-      dispatch(fetchProducts())
-    }
-  };
-};
-
-export default connect(mapState, mapDispatchToProps)(OrderConfirmation)
+export default connect(mapState)(OrderConfirmation)

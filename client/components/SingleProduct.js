@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchCategories, postReview, fetchProduct, removeProduct } from '../store'
+import { fetchCategories, fetchReviews, postReview, fetchProduct, removeProduct } from '../store'
 import _ from 'lodash';
 import StarsRating from 'react-stars-rating';
 
@@ -10,12 +10,13 @@ export class SingleProduct extends Component {
         this.state = {
             product: {},
         }
-        this.handleDeleteProduct = this.handleDeleteProduct.bind(this)     
+        this.handleDeleteProduct = this.handleDeleteProduct.bind(this)
     }
 
      componentDidMount() {
          this.props.fetchCategories()
          this.props.setCurrentProduct(this.props.id)
+         this.props.getReviews()
     }
 
     handleDeleteProduct(e){
@@ -44,8 +45,8 @@ export class SingleProduct extends Component {
     }
 
     render() {
+        console.log(this.props)
         let categoryId = this.props.product.categoryId
-        console.log('props', categoryId)
         let id = this.props.id
         let admin = this.props.isAdmin
         let currentProduct = {};
@@ -54,7 +55,9 @@ export class SingleProduct extends Component {
                 if (product.id === this.props.id) currentProduct = product;
             })
         })
-        const {reviews} = currentProduct
+
+        const {reviews} = this.props
+
         if (!reviews) return <div />
         if (!currentProduct) return <div />
         return (
@@ -67,7 +70,7 @@ export class SingleProduct extends Component {
                 <h5> {`Average Rating: ${currentProduct.averageRating && currentProduct.averageRating}`} </h5>
                 <h5> {`Based on ${currentProduct.numberOfReviews} reviews.`} </h5>
             </div>
-            {admin && 
+            {admin &&
             <button onClick = {this.handleDeleteProduct}> Delete Product </button>
             }
 
@@ -75,7 +78,12 @@ export class SingleProduct extends Component {
             <div>
                 <h1>Reviews</h1>
                 {
-                reviews.map(review =>{
+                        reviews.filter(review => {
+                          if (review.productId === currentProduct.id){
+                            console.log(review)
+                            return true
+                          }
+                        }).map(review =>{
                     return (
                     <div key={review.id}>
                     <h2>{review.title}</h2>
@@ -105,13 +113,17 @@ const mapStateToProps = (state, ownProps) => {
       id: parseInt(ownProps.match.params.id),
       categories: state.categories,
       products: state.products,
-      product: state.singleproduct
+      product: state.singleproduct,
+      reviews: state.reviews
     }
 };
 
 const mapDispatchToProps = (dispatch) => ({
     fetchCategories: () => {
       dispatch(fetchCategories())
+    },
+    getReviews: () => {
+        dispatch(fetchReviews())
     },
     setCurrentProduct: (id) => {
       dispatch(fetchProduct(id))

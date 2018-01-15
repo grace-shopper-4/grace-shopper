@@ -24,6 +24,7 @@ Category.hasMany(Product);
 Order.hasMany(LineItem);
 
 Product.hasMany(Review);
+Review.belongsTo(Product);
 
 User.hasMany(Order);
 Order.belongsTo(User);

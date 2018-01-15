@@ -26,6 +26,7 @@ Order.hasMany(LineItem);
 Product.hasMany(Review);
 
 User.hasMany(Order);
+Order.belongsTo(User);
 User.hasMany(Review);
 Review.belongsTo(User)
 

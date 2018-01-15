@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {NavLink} from 'react-router-dom'
 import {fetchCategories} from '../store'
+import axios from 'axios'
 
 /**
  * COMPONENT

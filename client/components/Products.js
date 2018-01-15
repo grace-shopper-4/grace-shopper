@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchCategories} from '../store'
 import {Grid, Image, Header, Card} from 'semantic-ui-react'
+import {Link} from 'react-router-dom'
 /**
  * COMPONENT
  */
@@ -58,12 +59,15 @@ import {Grid, Image, Header, Card} from 'semantic-ui-react'
                           }
                         }).map(product => {
                           return (
-                                  <Card key={product.id}>
+
+                                  <Card>
+                                  <Link to={`/products/${product.id}`}>
                                   <Image src={product.photo} alt="product photo" />
                                   <Card.Content>
                                   <Card.Header className="categoryProductName">{product.title}</Card.Header>
                                   <Card.Header className="categoryProductPrice">${product.price/100}</Card.Header>
                                   </Card.Content>
+                                  </Link>
                                   </Card>
                                   )
                         })

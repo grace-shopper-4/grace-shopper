@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import { fetchCategories } from '../store'
 import { NavLink } from 'react-router-dom';
+import AddToCartButton from './AddToCartButton';
 
 /**
  * COMPONENT
@@ -17,18 +18,15 @@ export class SingleCategory extends Component {
 
         let currentCategory = {};
         this.props.categories.forEach(category => {
-            console.log(category.id === this.props.match.params.id)
             if (category.id === parseInt(this.props.match.params.id)) currentCategory = category;
         })
-        console.log('current category: ', currentCategory)
-        if (currentCategory === {}) return <div />
+        if (currentCategory === {}) return (<div />)
         return (
             <div>
                 <h3>{currentCategory.title}</h3>
                 <ul>
                     {currentCategory.products &&
                         currentCategory.products.map(product => {
-                            console.log("reviews: ", product.reviews)
                             return (
                                 <li key={product.id}>
                                     <NavLink to={`/products/${product.id}`}>
@@ -37,6 +35,7 @@ export class SingleCategory extends Component {
                                         <h5> {`Average Rating: ${product.averageRating && product.averageRating}`} </h5>
                                         <h5> {`Based on ${product.numberOfReviews} reviews.`} </h5>
                                     </NavLink>
+                                    <AddToCartButton product={product} />
                                 </li>
                             )
                     })}

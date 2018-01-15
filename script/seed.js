@@ -42,7 +42,7 @@ async function seed () {
   for (let i = 0; i < 12; i++) {
     let title = chance.word({length: 5});
     let description = chance.paragraph();
-    let price = parseFloat((chance.dollar({max: 100})).slice(1));
+    let price = chance.integer({min: 500, max: 50000})
     let inventory = chance.integer({min: 1, max: 100});
     let size = Math.floor(Math.random() * (13) + 1);
     let categoryId = i%3 + 1;
@@ -62,7 +62,8 @@ async function seed () {
     let status = statuses[Math.floor(Math.random() * 4)];
     let session = chance.word({length: 5})
     await Order.create({
-        session
+        session,
+        userId: 1
     })
   }
 
@@ -86,7 +87,7 @@ async function seed () {
   }
 
   //seed Review
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < 50; i++) {
     let title = chance.sentence();
     let content = chance.paragraph();
     let stars = Math.floor(Math.random() * (5) + 1);

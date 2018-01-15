@@ -11,11 +11,12 @@ import {Main,
         MyAccount,
         Products,
         SingleProduct,
+        SingleOrder,
         SingleCategory,
         OrderReview,
         OrderConfirmation,
         ShoppingCart} from './components'
-import {me, fetchProducts, fetchCategories} from './store'
+import {me} from './store'
 
 /**
  * COMPONENT
@@ -33,6 +34,7 @@ class Routes extends Component {
         <Main>
           <Switch>
             {/* Routes placed here are available to all visitors */}
+            <Route exact path="/home" component={Home} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
             <Route exact path="/products" component={Products} />
@@ -41,6 +43,7 @@ class Routes extends Component {
             <Route path="/shoppingCart" component={ShoppingCart} />
             <Route path="/orderReview" component={OrderReview} />
             <Route path="/orderConfirmation" component={OrderConfirmation} />
+            <Route path="/orders/:id" component={SingleOrder} />
             {
               isLoggedIn &&
                 <Switch>

@@ -5,10 +5,8 @@ import axios from 'axios'
  */
 const GET_PRODUCT = 'GET_PRODUCT'
 
-/**
- * ACTION CREATORS
- */
-export const getProduct = product => ({type: GET_PRODUCT, product})
+export const getProduct = id => ({type: GET_PRODUCT, id})
+
 
 /**
  * THUNK CREATORS
@@ -19,14 +17,14 @@ export const fetchProduct = id =>
       .then(res =>
         dispatch(getProduct(res.data)))
       .catch(err => console.log(err))
+  
+      
+ 
 
-/**
- * REDUCER
- */
 export default function (state = {}, action) {
   switch (action.type) {
     case GET_PRODUCT:
-      return action.product;
+      return action.id;
     default:
       return state
   }

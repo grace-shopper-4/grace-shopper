@@ -6,6 +6,7 @@ import {logout} from '../store'
 import Navbar from './Navbar'
 
 
+
 /**
  * COMPONENT
  *  The Main component is our 'picture frame' - it displays the navbar and anything
@@ -17,7 +18,7 @@ const Main = (props) => {
 
   return (
     <div>
-      <h1>BOILERMAKER</h1>
+      <h1>newbootgoofin.gov</h1>
       <Navbar />
       {children}
     </div>

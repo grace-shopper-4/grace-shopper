@@ -1,13 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchCategories, postReview } from '../store'
+import { fetchCategories, postReview, fetchProduct, removeProduct } from '../store'
 import _ from 'lodash';
 import StarsRating from 'react-stars-rating';
 
 export class SingleProduct extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            product: {},
+        }
+        this.handleDeleteProduct = this.handleDeleteProduct.bind(this)     
+    }
 
      componentDidMount() {
          this.props.fetchCategories()
+         this.props.setCurrentProduct(this.props.id)
+    }
+
+    handleDeleteProduct(e){
+        this.props.removeProduct({id: this.props.id, catId: this.props.product.categoryId})
     }
 
 
@@ -32,7 +44,10 @@ export class SingleProduct extends Component {
     }
 
     render() {
-
+        let categoryId = this.props.product.categoryId
+        console.log('props', categoryId)
+        let id = this.props.id
+        let admin = this.props.isAdmin
         let currentProduct = {};
         this.props.categories.forEach(category => {
             category.products.forEach(product => {
@@ -41,7 +56,6 @@ export class SingleProduct extends Component {
         })
         const {reviews} = currentProduct
         if (!reviews) return <div />
-
         if (!currentProduct) return <div />
         return (
             <div>
@@ -53,6 +67,9 @@ export class SingleProduct extends Component {
                 <h5> {`Average Rating: ${currentProduct.averageRating && currentProduct.averageRating}`} </h5>
                 <h5> {`Based on ${currentProduct.numberOfReviews} reviews.`} </h5>
             </div>
+            {admin && 
+            <button onClick = {this.handleDeleteProduct}> Delete Product </button>
+            }
 
 
             <div>
@@ -83,9 +100,12 @@ export class SingleProduct extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        userId: state.user.id,
+      isAdmin: state.user.isAdmin,
+      userId: state.user.id,
       id: parseInt(ownProps.match.params.id),
-      categories: state.categories
+      categories: state.categories,
+      products: state.products,
+      product: state.singleproduct
     }
 };
 
@@ -93,11 +113,14 @@ const mapDispatchToProps = (dispatch) => ({
     fetchCategories: () => {
       dispatch(fetchCategories())
     },
-    setCurrentProduct: () => {
-      dispatch(getProduct)
+    setCurrentProduct: (id) => {
+      dispatch(fetchProduct(id))
     },
     submitReview: (newReview) => {
         dispatch(postReview(newReview))
+    },
+    removeProduct: (id) => {
+        dispatch(removeProduct(id))
     }
 });
 

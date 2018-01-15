@@ -98,9 +98,10 @@ router.delete('/:id', async (req, res, next) => {
 
 router.post('/:id/lineItem', async (req, res, next) => {
   try {
+    const product = Product.findById(req.body.id)
     await LineItem.create({
       quantity: 1,
-      itemPrice: req.body.price,
+      itemPrice: product.price,
       productId: req.body.id,
       orderId: req.params.id
     })

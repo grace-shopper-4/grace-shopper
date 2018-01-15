@@ -47,6 +47,12 @@ router.get('/:id/orders/:orderId', (req, res, next) => {
 })
 
 router.put('/:userId', (req, res, next) => {
+  // req.body === { isAdmin: true }
+  // .update({
+  //    keya: req.body.keya,
+  //    beyb: req.body.keyb
+  // })
+  // _.pick(req.body, ['keya', 'keyb'])
   User.update(req.body,
                 {returning: true, where: {id: req.params.userId}})
     .then(user => res.json(user))

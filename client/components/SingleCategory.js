@@ -15,6 +15,7 @@ export class SingleCategory extends Component {
     }
 
     render() {
+
         let currentCategory = {};
         this.props.categories.forEach(category => {
             if (category.id === parseInt(this.props.match.params.id)) currentCategory = category;

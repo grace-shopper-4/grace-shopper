@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {fetchUserOrders } from '../store'
+import { fetchUserOrders, fetchAllOrders } from '../store'
 import _ from 'lodash';
 import StarsRating from 'react-stars-rating';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 export class MyAccount extends Component {
     constructor(props) {
@@ -16,19 +16,26 @@ export class MyAccount extends Component {
 
 
     setOrdersByStatus(event) {
+        console.log("inside", this.props)
         const filter = event.target.value
         const orders = this.props.orders
         let ordersToSet = filter !== 'none' ?
             orders.filter(order => order.status === filter) :
             orders
         this.setState({ orders: ordersToSet })
+
+
     }
     componentDidMount() {
-        this.props.fetchUserOrders(this.props.user.id)
+        if (this.props.user.isAdmin) {
+            this.props.fetchAllOrders()
+        }
+        else {
+            this.props.fetchUserOrders(this.props.user.id)
+        }
     }
 
     render() {
-        console.log('props',  this.props)
         return (
             <div>
                 <h1> {this.props.user.email}</h1>
@@ -46,55 +53,37 @@ export class MyAccount extends Component {
                     {this.state.orders.map(order => {
                         let totalPrice = 0
                         return (
-                         <div key={order.id}>
-                         <Link to={`/orders/${order.id}`}>
-                                Order# {order.id}
-                                  </Link>
-                              
-                        </div>)
-                      })}
-                    </ul>
+                            <div key={order.id}>
+                                <Link to={`/orders/${order.id}`}>
+                                    Order# {order.id}
+                                </Link>
+
+                            </div>)
+                    })}
+                </ul>
             </div>)
 
     }
 }
 
-{/* <ul>
-{this.state.orders.map(order => {
-    let totalPrice = 0
-    return (
-        <div key={order.id}>
-            Order#{order.id}
-            <ul> {order.lineItems.map(lineItem => {
-                totalPrice += lineItem.totalPrice
-                return (
-                    <div key={lineItem.id}>
-                    <li > Product Name: {lineItem.product.title} </li>
-                    <li> <img src = {lineItem.product.photo}/> </li>
-                    <li> Product Price: {lineItem.itemPrice}  </li>
-                    <li>  Product Quantity:{lineItem.quantity}</li>
-                    <li> Subtotal:{lineItem.totalPrice}  </li>
-                    </div>
-                )})
-            }
-            <li> Order Total: {totalPrice} </li>
-         </ul>
-    </div>)
-  })}
-</ul> */}
+
 
 const mapStateToProps = (state, ownProps) => {
     return {
         user: state.user,
         orders: state.orders,
         order: state.cart,
+        categories: state.categories
     }
 };
 
 const mapDispatchToProps = (dispatch) => ({
     fetchUserOrders: (id) => {
-    dispatch(fetchUserOrders(id))
+        dispatch(fetchUserOrders(id))
     },
+    fetchAllOrders: () => {
+        dispatch(fetchAllOrders())
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyAccount)

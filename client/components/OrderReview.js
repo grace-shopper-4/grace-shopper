@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {updateOrderStatus, updateUser} from '../store'
 import {Form, Button} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
+import axios from 'axios'
 
 function OrderReview (props) {
 
@@ -35,7 +36,9 @@ function OrderReview (props) {
                        )
               })
             }
-                <Link to="/orderConfirmation" ><button type="submit">Submit Order</button></Link>
+                <Link to="/orderConfirmation" ><button onClick={()=>{
+                  axios.post('/api/email/send', {user, cart})
+                }} type="submit">Submit Order</button></Link>
                 </form>
 
          </div>

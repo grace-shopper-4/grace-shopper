@@ -46,7 +46,10 @@ class Navbar extends Component {
                   <Link to="/signup"><button>Sign Up</button></Link>
                 </div>
                 :
-                <Link to="/logout"><button onClick={ this.props.onClickLogout }>Log Out</button></Link>
+                <div>
+                  <Link to="/myAccount"><button>My Account</button></Link>
+                  <Link to="/logout"><button onClick={ this.props.onClickLogout }>Log Out</button></Link>
+                </div>
               }
             </div>
             <Link to="/shoppingCart"><img className="cart" src="/images/cart.jpg" /></Link>

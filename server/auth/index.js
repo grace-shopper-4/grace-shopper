@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const Session = require('express-session')
 const User = require('../db/models/user')
 const Order = require('../db/models/order')
 module.exports = router
@@ -34,7 +35,8 @@ router.post('/signup', (req, res, next) => {
 
 router.post('/logout', (req, res) => {
   req.logout()
-  res.redirect('/')
+  req.session.destroy();
+  res.redirect('/home')
 })
 
 router.get('/me', (req, res) => {

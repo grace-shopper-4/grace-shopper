@@ -13,21 +13,28 @@ export const fetchCurrentOrder = () => dispatch => {
 }
 
 export const createNewOrder = (product, user) => dispatch => {
+  console.log('creating new order')
   axios.post('/api/orders', { product, user })
   .then(res => res.data)
-  .then(newOrder => dispatch(getCurrentOrder(newOrder)))
+  .then(newOrder => {
+    dispatch(getCurrentOrder(newOrder))
+  })
   .catch(err => console.error(err))
 }
 
 export const addLineItem = (orderId, product) => dispatch => {
+  console.log('adding line item')
   axios.post(`/api/orders/${orderId}/lineItem`, product)
   .then(res => res.data)
-  .then(updatedOrder => dispatch(getCurrentOrder(updatedOrder)))
+  .then(updatedOrder => {
+    dispatch(getCurrentOrder(updatedOrder))
+  })
   .catch(err => console.error(err))
 }
 
 //numberToAdd parameter should be +1 to increment quantity or -1 to decrement quantity.
 export const updateLineItem = (orderId, product, numberToAdd) => dispatch => { 
+  console.log('updating line item qty')
   axios.put(`/api/orders/${orderId}/lineItem`, {product, numberToAdd})
   .then(res => res.data)
   .then(updatedOrder => {

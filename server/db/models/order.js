@@ -11,6 +11,10 @@ const Order = db.define('order', {
   },
   session: {
     type: Sequelize.STRING
+  },
+  guestOrder: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false
   }
 })
 

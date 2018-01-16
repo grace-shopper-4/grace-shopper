@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import { Link, BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { logout, fetchCurrentOrder } from '../store'
+import { logout, fetchCurrentOrder, getCurrentOrder } from '../store'
 
 
 
@@ -23,7 +23,7 @@ class Navbar extends Component {
           <nav className="nav-menu">
           {/*<img className="logo" src="/images/A boot.png" />*/}
             <ul>
-              <li><Link to="/">Home</Link></li>
+              <li><Link to="/home">Home</Link></li>
               <li><Link to="/Categories">Categories</Link>
                 <ul className="sub-menu">
                   {
@@ -46,7 +46,10 @@ class Navbar extends Component {
                   <Link to="/signup"><button>Sign Up</button></Link>
                 </div>
                 :
-                <Link to="/logout"><button onClick={ this.props.onClickLogout }>Log Out</button></Link>
+                <Link to="/logout"><button onClick={ () => {
+                  this.props.onClickLogout();
+                  this.props.clearCart();
+                }}>Log Out</button></Link>
               }
             </div>
             <Link to="/shoppingCart"><img className="cart" src="/images/cart.jpg" /></Link>
@@ -74,6 +77,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     fetchSessionOrder: () => {
       dispatch(fetchCurrentOrder());
+    },
+    clearCart: () => {
+      dispatch(getCurrentOrder({}))
     }
   };
 };

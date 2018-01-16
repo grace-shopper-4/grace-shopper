@@ -51,14 +51,14 @@ const mapDispatch = dispatch => {
 
 export default connect(mapState, mapDispatch)(Home)
 
-const backgroundColors = ['hotpink', 'pink', 'palevioletred', 'purple', 'violet'];
-let i = 0;
-setInterval(() => {
-  let homePageBackground = document.getElementById('home-page');
-  homePageBackground.classList = [];
-  homePageBackground.classList.add(`${backgroundColors[i]}`);
-  i = (i+1) % 4;
-}, 300);
+// const backgroundColors = ['hotpink', 'pink', 'palevioletred', 'purple', 'violet'];
+// let i = 0;
+// setInterval(() => {
+//   let homePageBackground = document.getElementById('home-page');
+//   homePageBackground.classList = '';
+//   homePageBackground.classList.add(`${backgroundColors[i]}`);
+//   i = (i+1) % 4;
+// }, 300);
 
 // /**
 //  * PROP TYPES

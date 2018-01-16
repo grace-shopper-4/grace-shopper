@@ -2,10 +2,8 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import { Link, BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { logout, fetchCurrentOrder } from '../store'
+import { logout, fetchCurrentOrder, getCurrentOrder } from '../store'
 import { Button } from 'semantic-ui-react'
-
-
 
 class Navbar extends Component {
 
@@ -23,7 +21,7 @@ class Navbar extends Component {
           <nav className="nav-menu">
           {/*<img className="logo" src="/images/A boot.png" />*/}
             <ul>
-              <li><Link to="/">Home</Link></li>
+              <li><Link to="/home">Home</Link></li>
               <li><Link to="/Categories">Categories</Link>
                 <ul className="sub-menu">
                   {
@@ -48,7 +46,10 @@ class Navbar extends Component {
                 :
                 <div>
                   <Link to="/myAccount"><Button>My Account</Button></Link>
-                  <Link to="/logout"><Button onClick={ this.props.onClickLogout }>Log Out</Button></Link>
+                  <Link to="/logout"><Button onClick={ () => {
+                  this.props.onClickLogout();
+                  this.props.clearCart();
+                }}>Log Out</Button></Link>
                 </div>
               }
             </div>
@@ -77,6 +78,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     fetchSessionOrder: () => {
       dispatch(fetchCurrentOrder());
+    },
+    clearCart: () => {
+      dispatch(getCurrentOrder({}))
     }
   };
 };

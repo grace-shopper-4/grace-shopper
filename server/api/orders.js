@@ -16,11 +16,12 @@ router.get('/', (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     let userId = req.body.user.id;
+    let isGuest = req.body.user.isGuest;
     let order;
     if (userId) {
-      order = await Order.create({ userId })
+      order = await Order.create({ userId, guestOrder: false })
     } else {
-      order = await Order.create()
+      order = await Order.create({ guestOrder: isGuest });
     }
     await LineItem.create({
         quantity: 1,
@@ -29,6 +30,9 @@ router.post('/', async (req, res, next) => {
         orderId: order.id
       })
     req.session.cartOrderId = order.id;
+    req.session.userId = userId;
+    req.session.isGuest = isGuest;
+    console.log(req.session);
     let newOrder = await Order.findOne({
       where: {id: order.id},
       include: [{model: LineItem}]
@@ -41,16 +45,35 @@ router.post('/', async (req, res, next) => {
 
 router.get('/cart', async (req, res, next) => {
   try {
-    let orderId = req.session.cartOrderId;
-    let order = await Order.findOne({
-      where: {id: orderId},
-      include: [{
-        model: LineItem,
+    let userId = req.session.userId;
+    let isGuest = req.session.isGuest;
+    console.log(req.session)
+    let order;
+    if (!isGuest){ 
+      let orders = await Order.findAll({
+        where: {userId, status: 'Created'},
         include: [{
-          model: Product
+          model: LineItem,
+          include: [{
+            model: Product
+          }]
+        }],
+        order: [['createdAt', 'DESC']]
+      })  
+      order = orders[0];
+    } else {
+      let orderId = req.session.cartOrderId;
+      order = await Order.findOne({
+        where: {id: orderId, guestOrder: true},
+        include: [{
+          model: LineItem,
+          include: [{
+            model: Product
+          }]
         }]
-      }]
-    })
+      })
+    }
+    console.log('returned order: ', order);
     res.json(order);
   } catch (err) {
     next(err);

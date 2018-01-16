@@ -1,49 +1,58 @@
-import React from 'react'
+import React, { Component } from 'react'
 // import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import { deleteLineItem, updateLineItem } from '../store'
+import { deleteLineItem, updateLineItem, fetchCurrentOrder } from '../store'
 import { Link } from 'react-router-dom'
 
 /**
  * COMPONENT
  */
-export function ShoppingCart (props) {
-    if (props.cart){
-        return (
-            <div>
-                <ul>
-                    {props.cart.lineItems &&
-                        props.cart.lineItems.map(lineItem => {
-                            return (
-                                <li key={lineItem.id}>
-                                    <div>{lineItem.product.title}</div>
-                                    <div>
+export class ShoppingCart extends Component {
+
+    componentDidMount() {
+        this.props.fetchCart()
+    }
+
+    render() {
+        if (this.props.cart){
+            return (
+                <div>
+                    <ul>
+                        {this.props.cart.lineItems &&
+                            this.props.cart.lineItems.map(lineItem => {
+                                return (
+                                    <li key={lineItem.id}>
+                                        <div>{lineItem.product.title}</div>
+                                        <div>
+                                            <button onClick={() => {
+                                                if (lineItem.quantity > 1){
+                                                    this.props.decrement(lineItem.orderId, lineItem.product)
+                                                } else {
+                                                    this.props.removeLineItem(this.props.cart.id, lineItem.id)
+                                                }
+                                            }}>-</button> {/*make this*/}
+                                            <span>{`Qty: ${lineItem.quantity}`}</span>
+                                            <button onClick={() => this.props.increment(lineItem.orderId, lineItem.product)}>+</button> {/*make this*/}
+                                        </div>
+                                        <div>{`Total cost: ${lineItem.totalPrice}`}</div>
                                         <button onClick={() => {
-                                            if (lineItem.quantity > 1){
-                                                props.decrement(lineItem.orderId, lineItem.product)
-                                            } else {
-                                                props.removeLineItem(props.cart.id, lineItem.id)
-                                            }
-                                        }}>-</button> {/*make this*/}
-                                        <span>{`Qty: ${lineItem.quantity}`}</span>
-                                        <button onClick={() => props.increment(lineItem.orderId, lineItem.product)}>+</button> {/*make this*/}
-                                    </div>
-                                    <div>{`Total cost: ${lineItem.totalPrice}`}</div>
-                                    <button onClick={() => {
-                                        props.removeLineItem(props.cart.id, lineItem.id)
-                                    }}>Remove Item</button>
-                                </li>
-                            )
-                        }
-                    )}
-                </ul>
-                <Link to={'/orderReview'}>
-                    <button>Submit Order</button>
-                </Link>
-            </div>
-        )
-    } else {
-        return null;
+                                            this.props.removeLineItem(this.props.cart.id, lineItem.id)
+                                        }}>Remove Item</button>
+                                    </li>
+                                )
+                            }
+                        )}
+                    </ul>
+                    <Link to={'/orderReview'}>
+                        <button>Submit Order</button>
+                    </Link>
+                </div>
+            )
+        } else {
+            return (
+                <h2>Your cart is empty!</h2>
+            );
+        }
     }
 }
 
@@ -62,6 +71,9 @@ const mapDispatch = () => dispatch => {
         },
         decrement: (orderId, product) => {
             dispatch(updateLineItem(orderId, product, -1))
+        },
+        fetchCart: () => {
+            dispatch(fetchCurrentOrder())
         }
     }
 }

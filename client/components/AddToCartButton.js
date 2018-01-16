@@ -11,7 +11,7 @@ export class AddToCartButton extends Component {
         let product = this.props.product;
         let user = this.props.user;
         let cart = this.props.cart;
-        if (!cart) {
+        if (!cart || !cart.lineItems || cart.lineItems.length < 1) {
             return (
                 <Button onClick={event => {
                     this.props.startNewCart(product, user)

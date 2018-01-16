@@ -63,7 +63,8 @@ async function seed () {
     let session = chance.word({length: 5})
     await Order.create({
         session,
-        userId: 1
+        userId: 1,
+        guestOrder: false
     })
   }
 

@@ -4,7 +4,8 @@ import { fetchUserOrders, fetchAllOrders, fetchAllUsers, removeUser, updateUser 
 import _ from 'lodash';
 import AddProduct from './AddProduct';
 import StarsRating from 'react-stars-rating';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import AddCategory from './AddCategory';
 import {Grid, Image, Header, Card, Button, List} from 'semantic-ui-react'
 
 export class MyAccount extends Component {
@@ -116,7 +117,16 @@ export class MyAccount extends Component {
                     })
                 }
                 </Grid>
-                <AddProduct />
+                
+                {this.props.user.isAdmin ? (
+                    <div>
+                        <AddCategory />
+                        <AddProduct />
+                    </div>
+                ) : null }
+
+                
+
             </div>)
 
     }

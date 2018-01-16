@@ -15,6 +15,7 @@ import {Main,
         SingleCategory,
         OrderReview,
         OrderConfirmation,
+        AddCategory,
         ShoppingCart} from './components'
 import {me} from './store'
 
@@ -28,7 +29,7 @@ class Routes extends Component {
 
   render () {
     const {isLoggedIn} = this.props
-
+    console.log('addcategory', AddCategory)
     return (
       <Router history={history}>
         <Main>
@@ -44,6 +45,7 @@ class Routes extends Component {
             <Route path="/orderReview" component={OrderReview} />
             <Route path="/orderConfirmation" component={OrderConfirmation} />
             <Route path="/orders/:id" component={SingleOrder} />
+            <Route path="/new" component={AddCategory} />
             {
               isLoggedIn &&
                 <Switch>

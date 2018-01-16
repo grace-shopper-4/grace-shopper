@@ -25,6 +25,7 @@ export class SingleCategory extends Component {
         return (
             <div>
                 <Header as="h3">{currentCategory.title}</Header>
+                <Card.Group itemsPerRow={4}>
                     {currentCategory.products &&
                         currentCategory.products.map(product => {
                             return (
@@ -41,6 +42,7 @@ export class SingleCategory extends Component {
                                 </Card>
                             )
                     })}
+                </Card.Group>
             </div>
         )
     }

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchCategories, postReview, fetchReviews, fetchProduct, removeProduct, fetchProducts, updateProduct } from '../store'
+import { fetchCategories, postReview, fetchReviews, fetchProduct, removedProduct, fetchProducts, updateProduct } from '../store'
 
 import _ from 'lodash';
 import StarsRating from 'react-stars-rating';
 import {Grid, Image, Header, Card} from 'semantic-ui-react'
+import history from "../history"
 
 export class SingleProduct extends Component {
     constructor(props) {
@@ -37,7 +38,10 @@ export class SingleProduct extends Component {
     }
 
     handleDelete(e){
-        this.props.removeProduct({id: this.props.id, catId: this.props.product.categoryId})
+   
+        this.props.removedProduct(this.props.id)
+        
+        history.push('/products')
     }
 
     handleTitle(event) {
@@ -98,13 +102,14 @@ export class SingleProduct extends Component {
         let id = this.props.id
         let admin = this.props.isAdmin
         let currentProduct = {};
+        let reviews = this.props.product.reviews
         this.props.categories.forEach(category => {
             category.products.forEach(product => {
                 if (product.id === this.props.id) currentProduct = product;
             })
         })
 
-        const {reviews} = this.props
+        // const {reviews} = this.props
 
         if (!reviews) return <div />
         if (!currentProduct) return <div />
@@ -121,7 +126,7 @@ export class SingleProduct extends Component {
             {admin &&
             <div>
                 <div>
-            <button onClick = {this.handleDeleteProduct}> Delete Product </button>
+            <button onClick = {this.handleDelete}> Delete Product </button>
             </div>
             <div>
             <h4> Edit Product </h4>
@@ -179,20 +184,32 @@ export class SingleProduct extends Component {
             <div>
                 <h1>Reviews</h1>
                 {
-                        reviews.filter(review => {
-                          if (review.productId === currentProduct.id){
-                            console.log(review)
-                            return true
-                          }
-                        }).map(review =>{
-                    return (
-                    <div key={review.id}>
-                    <h2>{review.title}</h2>
-                    <h3>{review.content}</h3>
-                    <StarsRating rating={review.stars} />
-                    </div>
-                            )
-                })
+                 
+
+                    this.props.product.reviews.map(review =>{
+                  return (
+                  <div key={review.id}>
+                  <h2>{review.title}</h2>
+                  <h3>{review.content}</h3>
+                  <StarsRating rating={review.stars} />
+                  </div>
+                          )
+              })
+
+                //         reviews.filter(review => {
+                //           if (review.productId === currentProduct.id){
+                        
+                //             return true
+                //           }
+                //         }).map(review =>{
+                //     return (
+                //     <div key={review.id}>
+                //     <h2>{review.title}</h2>
+                //     <h3>{review.content}</h3>
+                //     <StarsRating rating={review.stars} />
+                //     </div>
+                //             )
+                // })
                 }
                 <h1>Add A Review</h1>
                 <form onSubmit={this.submitReview}>
@@ -233,8 +250,8 @@ const mapDispatchToProps = (dispatch) => ({
     submitReview: (newReview) => {
         dispatch(postReview(newReview))
     },
-    removeProduct: (id) => {
-        dispatch(removeProduct(id))
+    removedProduct: (id) => {
+        dispatch(removedProduct(id))
     },
     fetchProducts: (id) => {
         dispatch(fetchProducts(id))

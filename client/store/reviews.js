@@ -15,12 +15,14 @@ const getReviews = reviews => ({type: GET_REVIEWS, reviews})
  * THUNK CREATORS
  */
 
-export const postReview = review =>
-  dispatch =>
-    axios.post('/api/reviews', review)
+export const postReview = (id, review) =>
+  dispatch => {
+    console.log('id', id, 'review', review)
+    return axios.post(`/api/reviews/${id}`, review)
       .then(res =>
           dispatch(postNewReview(res.data)))
       .catch(err => console.log(err))
+  }
 
 export const fetchReviews = () =>
   dispatch =>

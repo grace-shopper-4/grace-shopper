@@ -17,11 +17,12 @@ export class AddProduct extends Component {
         this.handlePhoto = this.handlePhoto.bind(this);
         this.handleDescription = this.handleDescription.bind(this);
         this.handleSize = this.handleSize.bind(this);
+        this.handleCategory = this.handleCategory.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this);
 
     }
 
-   
+
 
     handleTitle(event) {
         this.setState({
@@ -30,7 +31,7 @@ export class AddProduct extends Component {
     }
     handlePrice(event) {
         this.setState({
-            product: { ...this.state.product, price: event.target.value }
+            product: { ...this.state.product, price: event.target.value * 100 }
         })
     }
     handleInventory(event) {
@@ -52,6 +53,11 @@ export class AddProduct extends Component {
     handleSize(event) {
         this.setState({
             product: { ...this.state.product, size: event.target.value }
+        })
+    }
+    handleCategory(event) {
+        this.setState({
+            product: { ...this.state.product, categoryId: event.target.value}
         })
     }
     handleSubmit(event) {
@@ -120,6 +126,18 @@ export class AddProduct extends Component {
                             onChange={this.handleSize}
                         />
                     </div>
+                     <div>
+                        <select name="Category" onChange={this.handleCategory}>
+                            <option disabled selected>Choose Category</option>
+                            {this.props.categories.map(category => {
+                                return (
+                                    <option value={`${category.id}`} key={category.id}>
+                                        {category.title}
+                                    </option>
+                                )
+                            })}
+                        </select>
+                    </div>
                     <span>
                         <button type="submit">Submit</button>
                     </span>
@@ -132,6 +150,7 @@ export class AddProduct extends Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         isAdmin: state.user.isAdmin,
+        categories: state.categories
     }
 };
 

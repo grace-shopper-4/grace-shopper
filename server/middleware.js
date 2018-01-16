@@ -20,7 +20,7 @@ module.exports = {
     // console.log("order params", typeof parseInt(req.params.orderId))
     let cartOrderId = req.session.cartOrderId
     console.log("sessionOrderReq", req.session)
-    if (parseInt(req.params.orderId) === parseInt(cartOrderId)) {
+    if (parseInt(req.params.orderId) === parseInt(cartOrderId) || req.user.isAdmin) {
       console.log("params", req.params.orderId, cartOrderId)
       return next()
     } else {

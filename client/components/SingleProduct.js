@@ -24,6 +24,7 @@ export class SingleProduct extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleCategory = this.handleCategory.bind(this);
         this.toggleEditProduct = this.toggleEditProduct.bind(this);
+        this.submitReview = this.submitReview.bind(this)
     }
 
     componentDidMount() {
@@ -39,7 +40,9 @@ export class SingleProduct extends Component {
 
 handleDelete(e){
     this.props.removedProduct(this.props.id)
-    history.push('/products')
+    setTimeout(function() {
+        history.push('/products')
+    }, 10)
 }
 
 toggleEditProduct() {
@@ -83,6 +86,7 @@ handleSubmit(event) {
     event.preventDefault();
     const updatedProduct = this.state.product;
     this.props.updateProduct(this.props.id, updatedProduct)
+    this.forceUpdate()
 }
 
 handleChange = (event) => {
@@ -91,14 +95,15 @@ handleChange = (event) => {
 
 submitReview = (event) => {
   event.preventDefault();
+  let userId = this.props.userId
   const review = {
     title: event.target.title.value,
     content: event.target.content.value,
     stars: event.target.stars.value,
     productId: this.props.id,
-    userId: this.props.userId
+    userId: userId
 };
-this.props.submitReview(review)
+this.props.createReview(userId, review)
 }
 onRatingClick = (rating) =>{
     return true
@@ -243,7 +248,7 @@ render() {
                     )
 }
 
-        
+
 }
 
 const mapStateToProps = (state, ownProps) => {
@@ -271,8 +276,8 @@ const mapDispatchToProps = (dispatch) => ({
 setCurrentProduct: (id) => {
   dispatch(fetchProduct(id))
 },
-submitReview: (newReview) => {
-    dispatch(postReview(newReview))
+createReview: (id, newReview) => {
+    dispatch(postReview(id, newReview))
 },
 removedProduct: (id) => {
     dispatch(removedProduct(id))

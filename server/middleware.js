@@ -8,7 +8,7 @@ module.exports = {
       }
   },
   isUser: function(req, res, next){
-    console.log('params', req.params)
+    console.log('user params', req.params)
     let user = req.user
     if (user.id === +req.params.id || user.isAdmin){
       return next()
@@ -17,7 +17,7 @@ module.exports = {
     }
   },
   isSessionOrder: function(req, res, next){
-    console.log("params", req.params)
+    console.log("order params", req.params)
     let cartOrderId = req.session.cartOrderId
     if (+req.params.orderId === cartOrderId) {
       return next()

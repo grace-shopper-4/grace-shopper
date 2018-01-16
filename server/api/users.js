@@ -1,8 +1,10 @@
 const router = require('express').Router()
 const {User, LineItem, Product, Order} = require('../db/models')
+const {isAdmin, isUser} = require('../middleware.js')
 module.exports = router
 
-router.get('/', (req, res, next) => {
+
+router.get('/', isAdmin, (req, res, next) => {
   User.findAll({
     attributes: ['id', 'name', 'shippingAddress', 'isAdmin', 'email']
   })
@@ -10,8 +12,7 @@ router.get('/', (req, res, next) => {
     .catch(next)
 })
 
-router.get('/:id/orders', (req, res, next) => {
-  console.log('hit this route at least')
+router.get('/:id/orders', isUser, (req, res, next) => {
     Order.findAll({
       where: {userId: req.params.id},
       include: [{model: LineItem,
@@ -22,8 +23,7 @@ router.get('/:id/orders', (req, res, next) => {
     .catch(next)
 })
 
-router.get('/:id', (req, res, next) => {
-
+router.get('/:id', isUser, (req, res, next) => {
   User.findOne({
     where: {id: req.params.id},
     attributes: ['id', 'email']
@@ -35,7 +35,7 @@ router.get('/:id', (req, res, next) => {
 })
 
 
-router.get('/:id/orders/:orderId', (req, res, next) => {
+router.get('/:id/orders/:orderId', isUser, (req, res, next) => {
   User.findOne({
     where: {id: req.params.id},
     include:[{model: Order, where:{id: req.params.orderId},
@@ -53,7 +53,7 @@ router.put('/:userId', (req, res, next) => {
     .catch(next)
 })
 
-router.delete('/:userId', function (req, res, next) {
+router.delete('/:userId', isAdmin, function (req, res, next) {
   User.destroy({where: {id: req.params.userId}})
   .then(() => res.sendStatus(204))
   .catch(next);

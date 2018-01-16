@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const {Review, User} = require('../db/models')
+const {isAdmin, isUser, isSessionOrder} = require('../middleware.js')
 module.exports = router
 
 router.get('/', (req, res, next) => {
@@ -19,7 +20,7 @@ router.get('/:id', (req, res, next) => {
   .catch(next)
 })
 
-router.post('/', function (req, res, next) {
+router.post('/', isUser, function (req, res, next) {
   Review.create(req.body)
   .then(review => res.json(review))
   .catch(next);

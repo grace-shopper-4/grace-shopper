@@ -1,10 +1,11 @@
 const router = require('express').Router()
 const Session = require('express').Session;
 const {Order, LineItem, Product, User} = require('../db/models')
+const {isAdmin, isUser, isSessionOrder} = require('../middleware.js')
 module.exports = router
 
 
-router.get('/', (req, res, next) => {
+router.get('/', isAdmin, (req, res, next) => {
   Order.findAll({
     include:[{model: LineItem, include: [{model: Product}]}]
   })
@@ -49,7 +50,7 @@ router.get('/cart', async (req, res, next) => {
     let isGuest = req.session.isGuest;
     console.log(req.session)
     let order;
-    if (!isGuest){ 
+    if (!isGuest){
       let orders = await Order.findAll({
         where: {userId, status: 'Created'},
         include: [{
@@ -59,7 +60,7 @@ router.get('/cart', async (req, res, next) => {
           }]
         }],
         order: [['createdAt', 'DESC']]
-      })  
+      })
       order = orders[0];
     } else {
       let orderId = req.session.cartOrderId;
@@ -80,9 +81,9 @@ router.get('/cart', async (req, res, next) => {
   }
 })
 
-router.get('/users/:id', (req, res, next) => {
+router.get('/users/:orderId', isUser, (req, res, next) => {
   Order.findAll({
-    where: {userId: req.params.id},
+    where: {userId: req.params.orderId},
     include:[{model: LineItem, include: [{model: Product}]}]
   })
     .then(orders => {
@@ -91,44 +92,43 @@ router.get('/users/:id', (req, res, next) => {
 })
 
 
-router.get('/:id', (req, res, next) => {
+router.get('/:orderId', isAdmin, (req, res, next) => {
   Order.findOne({
-    where: {id: req.params.id},
+    where: {id: req.params.orderId},
     include: [{model: LineItem, include: [{model: Product}]}]
   })
   .then(order => res.json(order))
   .catch(next)
 })
 
-router.put('/:id',  (req, res, next) => {
-  console.log(req.body)
+router.put('/:orderId',  isSessionOrder, (req, res, next) => {
   Order.update(req.body,
-                {returning: true, where: {id: req.params.id}})
+                {returning: true, where: {id: req.params.orderId}})
   .then(order => {
     res.json(order)})
   .catch(next);
 });
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:orderId', isAdmin, async (req, res, next) => {
   let order = await Order.findById(req.params.id)
   order.destroy()
-  let lineItems = await LineItem.findAll({where: {orderId: req.params.id}})
+  let lineItems = await LineItem.findAll({where: {orderId: req.params.orderId}})
   Object.keys(lineItems).forEach(async lineItemKey => {
     await lineItems[lineItemKey].destroy();
   })
   res.status(200).send(`order ${req.params.id} deleted!`)
 })
 
-router.post('/:id/lineItem', async (req, res, next) => {
+router.post('/:orderId/lineItem', isSessionOrder, async (req, res, next) => {
   try {
     await LineItem.create({
       quantity: 1,
       itemPrice: req.body.price,
       productId: req.body.id,
-      orderId: req.params.id
+      orderId: req.params.orderId
     })
     let updatedOrder = await Order.findOne({
-      where: {id: req.params.id},
+      where: {id: req.params.orderId},
       include: [{
         model: LineItem,
         include: [{
@@ -142,14 +142,14 @@ router.post('/:id/lineItem', async (req, res, next) => {
   }
 })
 
-router.put('/:id/lineItem', async (req, res, next) => {
+router.put('/:orderId/lineItem', isSessionOrder, async (req, res, next) => {
   try {
     let lineItem = await LineItem.findOne({
-      where: {productId: req.body.product.id, orderId: req.params.id}
+      where: {productId: req.body.product.id, orderId: req.params.orderId}
     })
     await lineItem.update({quantity: lineItem.quantity + req.body.numberToAdd});
     let updatedOrder = await Order.findOne({
-      where: {id: req.params.id},
+      where: {id: req.params.orderId},
       include: [{
         model: LineItem,
         include: [{
@@ -164,8 +164,8 @@ router.put('/:id/lineItem', async (req, res, next) => {
 })
 
 
-router.delete('/:orderId/lineItem/:lineItemId', async (req, res, next) => {
-  try{
+router.delete('/:orderId/lineItem/:lineItemId', isSessionOrder, async (req, res, next) => {
+  try {
     let lineItem = await LineItem.findById(req.params.lineItemId)
     await lineItem.destroy();
     let updatedOrder = await Order.findOne({

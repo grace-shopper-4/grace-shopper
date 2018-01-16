@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const { Product, Review } = require('../db/models')
+const {isAdmin, isUser, isSessionOrder} = require('../middleware.js')
 module.exports = router
 
 router.get('/', (req, res, next) => {
@@ -21,7 +22,7 @@ router.get('/:id', (req, res, next) => {
     .catch(next)
 })
 
-router.put('/:id',  (req, res, next) => {
+router.put('/:id',  isAdmin, (req, res, next) => {
   Product.update(req.body,
                 {returning: true, where: {id: req.params.id}})
   .then(product => {
@@ -29,8 +30,7 @@ router.put('/:id',  (req, res, next) => {
   .catch(next);
 });
 
-router.delete('/:id', (req, res, next) => {
-  console.log("idididid", req.params.id)
+router.delete('/:id', isAdmin, (req, res, next) => {
   Review.destroy({
     where: {
       productId: req.params.id

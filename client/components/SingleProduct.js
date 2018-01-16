@@ -38,9 +38,9 @@ export class SingleProduct extends Component {
     }
 
     handleDelete(e){
-   
+
         this.props.removedProduct(this.props.id)
-        
+
         history.push('/products')
     }
 
@@ -184,9 +184,7 @@ export class SingleProduct extends Component {
             <div>
                 <h1>Reviews</h1>
                 {
-                 
-
-                    this.props.product.reviews.map(review =>{
+                    this.props.product.reviews.map(review => {
                   return (
                   <div key={review.id}>
                   <h2>{review.title}</h2>
@@ -198,7 +196,7 @@ export class SingleProduct extends Component {
 
                 //         reviews.filter(review => {
                 //           if (review.productId === currentProduct.id){
-                        
+
                 //             return true
                 //           }
                 //         }).map(review =>{

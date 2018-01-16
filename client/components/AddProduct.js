@@ -1,65 +1,129 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchOrder, updateOrderStatus } from '../store'
+import { createProduct } from '../store'
 import { Link } from 'react-router-dom';
 import StarsRating from 'react-stars-rating';
 
 
-export class SingleOrder extends Component {
+export class AddProduct extends Component {
     constructor(props) {
         super(props)
-        this.handleChangeStatus = this.handleChangeStatus.bind(this)
+        this.state = {
+            product: {}
+        }
+        this.handleTitle = this.handleTitle.bind(this);
+        this.handlePrice = this.handlePrice.bind(this);
+        this.handleInventory = this.handleInventory.bind(this);
+        this.handlePhoto = this.handlePhoto.bind(this);
+        this.handleDescription = this.handleDescription.bind(this);
+        this.handleSize = this.handleSize.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+
     }
 
-    componentDidMount() {
-        const orderId = this.props.id
-        this.props.fetchOrder(orderId)
+   
+
+    handleTitle(event) {
+        this.setState({
+            product: { ...this.state.product, title: event.target.value }
+        })
+    }
+    handlePrice(event) {
+        this.setState({
+            product: { ...this.state.product, price: event.target.value }
+        })
+    }
+    handleInventory(event) {
+        this.setState({
+            product: { ...this.state.product, inventory: event.target.value }
+        })
+    }
+    handlePhoto(event) {
+        this.setState({
+            product: { ...this.state.product, photo: event.target.value }
+        })
+    }
+    handleDescription(event) {
+        this.setState({
+            product: { ...this.state.product, description: event.target.value }
+        })
     }
 
-    handleChangeStatus(event) {
-        const order = { id: this.props.singleOrder.id, 
-                        status: event.target.value}
-        this.props.updateStatus(this.props.singleOrder.id, order)
-        this.props.fetchOrder(this.props.id)
+    handleSize(event) {
+        this.setState({
+            product: { ...this.state.product, size: event.target.value }
+        })
+    }
+    handleSubmit(event) {
+        event.preventDefault();
+        const createdProduct = this.state.product;
+        event.target.Price.value = ''
+        event.target.Title.value = ''
+        event.target.Description.value = ''
+        event.target.Inventory.value = ''
+        event.target.Size.value = ''
+        event.target.Photo.value = ''
+        this.props.addProduct(createdProduct)
+        this.forceUpdate()
     }
 
     render() {
-        let admin = this.props.isAdmin
-        let total = 0
-        let singleOrder = this.props.singleOrder
-        if (!singleOrder.lineItems) return <div />
-        if (singleOrder.userId !== this.props.user.id && !admin) return <div> <h1> ACCESS FORBIDDEN </h1> </div> //so you can't hit another user's orders via url
         return (
             <div>
-                <h1> Order# : {singleOrder.id}</h1>
-                <h1> Status : {singleOrder.status}</h1>
-                <Link to="/myAccount"><button> Back to My Account </button></Link>
-                <form>
-                    {singleOrder.lineItems.map(lineItem => {
-                        total += lineItem.totalPrice
-                        return (
-                            <div key={lineItem.id}>
-                                <img src={lineItem.product.photo} />
-                                <Link to={`/products/${lineItem.product.id}`} ><h2>{lineItem.product.title}</h2></Link>
-                                <h3> Product Price: ${lineItem.itemPrice}</h3>
-                                <h3> Units Ordered: {lineItem.quantity}</h3>
-                                <h3> Subtotal: ${lineItem.totalPrice}</h3>
-                            </div>
-                        )
-                    })
-                    }
-                    <h3> Order Total:  ${total} </h3>
-                </form>
-
-                {admin &&
+                <h4> Add Product </h4>
+                <form onSubmit={(event) => this.handleSubmit(event)}>
                     <div>
-                            <button value="Created" onClick={this.handleChangeStatus}> Created </button>
-                            <button value="Completed" onClick={this.handleChangeStatus}>  Completed</button>
-                            <button value="Cancelled" onClick={this.handleChangeStatus}> Cancelled </button>
-                            <button value="Processing" onClick={this.handleChangeStatus}> Processing </button>
+                        <input
+                            type="text"
+                            name="Title"
+                            placeholder="Enter Title"
+                            onChange={this.handleTitle}
+                        />
                     </div>
-                }
-
+                    <div>
+                        <input
+                            type="text"
+                            name="Price"
+                            placeholder="Enter Price"
+                            onChange={this.handlePrice}
+                        />
+                    </div>
+                    <div>
+                        <input
+                            type="text"
+                            name="Inventory"
+                            placeholder="Enter Inventory"
+                            onChange={this.handleInventory}
+                        />
+                    </div>
+                    <div>
+                        <input
+                            type="text"
+                            name="Photo"
+                            placeholder="Enter Photo"
+                            onChange={this.handlePhoto}
+                        />
+                    </div>
+                    <div>
+                        <input
+                            type="text"
+                            name="Description"
+                            placeholder="Enter Description"
+                            onChange={this.handleDescription}
+                        />
+                    </div>
+                    <div>
+                        <input
+                            type="text"
+                            name="Size"
+                            placeholder="Enter Size"
+                            onChange={this.handleSize}
+                        />
+                    </div>
+                    <span>
+                        <button type="submit">Submit</button>
+                    </span>
+                </form>
             </div>
         )
     }
@@ -68,21 +132,15 @@ export class SingleOrder extends Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         isAdmin: state.user.isAdmin,
-        user: state.user,
-        id: parseInt(ownProps.match.params.id),
-        singleOrder: state.singleOrder,
-        categories: state.categories
     }
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    fetchOrder: (id) => {
-        dispatch(fetchOrder(id))
+    addProduct: (createdOrder) => {
+        dispatch(createProduct(createdOrder))
     },
-    updateStatus: (orderId, updatedOrder) => {
-        dispatch(updateOrderStatus(orderId, updatedOrder))
-    },
+
 
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SingleOrder)
+export default connect(mapStateToProps, mapDispatchToProps)(AddProduct)

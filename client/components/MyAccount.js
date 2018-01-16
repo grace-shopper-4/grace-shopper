@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchUserOrders, fetchAllOrders, fetchAllUsers, removeUser, updateUser } from '../store'
 import _ from 'lodash';
+import AddProduct from './AddProduct';
 import StarsRating from 'react-stars-rating';
 import { Link } from 'react-router-dom'
 import {Grid, Image, Header, Card, Button, List} from 'semantic-ui-react'
@@ -116,6 +117,7 @@ export class MyAccount extends Component {
                     })
                 }
                 </Grid>
+                <AddProduct />
             </div>)
 
     }

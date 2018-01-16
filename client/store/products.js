@@ -20,6 +20,7 @@ export const fetchProducts = () =>
         dispatch(getProducts(res.data)))
       .catch(err => console.log(err))
 
+      
 
 
 

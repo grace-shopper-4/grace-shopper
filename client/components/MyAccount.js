@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { fetchUserOrders, fetchAllOrders, fetchAllUsers, removeUser, updateUser } from '../store'
 import _ from 'lodash';
 import StarsRating from 'react-stars-rating';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import AddCategory from './AddCategory';
 import {Grid, Image, Header, Card, Button, List} from 'semantic-ui-react'
 
 export class MyAccount extends Component {
@@ -116,6 +117,13 @@ export class MyAccount extends Component {
                     })
                 }
                 </Grid>
+
+                
+                {this.props.user.isAdmin ? (
+                    <div>
+                        <AddCategory />
+                    </div>
+                ) : null }
             </div>)
 
     }

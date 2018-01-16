@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link, BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout, fetchCurrentOrder, getCurrentOrder } from '../store'
-import { Button } from 'semantic-ui-react'
+import { Button, Dropdown, Icon, Menu, Segment } from 'semantic-ui-react'
 
 class Navbar extends Component {
 
@@ -16,17 +16,16 @@ class Navbar extends Component {
     let categories = this.props.categories
 
     return (
-      <div>
+     <div>
         <div className="nav-wrapper">
           <nav className="nav-menu">
-          {/*<img className="logo" src="/images/A boot.png" />*/}
             <ul>
               <li><Link to="/home">Home</Link></li>
-              <li><Link to="/Categories">Categories</Link>
+              <li>{`Categories +`}
                 <ul className="sub-menu">
                   {
                     categories.map(category => {
-                      return <li key={category.id}><Link to={`/Categories/${category.id}`}> {category.title} </Link></li>
+                      return <li key={category.id}><Link to={`/categories/${category.id}`}> {category.title} </Link></li>
                     })
                   }
                   <li><Link to="/products">All Boots</Link></li>
@@ -59,6 +58,7 @@ class Navbar extends Component {
         </div>
 
       </div>
+
     )
   }
 }

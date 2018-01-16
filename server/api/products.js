@@ -23,10 +23,13 @@ router.get('/:id', (req, res, next) => {
 })
 
 router.put('/:id',  isAdmin, (req, res, next) => {
-  Product.update(req.body,
-                {returning: true, where: {id: req.params.id}})
+  Product.findById(req.params.id)             
   .then(product => {
-    res.json(product)})
+    return product.update(req.body);
+  })
+  .then(updatedProduct => {
+    res.json(updatedProduct);
+  })
   .catch(next);
 });
 

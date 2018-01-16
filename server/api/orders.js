@@ -81,9 +81,9 @@ router.get('/cart', async (req, res, next) => {
   }
 })
 
-router.get('/users/:orderId', isUser, (req, res, next) => {
+router.get('/users/:id', isUser, (req, res, next) => {
   Order.findAll({
-    where: {userId: req.params.orderId},
+    where: {userId: req.params.id},
     include:[{model: LineItem, include: [{model: Product}]}]
   })
     .then(orders => {

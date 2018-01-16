@@ -78,7 +78,6 @@ export class MyAccount extends Component {
                                 <Link to={`/orders/${order.id}`}>
                                     Order# {order.id}
                                 </Link>
-
                             </div>)
                     })}
                 </ul>

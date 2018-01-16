@@ -24,6 +24,7 @@
         "axios": "^0.15.3",
         "babel-polyfill": "^6.26.0",
         "body-parser": "^1.16.1",
+        "chance": "^1.0.13",
         "compression": "^1.7.1",
         "connect-session-sequelize": "^4.1.0",
         "express": "^4.14.1",
@@ -48,8 +49,7 @@
         "redux-thunk": "^2.2.0",
         "semantic-ui-react": "^0.77.2",
         "sequelize": "^4.3.1",
-        "socket.io": "^2.0.3",
-        "chance": "^1.0.13"
+        "socket.io": "^2.0.3"
     },
     "devDependencies": {
         "axios-mock-adapter": "^1.9.0",

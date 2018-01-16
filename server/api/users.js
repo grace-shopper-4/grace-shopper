@@ -12,15 +12,18 @@ router.get('/', isAdmin, (req, res, next) => {
     .catch(next)
 })
 
-router.get('/:id/orders', isUser, (req, res, next) => {
-    Order.findAll({
+router.get('/:id/orders', isUser, async (req, res, next) => {  
+  try {
+    let userOrders = await Order.findAll({
       where: {userId: req.params.id},
       include: [{model: LineItem,
         include:[{model: Product}]
       }]
     })
-    .then(userOrders => res.json(userOrders))
-    .catch(next)
+    res.json(userOrders)
+  } catch (err) {
+    next(err);
+  }
 })
 
 router.get('/:id', isUser, (req, res, next) => {
@@ -28,10 +31,10 @@ router.get('/:id', isUser, (req, res, next) => {
     where: {id: req.params.id},
     attributes: ['id', 'email']
   })
-    .then(user => {
-      res.json(user)
-    })
-    .catch(next)
+  .then(user => {
+    res.json(user)
+  })
+  .catch(next)
 })
 
 

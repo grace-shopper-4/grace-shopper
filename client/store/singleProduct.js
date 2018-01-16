@@ -58,7 +58,7 @@ export default function (state = {}, action) {
     case GET_PRODUCT:
       return action.id;
     case UPDATE_PRODUCT:
-      return action.product[1][0];
+      return Object.assign({}, state, action.product)
    case DELETE_PRODUCT:
       return {};
     case CREATE_PRODUCT:

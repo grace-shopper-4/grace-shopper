@@ -20,7 +20,8 @@ router.get('/:id', (req, res, next) => {
   .catch(next)
 })
 
-router.post('/', isUser, function (req, res, next) {
+router.post('/:id', isUser, function (req, res, next) {
+  console.log('req.body Review', req.body)
   Review.create(req.body)
   .then(review => res.json(review))
   .catch(next);

@@ -74,7 +74,6 @@ router.get('/cart', async (req, res, next) => {
         }]
       })
     }
-    console.log('returned order: ', order);
     res.json(order);
   } catch (err) {
     next(err);

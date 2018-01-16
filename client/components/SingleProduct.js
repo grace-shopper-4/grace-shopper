@@ -38,10 +38,8 @@ export class SingleProduct extends Component {
         this.props.getReviews()
     }
 
-    handleDelete(e) {
-
+    handleDelete(e){
         this.props.removedProduct(this.props.id)
-
         history.push('/products')
     }
 
@@ -50,7 +48,6 @@ export class SingleProduct extends Component {
     }
 
     handleTitle(event) {
-
         this.setState({
             product: { ...this.state.product, title: event.target.value }
         })
@@ -64,7 +61,6 @@ export class SingleProduct extends Component {
         this.setState({
             product: { ...this.state.product, inventory: event.target.value }
         })
-
     }
     handlePhoto(event) {
         this.setState({
@@ -85,6 +81,12 @@ export class SingleProduct extends Component {
         event.preventDefault();
         const updatedProduct = this.state.product;
         this.props.updateProduct(this.props.id, updatedProduct)
+        event.target.Price.value = ''
+        event.target.Title.value = ''
+        event.target.Description.value = ''
+        event.target.Inventory.value = ''
+        event.target.Size.value = ''
+        event.target.Photo.value = ''
     }
 
     handleChange = (event) => {

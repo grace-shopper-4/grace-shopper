@@ -33,6 +33,14 @@ router.put('/:id',  isAdmin, (req, res, next) => {
   .catch(next);
 });
 
+router.post('/', ( req, res, next) => {
+  Product.create(req.body)
+      .then((product) => {
+          res.status(201).json(product);
+      })
+      .catch(next);
+});
+
 router.delete('/:id', isAdmin, (req, res, next) => {
   Review.destroy({
     where: {

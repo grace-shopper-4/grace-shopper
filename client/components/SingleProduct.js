@@ -42,6 +42,10 @@ handleDelete(e){
     history.push('/products')
 }
 
+toggleEditProduct() {
+    this.setState({editProductAccordionOpen: !this.state.editProductAccordionOpen})
+}
+
 handleTitle(event) {
 
     this.setState({
@@ -69,6 +73,12 @@ handleDescription(event) {
         product: { ...this.state.product, description: event.target.value }
     })
 }
+handleCategory(event) {
+    this.setState({
+        product: { ...this.state.product, categoryId: event.target.value}
+    })
+}
+
 handleSubmit(event) {
     event.preventDefault();
     const updatedProduct = this.state.product;

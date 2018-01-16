@@ -34,11 +34,12 @@ export class SingleCategory extends Component {
                                         <Image src={product.photo} />
                                         <Card.Content>
                                         <Card.Header className="categoryProductName">{product.title}</Card.Header>
-                                        <Card.Header className="categoryProductName">{`Average Rating: ${product.averageRating && product.averageRating}`} </Card.Header>
-                                        <Card.Header className="categoryProductName"> {`Based on ${product.numberOfReviews} reviews.`} </Card.Header>
+                                        <Card.Header className="categoryProductPrice">{`$ ${product.price / 100}`}</Card.Header>
+                                        <Card.Header>{`Average Rating: ${product.averageRating && product.averageRating}`} </Card.Header>
+                                        <Card.Header> {`Based on ${product.numberOfReviews} reviews.`} </Card.Header>
                                         </Card.Content>
                                     </NavLink>
-                                    <AddToCartButton product={product} />
+                                <AddToCartButton product={product} />
                                 </Card>
                             )
                     })}

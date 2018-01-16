@@ -17,11 +17,14 @@ module.exports = {
     }
   },
   isSessionOrder: function(req, res, next){
-    console.log("order params", req.params)
+    // console.log("order params", typeof parseInt(req.params.orderId))
     let cartOrderId = req.session.cartOrderId
-    if (+req.params.orderId === cartOrderId) {
+    console.log("sessionOrderReq", req.session)
+    if (parseInt(req.params.orderId) === parseInt(cartOrderId)) {
+      console.log("params", req.params.orderId, cartOrderId)
       return next()
     } else {
+      console.log("else params", req.params.orderId, cartOrderId)
       return next('this is not your order')
     }
   }

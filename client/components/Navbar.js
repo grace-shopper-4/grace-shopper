@@ -73,7 +73,6 @@ const mapState = ({ user, categories }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onClickLogout: () => {
-      console.log('it was clicked')
       dispatch(logout())
     },
     fetchSessionOrder: () => {

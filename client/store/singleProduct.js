@@ -32,14 +32,11 @@ export const fetchProduct = id =>
 export const updateProduct = (productId, updatedProduct) =>
   dispatch => {
     return axios.put(`/api/products/${productId}`, updatedProduct)
-      .then(res => { console.log(res.data)
-        dispatch(editProduct(res.data))
-      })
+      .then(res => dispatch(editProduct(res.data)))
       .catch(err => console.error(err))
   }
 
   export const removedProduct = (id) => (dispatch) => {
-    console.log("id", id)
     dispatch(deleteProduct(id));
     axios.delete(`/api/products/${id}`)
       .catch(err => console.error(err));
@@ -52,7 +49,6 @@ export default function (state = {}, action) {
     case UPDATE_PRODUCT:
       return action.product[1][0];
    case DELETE_PRODUCT:
-    console.log()
       return {};
     default:
       return state

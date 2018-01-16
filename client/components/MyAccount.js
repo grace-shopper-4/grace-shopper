@@ -4,7 +4,7 @@ import { fetchUserOrders, fetchAllOrders, fetchAllUsers, removeUser, updateUser 
 import _ from 'lodash';
 import StarsRating from 'react-stars-rating';
 import { Link } from 'react-router-dom'
-import {Grid, Image, Header, Card, Button} from 'semantic-ui-react'
+import {Grid, Image, Header, Card, Button, List} from 'semantic-ui-react'
 
 export class MyAccount extends Component {
     constructor(props) {
@@ -44,10 +44,24 @@ export class MyAccount extends Component {
        console.log(adminUsers.isAdmin)
         return (
             <div>
-                <h1> {this.props.user.email}</h1>
-                <h1> {this.props.user.name}</h1>
-                <h1> Billing Address: {this.props.user.billingAddress}</h1>
-                <h1> Shipping Address: {this.props.user.shippingAddress}</h1>
+                <List className="userInfo">
+                <List.Item>
+                    <List.Icon name='users' />
+                    <List.Content>Name: {this.props.user.name}</List.Content>
+                </List.Item>
+                <List.Item>
+                    <List.Icon name='mail' />
+                    <List.Content>Email: {this.props.user.email}</List.Content>
+                </List.Item>
+                <List.Item>
+                    <List.Icon name='marker' />
+                    <List.Content>Billing Address: {this.props.user.billingAddress}</List.Content>
+                </List.Item>
+                <List.Item>
+                    <List.Icon name='marker' />
+                    <List.Content>Shipping Address: {this.props.user.shippingAddress}</List.Content>
+                </List.Item>
+                </List>
                 <select className="form-control" name="filter-orders" onChange={this.setOrdersByStatus}>
                     <option value="none">View Your Orders</option>
                     <option>Created</option>
@@ -67,7 +81,16 @@ export class MyAccount extends Component {
                             </div>)
                     })}
                 </ul>
-                <Grid columns={5}>
+
+                <Grid className="adminUserGrid" columns={5} divided="vertically">
+                    <Grid.Row>
+                        <Grid.Column>Name</Grid.Column>
+                        <Grid.Column>Email</Grid.Column>
+                        <Grid.Column>Address</Grid.Column>
+                        <Grid.Column>User Status</Grid.Column>
+                        <Grid.Column>Remove User</Grid.Column>
+                    </Grid.Row>
+
                 {
                     adminUsers.map(user =>{
                         return(

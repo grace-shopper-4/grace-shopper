@@ -38,7 +38,6 @@ import {Link} from 'react-router-dom'
 
   render(){
 
-    console.log("filteredProducts", this.state.filteredProducts)
     const {categories} = this.props
     const {filteredProducts} = this.state
     return (

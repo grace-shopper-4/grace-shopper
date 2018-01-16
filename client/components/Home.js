@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {NavLink} from 'react-router-dom'
 import {fetchCategories} from '../store'
@@ -59,10 +58,3 @@ export default connect(mapState, mapDispatch)(Home)
 //   homePageBackground.classList.add(`${backgroundColors[i]}`);
 //   i = (i+1) % 4;
 // }, 300);
-
-// /**
-//  * PROP TYPES
-//  */
-// UserHome.propTypes = {
-//   email: PropTypes.string
-// }

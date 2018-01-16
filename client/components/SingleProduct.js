@@ -102,14 +102,14 @@ export class SingleProduct extends Component {
         let id = this.props.id
         let admin = this.props.isAdmin
         let currentProduct = {};
-        let reviews = this.props.product.reviews
+        // let reviews = this.props.product.reviews
         this.props.categories.forEach(category => {
             category.products.forEach(product => {
                 if (product.id === this.props.id) currentProduct = product;
             })
         })
 
-        // const {reviews} = this.props
+        const {reviews} = this.props
 
         if (!reviews) return <div />
         if (!currentProduct) return <div />
@@ -184,30 +184,30 @@ export class SingleProduct extends Component {
             <div>
                 <h1>Reviews</h1>
                 {
-                    this.props.product.reviews.map(review => {
-                  return (
-                  <div key={review.id}>
-                  <h2>{review.title}</h2>
-                  <h3>{review.content}</h3>
-                  <StarsRating rating={review.stars} />
-                  </div>
-                          )
-              })
+            //         this.props.product.reviews.map(review => {
+            //       return (
+            //       <div key={review.id}>
+            //       <h2>{review.title}</h2>
+            //       <h3>{review.content}</h3>
+            //       <StarsRating rating={review.stars} />
+            //       </div>
+            //               )
+            //   })
 
-                //         reviews.filter(review => {
-                //           if (review.productId === currentProduct.id){
+                        reviews.filter(review => {
+                          if (review.productId === currentProduct.id){
 
-                //             return true
-                //           }
-                //         }).map(review =>{
-                //     return (
-                //     <div key={review.id}>
-                //     <h2>{review.title}</h2>
-                //     <h3>{review.content}</h3>
-                //     <StarsRating rating={review.stars} />
-                //     </div>
-                //             )
-                // })
+                            return true
+                          }
+                        }).map(review =>{
+                    return (
+                    <div key={review.id}>
+                    <h2>{review.title}</h2>
+                    <h3>{review.content}</h3>
+                    <StarsRating rating={review.stars} />
+                    </div>
+                            )
+                })
                 }
                 <h1>Add A Review</h1>
                 <form onSubmit={this.submitReview}>

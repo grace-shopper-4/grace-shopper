@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const GET_CATEGORIES = 'GET_CATEGORIES';
-const DELETE_PRODUCT = 'DELETE_PRODUCT';
+// const DELETE_PRODUCT = 'DELETE_PRODUCT';
 
 const getCategories = categories => {
   return {
@@ -10,12 +10,12 @@ const getCategories = categories => {
   }
 }
 
-const deleteProduct = (ids) => {
-  return {
-    type: DELETE_PRODUCT,
-    ids
-  }
-}
+// const deleteProduct = (ids) => {
+//   return {
+//     type: DELETE_PRODUCT,
+//     ids
+//   }
+// }
 
 export const fetchCategories = () => dispatch => {
   axios.get('/api/categories')
@@ -41,27 +41,27 @@ export const fetchCategories = () => dispatch => {
     .catch(err => console.error(err))
 }
 
-export const removeProduct = (ids) => (dispatch) => {
-  console.log('in thunk', ids)
-  dispatch(deleteProduct(ids));
-  axios.delete(`/api/products/${ids.id}`)
-    .catch(err => console.error(err));
-};
+// export const removeProduct = (ids) => (dispatch) => {
+//   console.log('in thunk', ids)
+//   dispatch(deleteProduct(ids));
+//   axios.delete(`/api/products/${ids.id}`)
+//     .catch(err => console.error(err));
+// };
 
 
 export default function reducer(categories = [], action) {
   switch (action.type) {
     case GET_CATEGORIES:
       return action.categories;
-    case DELETE_PRODUCT:
-      let categoriesClone = categories;
-      return categoriesClone.map(category => {
-        if (category.id === action.ids.catId) {
-          category.products = category.products.filter(product => product.id !== action.ids.id)
-          return category
-        }
-        else { return category }
-      })
+    // case DELETE_PRODUCT:
+    //   let categoriesClone = categories;
+    //   return categoriesClone.map(category => {
+    //     if (category.id === action.ids.catId) {
+    //       category.products = category.products.filter(product => product.id !== action.ids.id)
+    //       return category
+    //     }
+    //     else { return category }
+    //   })
     default:
       return categories;
   }

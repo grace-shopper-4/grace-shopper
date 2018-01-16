@@ -45,22 +45,24 @@ router.post('/', async (req, res, next) => {
 
 router.get('/cart', async (req, res, next) => {
   try {
-    let orderId = req.session.cartOrderId;
     let userId = req.session.userId;
     let isGuest = req.session.isGuest;
     console.log(req.session)
     let order;
     if (!isGuest){ 
-      order = await Order.findOne({
-        where: {id: orderId, userId},
+      let orders = await Order.findAll({
+        where: {userId, status: 'Created'},
         include: [{
           model: LineItem,
           include: [{
             model: Product
           }]
-        }]
-      })
+        }],
+        order: [['createdAt', 'DESC']]
+      })  
+      order = orders[0];
     } else {
+      let orderId = req.session.cartOrderId;
       order = await Order.findOne({
         where: {id: orderId, guestOrder: true},
         include: [{

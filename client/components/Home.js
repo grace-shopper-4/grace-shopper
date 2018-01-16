@@ -11,12 +11,21 @@ import axios from 'axios'
 export class Home extends Component {
   componentDidMount() {
     this.props.setAllCategoriesOnState();
+    const backgroundColors = ['hotpink', 'pink', 'palevioletred', 'purple', 'violet'];
+    let i = 0;
+    this.interval = setInterval(() => {
+      let homePageBackground = document.getElementById('home-page');
+      homePageBackground.classList = '';
+      homePageBackground.classList.add(`${backgroundColors[i]}`);
+      i = (i+1) % 4;
+    }, 300);
   }
 
   render() {
     const categories = this.props.categories;
     return (
       <div id="home-page">
+        <button onClick={() => clearInterval(this.interval)}>Please stop the colors</button>
         <div className="home-page-container">
           <video src="../videos/Reno 911 New boot goofin.mp4" autoPlay muted loop />
           <br />
@@ -51,14 +60,7 @@ const mapDispatch = dispatch => {
 
 export default connect(mapState, mapDispatch)(Home)
 
-// const backgroundColors = ['hotpink', 'pink', 'palevioletred', 'purple', 'violet'];
-// let i = 0;
-// setInterval(() => {
-//   let homePageBackground = document.getElementById('home-page');
-//   homePageBackground.classList = '';
-//   homePageBackground.classList.add(`${backgroundColors[i]}`);
-//   i = (i+1) % 4;
-// }, 300);
+
 
 // /**
 //  * PROP TYPES

@@ -4,7 +4,7 @@ module.exports = router
 
 router.get('/', (req, res, next) => {
   User.findAll({
-    attributes: ['id', 'email']
+    attributes: ['id', 'name', 'shippingAddress', 'isAdmin', 'email']
   })
     .then(users => res.json(users))
     .catch(next)
@@ -35,8 +35,6 @@ router.get('/:id', (req, res, next) => {
 })
 
 
-
-
 router.get('/:id/orders/:orderId', (req, res, next) => {
   User.findOne({
     where: {id: req.params.id},
@@ -53,4 +51,10 @@ router.put('/:userId', (req, res, next) => {
                 {returning: true, where: {id: req.params.userId}})
     .then(user => res.json(user))
     .catch(next)
+})
+
+router.delete('/:userId', function (req, res, next) {
+  User.destroy({where: {id: req.params.userId}})
+  .then(() => res.sendStatus(204))
+  .catch(next);
 })

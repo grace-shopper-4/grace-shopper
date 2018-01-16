@@ -3,9 +3,7 @@ import axios from 'axios';
 import { Link, BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout, fetchCurrentOrder, getCurrentOrder } from '../store'
-
-
-
+import { Button } from 'semantic-ui-react'
 
 class Navbar extends Component {
 
@@ -42,17 +40,20 @@ class Navbar extends Component {
               {
                 user.isGuest ?
                 <div>
-                  <Link to="/login"><button>Log In</button></Link>
-                  <Link to="/signup"><button>Sign Up</button></Link>
+                  <Link to="/login"><Button>Log In</Button></Link>
+                  <Link to="/signup"><Button>Sign Up</Button></Link>
                 </div>
                 :
-                <Link to="/logout"><button onClick={ () => {
+                <div>
+                  <Link to="/myAccount"><Button>My Account</Button></Link>
+                  <Link to="/logout"><Button onClick={ () => {
                   this.props.onClickLogout();
                   this.props.clearCart();
-                }}>Log Out</button></Link>
+                }}>Log Out</Button></Link>
+                </div>
               }
             </div>
-            <Link to="/shoppingCart"><img className="cart" src="/images/cart.jpg" /></Link>
+            <Link to="/shoppingCart"><img className="cart" src="/icons/iconmonstr-shopping-cart-8.svg" /></Link>
           </div>
 
         </div>

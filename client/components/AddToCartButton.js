@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import { createNewOrder, updateLineItem, addLineItem } from '../store'
+import {Button, Container} from 'semantic-ui-react'
 
 /**
  * COMPONENT
@@ -12,15 +13,15 @@ export class AddToCartButton extends Component {
         let cart = this.props.cart;
         if (!cart || !cart.lineItems || cart.lineItems.length < 1) {
             return (
-                <button onClick={event => {
+                <Button onClick={event => {
                     this.props.startNewCart(product, user)
-                }}>Add to Cart</button>
+                }}>Add to Cart</Button>
             )
-        } 
+        }
         else {
             return (
-                <div>
-                    <button onClick={event => {
+                <Container>
+                    <Button onClick={event => {
                         let addItemAlert = document.getElementById(`add-item-alert-${product.id}`)
                         addItemAlert.classList.remove('hidden')
                         setTimeout(() => {
@@ -31,13 +32,13 @@ export class AddToCartButton extends Component {
                         cart.lineItems.forEach(lineItem => {
                             if (lineItem.productId === product.id) lineItemId = lineItem.id;
                         })
-                        if (lineItemId) { 
-                            this.props.incrementItem(cart.id, product) 
+                        if (lineItemId) {
+                            this.props.incrementItem(cart.id, product)
                         }
                         else { this.props.addNewItem(cart.id, product) }
-                    }}>Add to Cart</button>
+                    }}>Add to Cart</Button>
                     <span id={`add-item-alert-${product.id}`} className="add-item-alert hidden">Item added to cart!</span>
-                </div>
+                </Container>
             )
         }
     }

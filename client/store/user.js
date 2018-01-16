@@ -56,9 +56,14 @@ export const logout = () =>
 export const updateUser = (userId, updatedUser) =>
   dispatch => {
     axios.put(`api/users/${userId}`, updatedUser)
-    .then(res => dispatch(update(res.data)))
+    .then(res => res.data)
+    .then(updatedUser => {
+      updatedUser = _.sortBy(updatedUser, 'id')
+      dispatch(update(updatedUser))
+    })
     .catch(err => console.error(err))
 }
+
 
 /**
  * REDUCER

@@ -1,8 +1,10 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchCategories} from '../store'
-import {Grid, Image, Header, Card} from 'semantic-ui-react'
+import { Image, Header, Card, Input } from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
+import AddToCartButton from './AddToCartButton'
+
 /**
  * COMPONENT
  */
@@ -42,9 +44,10 @@ import {Link} from 'react-router-dom'
     const {filteredProducts} = this.state
     return (
             <div>
-            <Header as="h1"> All Products </Header>
-            <input onChange={this.handleChange} name="searchbar" placeholder="search" />
-
+              <Header as="h1"> All Products </Header>
+            <div className="searchbar">
+              <label>Find a Product:</label><Input onChange={this.handleChange} name="searchbar" placeholder="search" />
+            </div>
             {
              categories.map(category => {
                return (
@@ -64,9 +67,10 @@ import {Link} from 'react-router-dom'
                                   <Image src={product.photo} alt="product photo" />
                                   <Card.Content>
                                   <Card.Header className="categoryProductName">{product.title}</Card.Header>
-                                  <Card.Header className="categoryProductPrice">${product.price/100}</Card.Header>
+                                  <Card.Header className="categoryProductPrice">${product.price / 100}</Card.Header>
                                   </Card.Content>
                                   </Link>
+                                  <AddToCartButton product={product} />
                                   </Card>
                                   )
                         })

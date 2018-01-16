@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import { createNewOrder, updateLineItem, addLineItem } from '../store'
-import {Button, Container} from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react'
 
 /**
  * COMPONENT
@@ -20,7 +20,7 @@ export class AddToCartButton extends Component {
         }
         else {
             return (
-                <Container>
+                <div className="addToCartButton" >
                     <Button onClick={event => {
                         let addItemAlert = document.getElementById(`add-item-alert-${product.id}`)
                         addItemAlert.classList.remove('hidden')
@@ -38,7 +38,7 @@ export class AddToCartButton extends Component {
                         else { this.props.addNewItem(cart.id, product) }
                     }}>Add to Cart</Button>
                     <span id={`add-item-alert-${product.id}`} className="add-item-alert hidden">Item added to cart!</span>
-                </Container>
+                </div>
             )
         }
     }

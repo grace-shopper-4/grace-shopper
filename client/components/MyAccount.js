@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchUserOrders, fetchAllOrders, fetchAllUsers, removeUser, updateUser } from '../store'
 import _ from 'lodash';
+import AddProduct from './AddProduct';
 import StarsRating from 'react-stars-rating';
 import { Link } from 'react-router-dom';
 import AddCategory from './AddCategory';
@@ -78,7 +79,6 @@ export class MyAccount extends Component {
                                 <Link to={`/orders/${order.id}`}>
                                     Order# {order.id}
                                 </Link>
-
                             </div>)
                     })}
                 </ul>
@@ -117,13 +117,16 @@ export class MyAccount extends Component {
                     })
                 }
                 </Grid>
-
                 
                 {this.props.user.isAdmin ? (
                     <div>
                         <AddCategory />
+                        <AddProduct />
                     </div>
                 ) : null }
+
+                
+
             </div>)
 
     }

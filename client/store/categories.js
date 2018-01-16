@@ -35,7 +35,7 @@ export const fetchCategories = () => dispatch => {
             numberOfReviews++;
             totalStars += review.stars;
           })
-          if (numberOfReviews > 0) product.averageRating = totalStars / numberOfReviews;
+          if (numberOfReviews > 0) product.averageRating = (totalStars / numberOfReviews).toFixed(2);
           product.numberOfReviews = numberOfReviews;
         })
       })

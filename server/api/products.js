@@ -23,11 +23,22 @@ router.get('/:id', (req, res, next) => {
 })
 
 router.put('/:id',  isAdmin, (req, res, next) => {
-  Product.update(req.body,
-                {returning: true, where: {id: req.params.id}})
+  Product.findById(req.params.id)             
   .then(product => {
-    res.json(product)})
+    return product.update(req.body);
+  })
+  .then(updatedProduct => {
+    res.json(updatedProduct);
+  })
   .catch(next);
+});
+
+router.post('/', ( req, res, next) => {
+  Product.create(req.body)
+      .then((product) => {
+          res.status(201).json(product);
+      })
+      .catch(next);
 });
 
 router.delete('/:id', isAdmin, (req, res, next) => {

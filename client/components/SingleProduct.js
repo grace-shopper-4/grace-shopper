@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { fetchCategories, postReview, fetchReviews, fetchProduct, removedProduct, fetchProducts, updateProduct } from '../store'
 import _ from 'lodash';
 import StarsRating from 'react-stars-rating';
-import {Container, Item, Button } from 'semantic-ui-react'
+import { Image, Header, Accordion, Icon, Container, Item, Button } from 'semantic-ui-react'
 import history from "../history"
 import AddToCartButton from './AddToCartButton'
 
@@ -11,7 +11,8 @@ export class SingleProduct extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            product: {}
+            product: {},
+            editProductAccordionOpen: false
         }
 
         this.handleDelete = this.handleDelete.bind(this)
@@ -21,16 +22,17 @@ export class SingleProduct extends Component {
         this.handlePhoto = this.handlePhoto.bind(this);
         this.handleDescription = this.handleDescription.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-
-
+        this.handleCategory = this.handleCategory.bind(this);
+        this.toggleEditProduct = this.toggleEditProduct.bind(this);
     }
 
     componentDidMount() {
-       if (this.props.isAdmin){
-        this.props.fetchProducts()
+     if (this.props.isAdmin){
+      this.props.fetchProducts()
     }
     this.props.fetchCategories()
     this.props.setCurrentProduct(this.props.id)
+
 
     this.props.getReviews()
 }
@@ -97,73 +99,92 @@ render() {
     let id = this.props.id
     let admin = this.props.isAdmin
     let currentProduct = {};
-        this.props.categories.forEach(category => {
-            category.products.forEach(product => {
-                if (product.id === this.props.id) currentProduct = product;
-            })
+    this.props.categories.forEach(category => {
+        category.products.forEach(product => {
+            if (product.id === this.props.id) currentProduct = product;
         })
+    })
 
-        const {reviews} = this.props
+    const { reviews } = this.props
+
 
         if (!reviews) return <div />
-        if (!currentProduct) return <div />
+        if (Object.keys(currentProduct).length < 1) return <div />
                 return (
                         <div>
-                        {admin &&
-                            <div>
-                            <div>
-                                <h4> Edit Product </h4>
-                                <form onSubmit={this.handleSubmit} >
-                                <div>
-                                <input
-                                    type="text"
-                                    name="Title"
-                                    placeholder="Enter Title"
-                                    onChange = {this.handleTitle}
-                                />
-                                </div>
-                                <div>
-                                <input
-                                    type="text"
-                                    name="Price"
-                                    placeholder="Enter Price"
-                                    onChange = {this.handlePrice}
-                                />
-                                </div>
-                                <div>
-                                <input
-                                    type="text"
-                                    name="Inventory"
-                                    placeholder="Enter Inventory"
-                                    onChange = {this.handleInventory}
-                                />
-                                </div>
-                                <div>
-                                <input
-                                    type="text"
-                                    name="Photo"
-                                    placeholder="Enter Photo"
-                                    onChange = {this.handlePhoto}
-                                />
-                                </div>
-                                <div>
-                                <input
-                                    type="text"
-                                    name="Description"
-                                    placeholder="Enter Description"
-                                    onChange = {this.handleDescription}
-                                />
-                                </div>
-                            <span>
-                            <button type="submit">Submit</button>
-                            </span>
-                            </form>
-                            </div>
-                            <div>
-                                <Button onClick = {this.handleDelete}> Delete Product </Button>
-                            </div>
-                            </div>
-                        }
+                        {admin && (
+                                    <div>
+                                        <Accordion>
+                                            <Accordion.Title active={this.state.editProductAccordionOpen} onClick={this.toggleEditProduct}>
+                                                Edit Product
+                                                <Icon name="dropdown" />
+                                            </Accordion.Title>
+                                            <Accordion.Content active={this.state.editProductAccordionOpen}>
+                                                <form onSubmit={this.handleSubmit} >
+                                                    <div>
+                                                        <input
+                                                            type="text"
+                                                            name="Title"
+                                                            placeholder="Enter Title"
+                                                            onChange={this.handleTitle}
+
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <input
+                                                            type="text"
+                                                            name="Price"
+                                                            placeholder="Enter Price"
+                                                            onChange={this.handlePrice}
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <input
+
+                                                            type="text"
+                                                            name="Inventory"
+                                                            placeholder="Enter Inventory"
+                                                            onChange={this.handleInventory}
+
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <input
+                                                            type="text"
+                                                            name="Photo"
+                                                            placeholder="Enter Photo"
+                                                            onChange={this.handlePhoto}
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <input
+                                                            type="text"
+                                                            name="Description"
+                                                            placeholder="Enter Description"
+                                                            onChange={this.handleDescription}
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <select name="Category" onChange={this.handleCategory}>
+                                                            <option disabled selected>Choose Category</option>
+                                                            {this.props.categories.map(category => {
+                                                                return (
+                                                                    <option value={`${category.id}`} key={category.id}>
+                                                                        {category.title}
+                                                                    </option>
+                                                                )
+                                                            })}
+                                                        </select>
+                                                    </div>
+                                                    <span>
+                                                        <button type="submit">Submit</button>
+                                                    </span>
+                                                </form>
+                                                <button onClick={this.handleDelete}> Delete Product </button>
+                                            </Accordion.Content>
+                                        </Accordion>
+                                    </div>
+                                )}
                         <Container className="singleProduct">
                         <Item.Group divided>
                             <Item>
@@ -211,10 +232,13 @@ render() {
                     </div>
                     )
 }
+
+        
 }
 
 const mapStateToProps = (state, ownProps) => {
     return {
+
       isAdmin: state.user.isAdmin,
       user: state.user,
       userId: state.user.id,
@@ -228,6 +252,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => ({
     fetchCategories: () => {
+
       dispatch(fetchCategories())
   },
   getReviews: () => {
@@ -248,7 +273,6 @@ fetchProducts: (id) => {
 updateProduct: (id, updatedProduct) => {
     dispatch(updateProduct(id, updatedProduct))
 }
-
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct)

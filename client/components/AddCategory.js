@@ -64,40 +64,7 @@ export class AddCategory extends Component {
                         </Container>
                     </Accordion.Content>
                 </Accordion>
-        {/* <form onSubmit={(event) => this.handleSubmit(event, this.state)}>
-          <div>
-            <fieldset>
-              <legend>New Boot Category</legend>
-              <div>
-                <label>Title</label>
-                <div>
-                  <input
-                    value={this.state.title}
-                    type="text"
-                    onChange={this.handleChangeTitle} />
-                </div>
-              </div>
-              <div>
-                <label>Description</label>
-                <div>
-                  <input
-                    value={this.state.description}
-                    type="text"
-                    onChange={this.handleChangeDescription} />
-                </div>
-              </div>
-              <div>
-                <div>
-                  <button
-                    type="submit"
-                    disabled={this.state.title.length ? false : true} >
-                    Add Category
-                  </button>
-                </div>
-              </div>
-            </fieldset>
-          </div>
-        </form> */}
+      
 
 
       </div>

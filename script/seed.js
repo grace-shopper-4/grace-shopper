@@ -38,14 +38,76 @@ async function seed () {
     })
   }
 
-  //seed Product
+  let partyBoots = ['../public/images/party/91GmHLVZKpL._UY395_.jpg',
+                    '../public/images/party/Oxhide_boots._Loulan,_Xinjiang._Early_Han_220_BCE_-_8_CE.jpg',
+                    '../public/images/party/Party1.jpg',
+                    '../public/images/party/Party2.jpg',
+                    '../public/images/party/Party3.jpg',
+                    '../public/images/party/Party4.jpg',
+                    '../public/images/party/yrxymv1513849454074.jpg']
+
+  let rainBoots = ['../public/images/rain/Chinese-products-wholesale-cheap-funny-rain-boots.jpg',
+                   '../public/images/rain/danner-15610x-o_01_2_1.jpg',
+                   '../public/images/rain/Hessian-Boots_TNT.jpg',
+                   '../public/images/rain/Rain1.jpeg',
+                   '../public/images/rain/Rain2.jpg',
+                   '../public/images/rain/Rain3.jpeg']
+
+  let cowboyBoots = ['../public/images/cowboy/cowboy-sandals.jpg',
+                   '../public/images/cowboy/Cowboy1.jpeg',
+                   '../public/images/cowboy/Cowboy2.jpeg',
+                   '../public/images/cowboy/Cowboy3.jpeg',
+                   '../public/images/cowboy/Crocodile-Funny-Boot-Image.jpg',
+                   '../public/images/cowboy/LibertyBoots_CBR.jpg',
+                   '../public/images/cowboy/white-cowboy-boots-for-women.jpg']
+
+  //seed party boots Product
+  for (let i = 0; i < 7; i++) {
+    let title = chance.word({length: 5});
+    let description = chance.paragraph();
+    let price = chance.integer({min: 500, max: 50000})
+    let inventory = chance.integer({min: 1, max: 100});
+    let size = Math.floor(Math.random() * (13) + 1);
+    let photo = partyBoots[i];
+    let categoryId = 1;
+    await Product.create({
+        title,
+        description,
+        price,
+        inventory,
+        size,
+        categoryId
+    })
+  }
+
+  //seed cowboy boots Product
+  for (let i = 0; i < 7; i++) {
+    let title = chance.word({length: 5});
+    let description = chance.paragraph();
+    let price = chance.integer({min: 500, max: 50000})
+    let inventory = chance.integer({min: 1, max: 100});
+    let size = Math.floor(Math.random() * (13) + 1);
+    let photo = cowboyBoots[i]
+    let categoryId = 2;
+    await Product.create({
+        title,
+        description,
+        price,
+        inventory,
+        size,
+        categoryId
+    })
+  }
+
+  //seed cowboy boots Product
   for (let i = 0; i < 12; i++) {
     let title = chance.word({length: 5});
     let description = chance.paragraph();
     let price = chance.integer({min: 500, max: 50000})
     let inventory = chance.integer({min: 1, max: 100});
     let size = Math.floor(Math.random() * (13) + 1);
-    let categoryId = i%3 + 1;
+    let photo = cowboyBoots[i];
+    let categoryId = 3;
     await Product.create({
         title,
         description,

@@ -32,8 +32,10 @@ export class Home extends Component {
             {categories.map(category => {
               return (
                 <div key={category.id} className="category-box">
-                  <NavLink to={`/categories/${category.id}`}>{category.title}</NavLink>
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Oxhide_boots._Loulan%2C_Xinjiang._Early_Han_220_BCE_-_8_CE.jpg/220px-Oxhide_boots._Loulan%2C_Xinjiang._Early_Han_220_BCE_-_8_CE.jpg" />
+                  <NavLink to={`/categories/${category.id}`}>
+                    <h3>{category.title}</h3>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Oxhide_boots._Loulan%2C_Xinjiang._Early_Han_220_BCE_-_8_CE.jpg/220px-Oxhide_boots._Loulan%2C_Xinjiang._Early_Han_220_BCE_-_8_CE.jpg" />
+                  </NavLink>
                 </div>
               )
             })}

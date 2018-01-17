@@ -96,7 +96,7 @@ export class AddProduct extends Component {
                                             <Form.Group>
                                                 <Form.Input required
                                                     label="Title" onChange={this.handleTitle} name="Title" placeholder='Title' width={3} />
-                                                <Form.Input r label='Description' placeholder='Tell us more about you...' onChange={this.handleDescription} name="Description" placeholder='Description' width={7} />
+                                                <Form.Input label='Description' placeholder='Tell us more about you...' onChange={this.handleDescription} name="Description" placeholder='Description' width={7} />
                                             </Form.Group>
                                             <Form.Group>
                                                 <Form.Input label="Photo" onChange={this.handlePhoto} name="Photo" placeholder='Photo' width={4} />

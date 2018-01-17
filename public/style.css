@@ -332,6 +332,11 @@ ul.ui.list {
 }
 
 
+#ordersList {
+    margin-left: 25px;
+
+}
+
 /*Single Product */
 
 .ui.container.singleProduct {

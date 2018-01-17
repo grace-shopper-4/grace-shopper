@@ -31,16 +31,18 @@ function OrderReview (props) {
                 <div key={lineItem.id}>
                 <img src ={lineItem.product.photo} alt="product image" />
                 <h2>{lineItem.product.title}</h2>
-                <h3>{lineItem.itemPrice}</h3>
-                <h3>{lineItem.quantity}</h3>
-                <h3>{lineItem.totalPrice}</h3>
+                <h3>Price: ${lineItem.itemPrice / 100}</h3>
+                <h3>Quantity: {lineItem.quantity}</h3>
+                <h3>Total Price: ${lineItem.totalPrice / 100}</h3>
                 </div>
                        )
               })
             }
-                <Link to="/orderConfirmation" ><button onClick={()=>{
+                
+                  <Link to="/orderConfirmation" ><button className="orderReviewButton" onClick={()=>{
                   axios.post('/api/email/send', {user, cart})
                 }} type="submit">Submit Order</button></Link>
+
                 </form>
 
          </div>

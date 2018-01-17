@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { fetchCategories, postReview, fetchReviews, fetchProduct, removedProduct, fetchProducts, updateProduct } from '../store'
 import _ from 'lodash';
 import StarsRating from 'react-stars-rating';
-import { Image, Header, Accordion, Icon, Container, Item, Button } from 'semantic-ui-react'
+import { Image, Header, Accordion, Icon, Container, Item, Button, Form, Message } from 'semantic-ui-react'
 import history from "../history"
 import AddToCartButton from './AddToCartButton'
 
@@ -128,14 +128,14 @@ render() {
                 return (
                         <div>
                         {admin && (
-                                    <div>
+                                    <div className="adminProductForm">
                                         <Accordion>
                                             <Accordion.Title active={this.state.editProductAccordionOpen} onClick={this.toggleEditProduct}>
                                                 Edit Product
                                                 <Icon name="dropdown" />
                                             </Accordion.Title>
                                             <Accordion.Content active={this.state.editProductAccordionOpen}>
-                                                <form onSubmit={this.handleSubmit} >
+                                                <Form onSubmit={this.handleSubmit} >
                                                     <div>
                                                         <input
                                                             type="text"
@@ -192,10 +192,10 @@ render() {
                                                         </select>
                                                     </div>
                                                     <span>
-                                                        <button type="submit">Submit</button>
+                                                        <Button type="submit">Submit</Button>
                                                     </span>
-                                                </form>
-                                                <button onClick={this.handleDelete}> Delete Product </button>
+                                                </Form>
+                                                <Button onClick={this.handleDelete}> Delete Product </Button>
                                             </Accordion.Content>
                                         </Accordion>
                                     </div>
@@ -207,19 +207,17 @@ render() {
                                 <Item.Content>
                                     <Item.Header as="h1"> {this.props.product.title}</Item.Header>
                                     <Item.Description>{this.props.product.description}</Item.Description>
-                                    <Item.Meta>
-                                        <span>Average Rating: </span><StarsRating rating={currentProduct.averageRating && currentProduct.averageRating} />
-                                        <span> {`Average Rating: ${currentProduct.averageRating && currentProduct.averageRating}`} </span>
-                                        <span> {`Based on ${currentProduct.numberOfReviews} reviews.`} </span>
-                                    </Item.Meta>
-                                    <Item.Extra> {`$${this.props.product.price / 100}`}</Item.Extra>
+                                    <Item.Extra style={{marginBottom: '4px'}}> {`$${this.props.product.price / 100}`}</Item.Extra>
                                     <AddToCartButton product={this.props.product} />
                                 </Item.Content>
                             </Item>
                         </Item.Group>
                         </Container>
                         <div>
+                        <div className="reviews">
                         <h1>Reviews</h1>
+                        <p>{`Average rating based on ${currentProduct.numberOfReviews} reviews:`}</p><StarsRating rating={currentProduct.averageRating && currentProduct.averageRating} />
+                        </div>
                         {
                             reviews.filter(review => {
                               if (review.productId === currentProduct.id){
@@ -228,21 +226,40 @@ render() {
                             }
                         }).map(review =>{
                             return (
-                                    <div key={review.id}>
-                                    <h2>{review.title}</h2>
-                                    <h3>{review.content}</h3>
+                                    <Item.Group className="reviews" divided>
+                                    <Item key={review.id}>
+                                    <Item.Content>
+                                    <div className="starsRating">
                                     <StarsRating rating={review.stars} />
                                     </div>
+                                    <Item.Header as='h1'>{review.title}</Item.Header>
+                                    <Item.Description>{review.content}</Item.Description>
+                                    </Item.Content>
+                                    </Item>
+                                    </Item.Group>
                                     )
                         })
                     }
+                    <div className="reviewForm" >
                     <h1>Add A Review</h1>
-                    <form onSubmit={this.submitReview}>
-                    <input onChange={this.handleChange} name="title" type="text" placeholder="review title" />
-                    <input onChange={this.handleChange} name="content" type="text" placeholder="review content" />
+                    <Form onSubmit={this.submitReview}>
+                    <Form.Group widths="equal">
+                    <Form.Field>
+                    <label>Review Title: </label>
+                    <Form.Input onChange={this.handleChange} name="title" type="text" placeholder="review title" />
+                    </Form.Field>
+                    <Form.Field>
+                    <label>Details: </label>
+                    <Form.TextArea onChange={this.handleChange} name="content" type="text" placeholder="review content" />
+                    </Form.Field>
+                    <Form.Field>
+                    <label>Star Rating</label>
                     <StarsRating insideForm={true} name="stars" rating={0} onClick={this.onRatingClick()} />
-                    <button type="submit">Submit</button>
-                    </form>
+                    </Form.Field>
+                    </Form.Group>
+                    <Button type="submit">Submit</Button>
+                    </Form>
+                    </div>
                     </div>
                     </div>
                     )

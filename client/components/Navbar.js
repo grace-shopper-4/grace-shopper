@@ -16,24 +16,21 @@ class Navbar extends Component {
     let categories = this.props.categories
 
     return (
-     <div>
-        <div className="nav-wrapper">
-          <nav className="nav-menu">
-            <ul>
-              <li><Link to="/home">Home</Link></li>
-              <li>{`Categories +`}
-                <ul className="sub-menu">
-                  {
+        <div>
+        <Menu secondary className="nav-wrapper">
+
+          <Menu.Item><Link className="logoTitle" to="/home">new boot goofin</Link></Menu.Item>
+          <Dropdown text="categories" >
+            <Dropdown.Menu>
+              {
                     categories.map(category => {
-                      return <li key={category.id}><Link to={`/categories/${category.id}`}> {category.title} </Link></li>
+                      return <Dropdown.Item key={category.id}><Link to={`/categories/${category.id}`}> {category.title} </Link></Dropdown.Item>
                     })
                   }
-                  <li><Link to="/products">All Boots</Link></li>
-                </ul>
-              </li>
-            </ul>
-          </nav>
-          <div className="nav-options">
+            </Dropdown.Menu>
+          </Dropdown>
+
+          <Menu.Menu position="right" className="nav-options">
             <div className="nav-user-info">
               <p>Welcome, {user.name}!</p>
               {
@@ -53,12 +50,9 @@ class Navbar extends Component {
               }
             </div>
             <Link to="/shoppingCart"><img className="cart" src="/icons/iconmonstr-shopping-cart-8.svg" /></Link>
-          </div>
-
+          </Menu.Menu>
+        </Menu>
         </div>
-
-      </div>
-
     )
   }
 }

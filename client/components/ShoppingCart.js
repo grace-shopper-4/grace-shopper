@@ -14,9 +14,10 @@ export class ShoppingCart extends Component {
     }
 
     render() {
-        console.log('lineitems:', this.props.cart.lineItems)
         if (this.props.cart.lineItems){
             if (this.props.cart.lineItems[0]){
+                if (this.props.cart.lineItems[0].product){
+
                 return (
                     <div>
                         <ul>
@@ -50,6 +51,9 @@ export class ShoppingCart extends Component {
                         </Link>
                     </div>
                 )
+                } else {
+                return <h2>Your cart is empty!</h2>
+                }
             } else {
                 return <h2>Your cart is empty!</h2>
             }

@@ -68,7 +68,7 @@ async function seed () {
     let price = chance.integer({min: 500, max: 50000})
     let inventory = chance.integer({min: 1, max: 100});
     let size = Math.floor(Math.random() * (13) + 1);
-    let photo = partyBoots[i];
+    let photo = partyBoots[0];
     let categoryId = 1;
     await Product.create({
         title,
@@ -88,7 +88,7 @@ async function seed () {
     let price = chance.integer({min: 500, max: 50000})
     let inventory = chance.integer({min: 1, max: 100});
     let size = Math.floor(Math.random() * (13) + 1);
-    let photo = rainBoots[i]
+    let photo = rainBoots[0]
     let categoryId = 2;
     await Product.create({
         title,
@@ -108,7 +108,7 @@ async function seed () {
     let price = chance.integer({min: 500, max: 50000})
     let inventory = chance.integer({min: 1, max: 100});
     let size = Math.floor(Math.random() * (13) + 1);
-    let photo = cowboyBoots[i];
+    let photo = cowboyBoots[0];
     let categoryId = 3;
     await Product.create({
         title,

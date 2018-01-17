@@ -82,7 +82,7 @@ export class MyAccount extends Component {
                             </div>)
                     })}
                 </ul>
-
+                {this.props.user.isAdmin ? (<div>
                 <Grid className="adminUserGrid" columns={5} divided="vertically">
                     <Grid.Row>
                         <Grid.Column>Name</Grid.Column>
@@ -91,7 +91,7 @@ export class MyAccount extends Component {
                         <Grid.Column>User Status</Grid.Column>
                         <Grid.Column>Remove User</Grid.Column>
                     </Grid.Row>
-
+                    )
                 {
                     adminUsers.map(user =>{
                         return(
@@ -117,16 +117,9 @@ export class MyAccount extends Component {
                     })
                 }
                 </Grid>
-                
-                {this.props.user.isAdmin ? (
-                    <div>
-                        <AddCategory />
-                        <AddProduct />
-                    </div>
-                ) : null }
-
-                
-
+                <AddCategory />
+                <AddProduct/>
+                </div>) : null }
             </div>)
 
     }

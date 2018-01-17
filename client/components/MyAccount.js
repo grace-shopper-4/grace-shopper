@@ -86,6 +86,7 @@ export class MyAccount extends Component {
                 </div>
                 {this.props.user.isAdmin ? (<div>
                     <AddProduct />
+                    <AddCategory />
                     <Grid className="adminUserGrid" columns={5} divided="vertically">
                         <Grid.Row>
                             <Grid.Column>Name</Grid.Column>

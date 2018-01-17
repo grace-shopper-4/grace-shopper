@@ -275,6 +275,11 @@ form div {
     padding: 0 0;
 }
 
+#ordersList {
+    margin-left: 25px;
+
+}
+
 /*Single Product */
 .ui.container.singleProduct {
     display: block;

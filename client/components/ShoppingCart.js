@@ -14,41 +14,57 @@ export class ShoppingCart extends Component {
     }
 
     render() {
+        let orderTotal = 0;
         if (this.props.cart.lineItems){
             if (this.props.cart.lineItems[0]){
                 if (this.props.cart.lineItems[0].product){
 
                 return (
                     <div>
-                        <ul>
-                            {this.props.cart.lineItems &&
-                                this.props.cart.lineItems.map(lineItem => {
-                                    return (
-                                        <li key={lineItem.id}>
-                                            <div>{lineItem.product.title}</div>
-                                            <div>
-                                                <button onClick={() => {
-                                                    if (lineItem.quantity > 1){
-                                                        this.props.decrement(lineItem.orderId, lineItem.product)
-                                                    } else {
-                                                        this.props.removeLineItem(this.props.cart.id, lineItem.id)
-                                                    }
-                                                }}>-</button> {/*make this*/}
-                                                <span>{`Qty: ${lineItem.quantity}`}</span>
-                                                <button onClick={() => this.props.increment(lineItem.orderId, lineItem.product)}>+</button> {/*make this*/}
-                                            </div>
-                                            <div>{`Total cost: ${lineItem.totalPrice}`}</div>
-                                            <button onClick={() => {
-                                                this.props.removeLineItem(this.props.cart.id, lineItem.id)
-                                            }}>Remove Item</button>
-                                        </li>
-                                    )
-                                }
-                            )}
-                        </ul>
-                        <Link to={'/orderReview'}>
-                            <button>Submit Order</button>
-                        </Link>
+                        <h3 id="cart-header">Your cart:</h3>
+                        <table id="cart-list">
+                            <thead>
+                                <th>Item</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th />
+                            </thead>
+                            <tbody>
+                                {this.props.cart.lineItems &&
+                                    this.props.cart.lineItems.map(lineItem => {
+                                        orderTotal += lineItem.totalPrice;
+                                        return (
+                                            <tr key={lineItem.id}>
+                                                <td>{lineItem.product.title}</td>
+                                                <td>
+                                                    <div>
+                                                        <button className="cart-btns" onClick={() => {
+                                                            if (lineItem.quantity > 1){
+                                                                this.props.decrement(lineItem.orderId, lineItem.product)
+                                                            } else {
+                                                                this.props.removeLineItem(this.props.cart.id, lineItem.id)
+                                                            }
+                                                        }}>-</button> {/*make this*/}
+                                                        <span id="qty-span">{lineItem.quantity}</span>
+                                                        <button className="cart-btns" onClick={() => this.props.increment(lineItem.orderId, lineItem.product)}>+</button> {/*make this*/}
+                                                    </div>
+                                                </td>
+                                                <td>{`$${(lineItem.totalPrice / 100).toFixed(2)}`}</td>
+                                                <button className="cart-btns" onClick={() => {
+                                                    this.props.removeLineItem(this.props.cart.id, lineItem.id)
+                                                }}>X</button>
+                                            </tr>
+                                        )
+                                    }
+                                )}
+                            </tbody>
+                        </table>
+                        <div id='order-total-box'>
+                            <label id='order-total-label'>{`Order Total: $${(orderTotal / 100).toFixed(2)}`}</label>
+                            <Link to={'/orderReview'}>
+                                <button>Submit Order</button>
+                            </Link>
+                        </div>
                     </div>
                 )
                 } else {

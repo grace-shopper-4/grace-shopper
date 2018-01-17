@@ -26,7 +26,19 @@ form div {
     margin: 1em;
     display: inline-block;
 }
+
+td {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+table {
+    margin: 30px;
+}
+
+
 /*buttons*/
+
 .ui.button {
     cursor: pointer;
     display: inline-block;
@@ -47,13 +59,13 @@ form div {
     text-align: center;
     text-decoration: none;
     border-radius: .28571429rem;
-    box-shadow: 0 0 0 1px transparent inset, 0 0 0 0 rgba(34,36,38,.15) inset;
+    box-shadow: 0 0 0 1px transparent inset, 0 0 0 0 rgba(34, 36, 38, .15) inset;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    -webkit-transition: opacity .1s ease,background-color .1s ease,color .1s ease,box-shadow .1s ease,background .1s ease;
-    transition: opacity .1s ease,background-color .1s ease,color .1s ease,box-shadow .1s ease,background .1s ease;
+    -webkit-transition: opacity .1s ease, background-color .1s ease, color .1s ease, box-shadow .1s ease, background .1s ease;
+    transition: opacity .1s ease, background-color .1s ease, color .1s ease, box-shadow .1s ease, background .1s ease;
     will-change: '';
     -webkit-tap-highlight-color: transparent;
 }
@@ -100,9 +112,11 @@ form div {
     margin-left: -72px;
     margin-top: 15px;
 }
+
 .sub-menu li a {
     margin-top: 15px;
 }
+
 .nav-menu ul {
     padding-left: 0em;
 }
@@ -111,7 +125,6 @@ form div {
     display: inline-block;
     padding: 15px;
 }
-
 
 .nav-options {
     display: flex;
@@ -142,8 +155,9 @@ form div {
 }
 
 @media (max-width: 850px) {
-    .nav-wrapper {
-        font-size: 0.75rem;
+    .nav-wrapper,
+    .ui.button {
+        font-size: 0.9rem;
     }
 }
 
@@ -194,19 +208,47 @@ form div {
 }
 
 
-
 /*Shopping Cart*/
+
+#cart-header {
+    margin: 15px;
+}
 
 .add-item-alert {
     color: #5F4B8B;
     margin: 10px;
 }
 
+#cart-list td {
+    border-right: #999 solid 1px;
+}
+
+.cart-btns {
+    background-color: rgba(177, 172, 172, 0.2);
+    border: white solid 1px;
+    border-radius: 50%;
+}
+
+#qty-span {
+    margin: 10px;
+}
+
+#order-total-box {
+    margin-left: 40px;
+}
+
+#order-total-label {
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
 
 /*All Products*/
+
+
 /*Cards*/
 
-.searchbar{
+.searchbar {
     margin-left: 2.5em;
 }
 
@@ -242,38 +284,54 @@ form div {
     margin-top: .5em;
 }
 
-.ui.card a, .ui.cards>.card a {
+.ui.card a,
+.ui.cards>.card a {
     cursor: pointer;
     text-align: center;
 }
 
-.ui.card img, .ui.cards>.card img {
+.ui.card img,
+.ui.cards>.card img {
     text-align: center;
     margin: auto;
     margin-top: 15px;
 }
 
+
 /*My Account */
+
+
 /*Admin User Grid*/
-.ui.grid.adminUserGrid{
+
+.ui.grid.adminUserGrid {
     margin-top: 3rem;
     margin-bottom: -1rem;
     margin-left: 6rem;
     margin-right: 5rem;
 }
+
+
 /*user info list*/
+
 .ui.list.userInfo {
     font-size: 1.25em;
 }
-.ui.list.userInfo:first-child, ol.ui.list:first-child, ul.ui.list:first-child{
+
+.ui.list.userInfo:first-child,
+ol.ui.list:first-child,
+ul.ui.list:first-child {
     margin-top: 4em;
     padding-top: 0;
 }
-.ui.list.userInfo, ol.ui.list, ul.ui.list {
+
+.ui.list.userInfo,
+ol.ui.list,
+ul.ui.list {
     list-style-type: none;
     margin: 1em 5em;
     padding: 0 0;
 }
+
 
 #ordersList {
     margin-left: 25px;
@@ -281,6 +339,7 @@ form div {
 }
 
 /*Single Product */
+
 .ui.container.singleProduct {
     display: block;
     max-width: 100%!important;
@@ -311,3 +370,4 @@ div.reviews {
     text-align: center;
     margin-bottom: 20px;
 }
+

@@ -91,7 +91,7 @@ export class MyAccount extends Component {
                         <Grid.Column>User Status</Grid.Column>
                         <Grid.Column>Remove User</Grid.Column>
                     </Grid.Row>
-                    )
+
                 {
                     adminUsers.map(user =>{
                         return(

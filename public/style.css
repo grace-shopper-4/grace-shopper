@@ -47,7 +47,7 @@ table {
     border: none;
     vertical-align: baseline;
     background: #e0e1e2 none;
-    color: rgba(0, 0, 0, .6);
+    color: #5F4B8B;
     font-family: 'Quicksand', sans-serif;
     margin: 0 .25em 0 0;
     padding: .78571429em 1.5em .78571429em;
@@ -72,13 +72,26 @@ table {
 
 
 /*Navbar*/
+.logoTitle {
+    font-size: 2em;
+    color: #5F4B8B;
+}
 
 .nav-wrapper {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: #999 2px solid;
+    border-bottom: #5F4B8B 2px solid;
+}
+
+.ui.secondary.menu {
+    background: 0 0;
+    margin-left: -.35714286em;
+    margin-right: -.35714286em;
+    border-radius: 0;
+    border-bottom: #5F4B8B 2px solid;
+    box-shadow: none;
 }
 
 .nav-menu {
@@ -180,19 +193,7 @@ table {
 
 .home-page-container {
     background-color: white;
-    /*      height: 100vh;
-  display: flex;
-  justify-content: center;*/
 }
-
-
-/*.home-page-container .home-page-container-text {
-    position: absolute;
-    top: 45vh;
-    opacity: 0;
-    text-shadow: 2px 2px #252525;
-    z-index: 5;
-}*/
 
 #home-page video {
     margin: 20px;
@@ -214,7 +215,7 @@ table {
 }
 
 .add-item-alert {
-    background-color: rgb(116, 238, 238);
+    color: #5F4B8B;
     margin: 10px;
 }
 
@@ -342,5 +343,31 @@ ul.ui.list {
 .ui.container.singleProduct {
     display: block;
     max-width: 100%!important;
-    margin-top: 25vh;
+    margin-top: 15vh;
 }
+
+.ui.items.reviews {
+    margin: 1.5em 5em;
+}
+
+div.reviews {
+    margin: 10em 5em 0em 5em;
+}
+
+.reviewForm{
+    margin-left: 5em;
+    margin-bottom: 10vh;
+}
+
+.adminProductForm {
+   margin-left: 5em;
+   margin-top: 5vh;
+}
+
+/*Single Category*/
+.ui.card a, .ui.cards>.card a {
+    cursor: pointer;
+    text-align: center;
+    margin-bottom: 20px;
+}
+

@@ -200,29 +200,50 @@ export class SingleProduct extends Component {
                         reviews.filter(review => {
                             if (review.productId === currentProduct.id) {
 
+
                                 return true
                             }
                         }).map(review => {
                             return (
-                                <div key={review.id}>
-                                    <h2>{review.title}</h2>
-                                    <h3>{review.content}</h3>
+
+                                    <Item.Group className="reviews" divided>
+                                    <Item key={review.id}>
+                                    <Item.Content>
+                                    <div className="starsRating">
                                     <StarsRating rating={review.stars} />
-                                </div>
-                            )
+                                    </div>
+                                    <Item.Header as='h1'>{review.title}</Item.Header>
+                                    <Item.Description>{review.content}</Item.Description>
+                                    </Item.Content>
+                                    </Item>
+                                    </Item.Group>
+                                    )
                         })
                     }
+                    <div className="reviewForm" >
                     <h1>Add A Review</h1>
-                    <form onSubmit={this.submitReview}>
-                        <input onChange={this.handleChange} name="title" type="text" placeholder="review title" />
-                        <input onChange={this.handleChange} name="content" type="text" placeholder="review content" />
-                        <StarsRating insideForm={true} name="stars" rating={0} onClick={this.onRatingClick()} />
-                        <button type="submit">Submit</button>
-                    </form>
-                </div>
-            </div>
-        )
-    }
+                    <Form onSubmit={this.submitReview}>
+                    <Form.Group widths="equal">
+                    <Form.Field>
+                    <label>Review Title: </label>
+                    <Form.Input onChange={this.handleChange} name="title" type="text" placeholder="review title" />
+                    </Form.Field>
+                    <Form.Field>
+                    <label>Details: </label>
+                    <Form.TextArea onChange={this.handleChange} name="content" type="text" placeholder="review content" />
+                    </Form.Field>
+                    <Form.Field>
+                    <label>Star Rating</label>
+                    <StarsRating insideForm={true} name="stars" rating={0} onClick={this.onRatingClick()} />
+                    </Form.Field>
+                    </Form.Group>
+                    <Button type="submit">Submit</Button>
+                    </Form>
+                    </div>
+                    </div>
+                    </div>
+                    )
+}
 
 
 }

@@ -179,18 +179,7 @@ form div {
 
 .home-page-container {
     background-color: white;
-/*      height: 100vh;
-  display: flex;
-  justify-content: center;*/
 }
-
-/*.home-page-container .home-page-container-text {
-    position: absolute;
-    top: 45vh;
-    opacity: 0;
-    text-shadow: 2px 2px #252525;
-    z-index: 5;
-}*/
 
 #home-page video {
     margin: 20px;
@@ -206,12 +195,10 @@ form div {
 
 
 
-
-
 /*Shopping Cart*/
 
 .add-item-alert {
-    background-color: rgb(116, 238, 238);
+    color: #5F4B8B;
     margin: 10px;
 }
 
@@ -310,5 +297,12 @@ div.reviews {
 
 .adminProductForm {
    margin-left: 5em;
+   margin-top: 5vh;
 }
 
+/*Single Category*/
+.ui.card a, .ui.cards>.card a {
+    cursor: pointer;
+    text-align: center;
+    margin-bottom: 20px;
+}

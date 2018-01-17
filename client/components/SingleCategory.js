@@ -24,7 +24,7 @@ export class SingleCategory extends Component {
         if (currentCategory === {}) return (<div />)
         return (
             <div>
-                <Header as="h3">{currentCategory.title}</Header>
+                <Header as="h1">{currentCategory.title} Boots</Header>
                 <Card.Group itemsPerRow={4}>
                     {currentCategory.products &&
                         currentCategory.products.map(product => {
@@ -32,7 +32,7 @@ export class SingleCategory extends Component {
                                 <Card key={product.id}>
                                     <NavLink to={`/products/${product.id}`}>
                                         <Image src={product.photo} />
-                                        <Card.Content>
+                                        <Card.Content style={{marginBotton: '10px'}}>
                                         <Card.Header className="categoryProductName">{product.title}</Card.Header>
                                         <Card.Header className="categoryProductPrice">{`$ ${product.price / 100}`}</Card.Header>
                                         <Card.Header>{`Average Rating: ${product.averageRating && product.averageRating}`} </Card.Header>

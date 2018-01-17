@@ -195,7 +195,7 @@ render() {
                                                         <Button type="submit">Submit</Button>
                                                     </span>
                                                 </Form>
-                                                <Button onClick={this.handleDelete}> Delete Product </Button>
+                                                <Button onClick={this.handleDelete} > Delete Product </Button>
                                             </Accordion.Content>
                                         </Accordion>
                                     </div>

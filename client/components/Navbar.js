@@ -27,6 +27,7 @@ class Navbar extends Component {
                       return <Dropdown.Item key={category.id}><Link to={`/categories/${category.id}`}> {category.title} </Link></Dropdown.Item>
                     })
                   }
+               <Dropdown.Item><Link to="/products">All Boots</Link></Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
 

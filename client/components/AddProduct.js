@@ -118,7 +118,7 @@ export class AddProduct extends Component {
                                                     })}
                                                 </select>
                                             </div>
-                                            <Button disabled={Object.keys(this.state.product).length < 6 ? true : false} type='submit'>Submit</Button>
+                                            <Button disabled={Object.keys(this.state.product).length < 4 ? true : false} type='submit'>Submit</Button>
                                         </Form>
                                     </Grid.Column>
                                 </Grid.Row>

@@ -121,7 +121,6 @@ export class MyAccount extends Component {
                             })
                         }
                     </Grid>
-                    <AddCategory />
                    
                 </div>) : null}
             </div>)

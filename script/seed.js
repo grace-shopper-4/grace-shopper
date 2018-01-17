@@ -38,28 +38,28 @@ async function seed () {
     })
   }
 
-  let partyBoots = ['../public/images/party/91GmHLVZKpL._UY395_.jpg',
-                    '../public/images/party/Oxhide_boots._Loulan,_Xinjiang._Early_Han_220_BCE_-_8_CE.jpg',
-                    '../public/images/party/Party1.jpg',
-                    '../public/images/party/Party2.jpg',
-                    '../public/images/party/Party3.jpg',
-                    '../public/images/party/Party4.jpg',
-                    '../public/images/party/yrxymv1513849454074.jpg']
+  let partyBoots = ['https://www.dhresource.com/0x0s/f2-albu-g4-M00-81-25-rBVaEFe8IB6AfQ7kAAJYDyPO0cw770.jpg/winter-boots-led-shoes-black-light-up-shoes.jpg',
+                    'https://www.dhresource.com/0x0s/f2-albu-g4-M00-81-25-rBVaEFe8IB6AfQ7kAAJYDyPO0cw770.jpg/winter-boots-led-shoes-black-light-up-shoes.jpg',
+                    'https://www.dhresource.com/0x0s/f2-albu-g4-M00-81-25-rBVaEFe8IB6AfQ7kAAJYDyPO0cw770.jpg/winter-boots-led-shoes-black-light-up-shoes.jpg',
+                    'https://www.dhresource.com/0x0s/f2-albu-g4-M00-81-25-rBVaEFe8IB6AfQ7kAAJYDyPO0cw770.jpg/winter-boots-led-shoes-black-light-up-shoes.jpg',
+                    'https://www.dhresource.com/0x0s/f2-albu-g4-M00-81-25-rBVaEFe8IB6AfQ7kAAJYDyPO0cw770.jpg/winter-boots-led-shoes-black-light-up-shoes.jpg',
+                    'https://www.dhresource.com/0x0s/f2-albu-g4-M00-81-25-rBVaEFe8IB6AfQ7kAAJYDyPO0cw770.jpg/winter-boots-led-shoes-black-light-up-shoes.jpg',
+                    'https://www.dhresource.com/0x0s/f2-albu-g4-M00-81-25-rBVaEFe8IB6AfQ7kAAJYDyPO0cw770.jpg/winter-boots-led-shoes-black-light-up-shoes.jpg']
 
-  let rainBoots = ['../public/images/rain/Chinese-products-wholesale-cheap-funny-rain-boots.jpg',
-                   '../public/images/rain/danner-15610x-o_01_2_1.jpg',
-                   '../public/images/rain/Hessian-Boots_TNT.jpg',
-                   '../public/images/rain/Rain1.jpeg',
-                   '../public/images/rain/Rain2.jpg',
-                   '../public/images/rain/Rain3.jpeg']
+  let rainBoots = ['https://www.kidorable.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/r/a/rainboots-shark.jpg',
+                   'https://www.kidorable.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/r/a/rainboots-shark.jpg',
+                   'https://www.kidorable.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/r/a/rainboots-shark.jpg',
+                   'https://www.kidorable.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/r/a/rainboots-shark.jpg',
+                   'https://www.kidorable.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/r/a/rainboots-shark.jpg',
+                   'https://www.kidorable.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/r/a/rainboots-shark.jpg']
 
-  let cowboyBoots = ['../public/images/cowboy/cowboy-sandals.jpg',
-                   '../public/images/cowboy/Cowboy1.jpeg',
-                   '../public/images/cowboy/Cowboy2.jpeg',
-                   '../public/images/cowboy/Cowboy3.jpeg',
-                   '../public/images/cowboy/Crocodile-Funny-Boot-Image.jpg',
-                   '../public/images/cowboy/LibertyBoots_CBR.jpg',
-                   '../public/images/cowboy/white-cowboy-boots-for-women.jpg']
+  let cowboyBoots = ['http://geekologie.com/2014/05/09/cobra-cowboy-boots.jpg',
+                     'http://geekologie.com/2014/05/09/cobra-cowboy-boots.jpg',
+                     'http://geekologie.com/2014/05/09/cobra-cowboy-boots.jpg',
+                     'http://geekologie.com/2014/05/09/cobra-cowboy-boots.jpg',
+                     'http://geekologie.com/2014/05/09/cobra-cowboy-boots.jpg',
+                     'http://geekologie.com/2014/05/09/cobra-cowboy-boots.jpg',
+                     'http://geekologie.com/2014/05/09/cobra-cowboy-boots.jpg']
 
   //seed party boots Product
   for (let i = 0; i < 7; i++) {
@@ -76,7 +76,8 @@ async function seed () {
         price,
         inventory,
         size,
-        categoryId
+        categoryId,
+        photo
     })
   }
 
@@ -95,7 +96,8 @@ async function seed () {
         price,
         inventory,
         size,
-        categoryId
+        categoryId,
+        photo
     })
   }
 
@@ -114,7 +116,8 @@ async function seed () {
         price,
         inventory,
         size,
-        categoryId
+        categoryId,
+        photo
     })
   }
 
@@ -154,7 +157,7 @@ async function seed () {
     let title = chance.sentence();
     let content = chance.paragraph();
     let stars = Math.floor(Math.random() * (5) + 1);
-    let productId = Math.floor(Math.random() * (12) + 1);
+    let productId = Math.floor(Math.random() * (26) + 1);
     let userId = Math.floor(Math.random() * (2) + 1);
     await Review.create({
         title,

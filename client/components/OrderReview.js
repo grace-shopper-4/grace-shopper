@@ -19,7 +19,9 @@ function OrderReview (props) {
               <label>Shipping Address</label>
               <input onChange={props.handleChange} name="address"/>
               </Form.Field>
-              <Button type='submit'>Save</Button>
+              {user.id &&
+                <Button type='submit'>Save</Button>
+              }
            </Form>
                 <form onSubmit={() => {props.submitOrder(cart.id)}}>
             {

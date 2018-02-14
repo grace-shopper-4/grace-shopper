@@ -41,6 +41,7 @@
         "prop-types": "^15.5.8",
         "react": "^16.0.0",
         "react-dom": "^16.0.0",
+        "react-parallax": "^1.6.0",
         "react-redux": "^5.0.2",
         "react-router-dom": "^4.1.1",
         "react-stars-rating": "0.0.5",

@@ -4,11 +4,21 @@ import { Link, BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout, fetchCurrentOrder, getCurrentOrder } from '../store'
 import { Button, Dropdown, Icon, Menu, Segment } from 'semantic-ui-react'
+import history from '../history'
 
 class Navbar extends Component {
 
   componentDidMount() {
     this.props.fetchSessionOrder();
+  }
+
+  handleCategoryClick = event => {
+    const categoryId= event.target.getAttribute('name');
+    history.push(`/categories/${categoryId}`)
+  }
+
+  handleProductsClick = event => {
+    history.push('/products')
   }
 
   render() {
@@ -23,11 +33,17 @@ class Navbar extends Component {
           <Dropdown text="categories" >
             <Dropdown.Menu>
               {
-                    categories.map(category => {
-                      return <Dropdown.Item key={category.id}><Link to={`/categories/${category.id}`}> {category.title} </Link></Dropdown.Item>
-                    })
-                  }
-               <Dropdown.Item><Link to="/products">All Boots</Link></Dropdown.Item>
+                categories.map(category => {
+                  return <Dropdown.Item 
+                            key={category.id} 
+                            onClick={this.handleCategoryClick} 
+                            name={category.id}
+                          > 
+                            {category.title}
+                          </Dropdown.Item>
+                })
+              }
+              <Dropdown.Item onClick={this.handleProductsClick}>All Boots</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
 

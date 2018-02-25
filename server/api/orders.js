@@ -120,9 +120,10 @@ router.delete('/:orderId', isAdmin, async (req, res, next) => {
 
 router.post('/:orderId/lineItem', isSessionOrder, async (req, res, next) => {
   try {
+    const product = Product.findById(req.body.id)
     await LineItem.create({
       quantity: 1,
-      itemPrice: req.body.price,
+      itemPrice: product.price,
       productId: req.body.id,
       orderId: req.params.orderId
     })
